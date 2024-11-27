@@ -14,52 +14,12 @@ import toast from "@/utils/toast";
 import { useUsersStore } from "./users.store";
 import { useSignalRStore } from "./signalr.store";
 
-export const UserRight = z.object({
-  AppId: z.coerce.number(),
-  GroupId: z.coerce.number(),
-  RightId: z.coerce.number(),
-});
-
-export const UserRights = z.array(UserRight);
-
-export type UserRight = z.infer<typeof UserRight>;
-
-export type UserRights = z.infer<typeof UserRights>;
-
 export const User = z.object({
   UserId: z.coerce.number(),
-  IsAdmin: z
-    .string()
-    .transform((val: string) => (val.toLowerCase() === "true" ? true : false)),
-  FIO: z.string(),
-  Login: z.string(),
-  Src_Id: z.nullable(
-    z.coerce.number().transform((val: number) => (val !== 0 ? val : null)),
-  ),
-  Src_Name: z.nullable(
-    z
-      .string()
-      .transform((val: string) => (val.toLowerCase().length ? val : null)),
-  ),
-  Terr_Id: z.nullable(
-    z.coerce.number().transform((val: number) => (val !== 0 ? val : null)),
-  ),
-  Terr_Name: z.nullable(
-    z
-      .string()
-      .transform((val: string) => (val.toLowerCase().length ? val : null)),
-  ),
-  nbf: z.number().transform((val: number) => luxon.fromSeconds(val).toISO()),
+  UserName: z.string(),
+  UserLogin: z.string(),
+
   exp: z.number().transform((val: number) => luxon.fromSeconds(val).toISO()),
-  UserRights: z.string().transform((str, ctx): z.infer<typeof UserRights> => {
-    try {
-      return UserRights.parse(JSON.parse(str));
-    } catch (e) {
-      ctx.addIssue({ code: "custom", message: "Invalid JSON" });
-      return z.NEVER;
-    }
-  }),
-  // UserRights: z.string().transform((val: string) => JSON.parse(val))
 });
 
 export type User = z.infer<typeof User>;
@@ -99,25 +59,24 @@ export const useAuthStore = defineStore({
      **/
     async login(username: string, password: string) {
       return await axios
-        .post("/api/login", {
+        .post("/api/Authentication/Login", {
           Login: username,
           Password: password,
         })
-        .then((response: any) => {
-          const token: string = response.access_token;
-          const success: boolean = response.result >= 0;
+        .then((response: { accessToken: string }) => {
+          const token: string = response.accessToken;
 
-          if (success && token) {
+          if (token) {
             this.refreshToken(token);
 
-            const signalRStore = useSignalRStore();
-            signalRStore.connect();
+            // const signalRStore = useSignalRStore();
+            // signalRStore.connect();
 
             // Перенаправим на главную, или на указанный для возвращения адрес
             router.push(this.returnUrl || "/");
           }
 
-          if (!success) toast("Ошибка входа", response.Error, "error");
+          if (!token) toast("Ошибка входа", JSON.stringify(response), "error");
         });
     },
     /**

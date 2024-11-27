@@ -1,22 +1,22 @@
-import { fileURLToPath, URL } from 'node:url'
+import { fileURLToPath, URL } from "node:url";
 
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
+import { defineConfig } from "vite";
+import vue from "@vitejs/plugin-vue";
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
-      'devextreme/ui': 'devextreme/esm/ui',
+      "@": fileURLToPath(new URL("./src", import.meta.url)),
+      "devextreme/ui": "devextreme/esm/ui",
     },
   },
   server: {
     host: true,
     proxy: {
-      '/api': {
-        target: 'http://localhost:5272',
+      "/api": {
+        target: "http://localhost:5000",
         changeOrigin: true,
       },
       // '/notification': {
@@ -26,4 +26,4 @@ export default defineConfig({
       // },
     },
   },
-})
+});
