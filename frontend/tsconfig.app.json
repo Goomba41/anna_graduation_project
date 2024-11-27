@@ -1,0 +1,30 @@
+{
+  // "extends": "@vue/tsconfig/tsconfig.web.json",
+  "include": [
+    "env.d.ts",
+    "src/**/*",
+    "src/**/*.vue"
+  ],
+  "exclude": [
+    "src/**/__tests__/*"
+  ],
+  "compilerOptions": {
+    "composite": true,
+    "resolveJsonModule": true,
+    "module": "es2022",
+    "baseUrl": ".",
+    "ignoreDeprecations": "5.0",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "target": "es2019",
+    "lib": [
+      "es2019",
+      "dom"
+    ]
+  }
+}

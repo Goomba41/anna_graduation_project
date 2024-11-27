@@ -1,0 +1,181 @@
+@import url("./prime.css");
+@import url("./devextreme.css");
+
+@font-face {
+  font-family: "Exo2";
+  font-weight: 400;
+  font-style: normal;
+  font-display: auto;
+  src:
+    local("Exo2"),
+    url("/fonts/Exo2/Exo2-VariableFont_wght.ttf") format("truetype");
+}
+
+/* @font-face {
+  font-family: "RobotoMono";
+  font-weight: 400;
+  font-style: normal;
+  font-display: auto;
+  src:
+    local("RobotoMono"),
+    url("/fonts/RobotoMono/RobotoMono-VariableFont_wght.ttf") format("truetype");
+} */
+
+@tailwind base;
+@tailwind components;
+
+/* * APP */
+body *,
+.dx-widget {
+  font-family: "Exo2";
+  @apply tw-transition-colors;
+}
+
+button,
+[type="button"],
+[type="reset"],
+[type="submit"] {
+  @apply tw-bg-primary tw-border-primary;
+}
+
+.skeleton-box {
+  position: relative;
+  overflow: hidden;
+  @apply tw-bg-gray-300;
+}
+
+.skeleton-box::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.2) 20%,
+    rgba(255, 255, 255, 0.5) 60%,
+    rgba(255, 255, 255, 0)
+  );
+  animation: shimmer 3s infinite;
+  content: "";
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.panel {
+  @apply tw-shadow-lg tw-flex tw-flex-col tw-rounded-3xl tw-mx-2 tw-mb-2 tw-bg-gray-100;
+}
+
+.control-rows {
+  @apply tw-flex tw-flex-col;
+}
+
+.control-rows .row {
+  @apply tw-flex tw-flex-row tw-w-full;
+}
+
+.equal-split .field > div {
+  @apply tw-justify-between;
+}
+
+.equal-split .field > div > .p-component {
+  @apply tw-max-w-[50%] tw-w-full;
+}
+
+.buttons-stacked {
+  @apply tw-flex tw-flex-col tw-h-14;
+}
+
+.buttons-stacked .p-button {
+  @apply first:tw-rounded-b-none last:tw-rounded-t-none;
+}
+
+button.p-button.p-component.hotkey:after {
+  position: absolute;
+  font-size: 0.5rem;
+  bottom: 3px;
+  border-radius: 4px;
+  border: 1px solid white;
+  padding: 1px;
+  line-height: 1;
+}
+
+.fa-spin {
+  animation-name: fa-spin;
+  animation-duration: var(--fa-animation-duration, 2s);
+  animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+  animation-timing-function: var(--fa-animation-timing, linear);
+}
+
+.wave {
+  animation-name: wave-animation; /* Имя анимации */
+  animation-duration: 2.5s; /* Скорость вращения */
+  animation-iteration-count: infinite; /* Постоянное повторе ние */
+  transform-origin: 70% 70%; /* Центральная точка вращения */
+  display: inline-block;
+}
+
+@keyframes fa-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes wave-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  15% {
+    transform: rotate(14deg);
+  } /* The following five values can be played with to make the waving more or less extreme */
+  30% {
+    transform: rotate(-8deg);
+  }
+  40% {
+    transform: rotate(14deg);
+  }
+  50% {
+    transform: rotate(-4deg);
+  }
+  60% {
+    transform: rotate(10deg);
+  }
+  70% {
+    transform: rotate(0deg);
+  } /* Reset for the last half to pause */
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+[data-title]:hover:after {
+  opacity: 1;
+  transition: all 0.1s ease 0.5s;
+  visibility: visible;
+}
+[data-title]:after {
+  content: attr(data-title);
+  background-color: #00ff00;
+  color: #111;
+  font-size: 150%;
+  position: absolute;
+  padding: 1px 5px 2px 5px;
+  bottom: -1.6em;
+  white-space: nowrap;
+  box-shadow: 1px 1px 3px #222222;
+  opacity: 0;
+  border: 1px solid #111111;
+  z-index: 99999;
+  visibility: hidden;
+}
+
+@tailwind utilities;
