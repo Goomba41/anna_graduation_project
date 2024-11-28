@@ -43,7 +43,7 @@ namespace backend.Controllers
             var claims = new[] {
               new Claim(JwtRegisteredClaimNames.Sub, _configuration["Token:subject"]!),
               new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-              new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
+              new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()),
               new Claim("UserId", user.Id.ToString()),
               new Claim("UserName", String.Format("{0} {1} {2}", user.LastName, user.FirstName, user.Patronymic)),
               new Claim("UserLogin", user.Login)
@@ -51,7 +51,7 @@ namespace backend.Controllers
 
             //Create Signing Credentials to sign the token
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Token:key"]!));
-            var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
 
             // Create the token
             var token = new JwtSecurityToken(

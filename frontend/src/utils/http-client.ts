@@ -1,7 +1,7 @@
 import axios, {
-  AxiosError,
-  type InternalAxiosRequestConfig,
+  type AxiosError,
   type AxiosResponse,
+  type InternalAxiosRequestConfig,
 } from "axios";
 import FileSaver from "file-saver";
 
@@ -36,7 +36,7 @@ axios.interceptors.request.use(
 
     // Если есть токен, подставляем в заголовок запроса
     if (token) {
-      config.headers!.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = `Bearer ${token}`;
       // Нужно указать этот параметр, чтобы в перехватчике ответа
       // разбирать результат вручную (если файл - загрузить, если json - отдать)
       // чтобы можно было не указывать ожидаемый тип ответа в
@@ -66,7 +66,7 @@ axios.interceptors.request.use(
     const loadingStore = useLoadingStore();
     loadingStore.loading(false, "axios");
 
-    const title: string = `${error.response!.status} - ${error.response!.statusText}`;
+    const title: string = `${error.response.status} - ${error.response.statusText}`;
     const body: string = error.message;
 
     toast(title, body);
@@ -91,34 +91,35 @@ axios.interceptors.response.use(
     if (responseType && responseType === "application/json") {
       // Иначе преобразуем в JSON, если это ArrayBuffer и отдадим дальше
       if (response.data instanceof ArrayBuffer) {
-        return JSON.parse(new TextDecoder().decode(response.data));
+        response.data = JSON.parse(new TextDecoder().decode(response.data));
+        return response;
       }
 
-      return response.data;
-    } else if (responseType) {
-      let filename: string = "";
-      const disposition = response.headers["content-disposition"];
-
-      if (disposition && disposition.indexOf("attachment") !== -1) {
-        const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/gi;
-        const matches = filenameRegex.exec(disposition);
-        if (matches != null && matches[1]) {
-          filename = decodeURI(matches[1].replace(/['"]/g, ""));
-        }
-      }
-
-      const file = new Blob([response.data], { type: responseType });
-
-      // FileSaver(file, filename || `ИС «ЭКО» ${v4()}`);
-      FileSaver(file, filename || `АИС «Документооборот» ${v4()}`);
-      return;
+      return response;
     }
+
+    let filename = "";
+    const disposition = response.headers["content-disposition"];
+
+    if (disposition && disposition.indexOf("attachment") !== -1) {
+      const filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/gi;
+      const matches = filenameRegex.exec(disposition);
+      if (matches?.[1]) {
+        filename = decodeURI(matches[1].replace(/['"]/g, ""));
+      }
+    }
+
+    const file = new Blob([response.data], { type: responseType });
+
+    // FileSaver(file, filename || `ИС «ЭКО» ${v4()}`);
+    FileSaver(file, filename || `АИС «Документооборот» ${v4()}`);
+    return;
   },
   (error: AxiosError) => {
     const authStore = useAuthStore();
     const loadingStore = useLoadingStore();
 
-    const title: string = `${error.response!.status} - ${error.response!.statusText}`;
+    const title: string = `${error.response.status} - ${error.response.statusText}`;
     let body: string = error.message;
 
     if (error.response && error.response.status === 401) {

@@ -39,19 +39,19 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, type Ref } from 'vue'
+import { ref, watch, type Ref } from "vue";
 
-import useEmitter from '@/utils/emitter'
+import useEmitter from "@/utils/emitter";
 
-import Button from 'primevue/button'
-import Dialog from 'primevue/dialog'
+import Button from "primevue/button";
+import Dialog from "primevue/dialog";
 
-import DxFilterBuilder from 'devextreme-vue/filter-builder'
-import { DxFilterBuilderTypes } from 'devextreme-vue/filter-builder'
+import DxFilterBuilder from "devextreme-vue/filter-builder";
+import type { DxFilterBuilderTypes } from "devextreme-vue/filter-builder";
 
-const dataTableFilter = ref(DxFilterBuilder)
+const dataTableFilter = ref(DxFilterBuilder);
 
-const visible: Ref<boolean> = ref(false)
+const visible: Ref<boolean> = ref(false);
 
 // let initialFilters: Ref<any> = ref([]);
 
@@ -64,35 +64,39 @@ const props = defineProps({
     type: Array<DxFilterBuilderTypes.Field>,
     default: () => [],
   },
-})
+});
 
-const emit = defineEmits<{
-  (e: 'applyFilters', value: (string | Array<string>)[]): (string | Array<string>)[]
-}>()
+const emit =
+  defineEmits<
+    (
+      e: "applyFilters",
+      value: (string | Array<string>)[],
+    ) => (string | Array<string>)[]
+  >();
 
-const { bus } = useEmitter()
+const { bus } = useEmitter();
 
 watch(
-  () => bus.value.get('openTableFilters'),
+  () => bus.value.get("openTableFilters"),
   () => {
     // Деструктурим параметры (потому что параметры пишутся в массив)
-    visible.value = true
+    visible.value = true;
   },
-)
+);
 
 const closeModal = () => {
-  visible.value = false
-}
+  visible.value = false;
+};
 
 const clearFilters = () => {
-  emit('applyFilters', [])
-  closeModal()
-}
+  emit("applyFilters", []);
+  closeModal();
+};
 
 const applyFilters = () => {
-  emit('applyFilters', dataTableFilter.value.instance.option('value'))
-  closeModal()
-}
+  emit("applyFilters", dataTableFilter.value.instance.option("value"));
+  closeModal();
+};
 </script>
 
 <style lang="css" scoped></style>

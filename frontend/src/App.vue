@@ -1,27 +1,7 @@
 <template>
-  <!-- <div
-    v-if="settingsStore.settings.find((s) => s.Id === form.Id)?.Value"
-    class="tw-absolute tw-w-full tw-text-base tw-top-0 tw-bg-orange-600 tw-text-gray-100 tw-text-center tw-font-semibold tw-p-1"
-  >
-    Внимание, ведутся технические работы!
-  </div> -->
   <div class="tw-flex tw-flex-row tw-flex-auto">
     <RouterView />
   </div>
-  <!-- <div
-    v-if="authStore.user?.IsAdmin"
-    class="tw-flex tw-items-center tw-w-full tw-text-base tw-h-8 tw-mt-1 tw-bottom-0 tw-bg-gray-400 tw-text-gray-100 tw-text-center tw-font-semibold tw-px-4 tw-py-1"
-  >
-    <div class="tw-flex tw-items-center">
-      <label for="maintenanceMode" class="tw-mr-2">Оповещение о тех. работах</label>
-
-      <InputSwitch
-        v-model="Value"
-        :disabled="loadingStore.loadingState"
-        @change="toggleMaintenance"
-      />
-    </div>
-  </div> -->
 
   <Toast position="bottom-right" />
 
@@ -52,10 +32,7 @@
   >
     <div class="tw-flex tw-flex-col tw-items-center">
       <div class="tw-flex tw-flex-row tw-items-center">
-        <font-awesome-icon
-          :icon="['fas', 'fa-exclamation-triangle']"
-          class="tw-mr-8 tw-text-3xl tw-text-danger"
-        ></font-awesome-icon>
+        <ExclamationTriangle class="tw-mr-8 tw-text-3xl tw-text-danger" />
         <div class="message">{{ confirmationMessage }}</div>
       </div>
 
@@ -227,7 +204,9 @@ import { useSignalRStore } from "./stores/signalr.store";
 // import { useSettingsStore } from './stores/settings.store'
 
 // import { Setting } from './typings/settings.types'
-import { TCustomColor, ZCustomColor } from "./typings/preferences.types";
+import { type TCustomColor, ZCustomColor } from "./typings/preferences.types";
+
+import ExclamationTriangle from "./components/icons/ExclamationTriangle.vue";
 
 const { bus, emit } = useEmitter();
 
@@ -482,9 +461,9 @@ function chooseTheme(name: string) {
 }
 
 function cleanThemes() {
-  Object.keys(appThemes.value).forEach((theme: string) => {
+  for (const theme of Object.keys(appThemes.value)) {
     document.body.classList.remove(theme);
-  });
+  }
 }
 
 function initializeTheme(
@@ -500,7 +479,7 @@ function initializeTheme(
     chooseTheme(usedTheme);
   } else {
     try {
-      let rgb =
+      const rgb =
         typeof usedTheme === "string"
           ? ZCustomColor.parse(JSON.parse(usedTheme))
           : ZCustomColor.parse(usedTheme);

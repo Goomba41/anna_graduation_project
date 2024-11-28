@@ -1,7 +1,7 @@
-import { defineStore } from 'pinia'
+import { defineStore } from "pinia";
 
 export const useLoadingStore = defineStore({
-  id: 'loading',
+  id: "loading",
   state: () => ({
     axios: false, // Состояние заргузки axios
     route: false, // Состояние загрузки роутера
@@ -13,7 +13,7 @@ export const useLoadingStore = defineStore({
      * @returns true - загружается, false - загружено.
      */
     loadingState(state): boolean {
-      return state.axios || state.route || state.loadersCounter > 0
+      return state.axios || state.route || state.loadersCounter > 0;
     },
   },
   actions: {
@@ -22,18 +22,18 @@ export const useLoadingStore = defineStore({
      * @param {boolean} isLoading - состояние, которое нужно установить.
      * @param {"axios" | "route"} type - кем производится загрузка.
      */
-    loading(isLoading: boolean, type: 'axios' | 'route') {
+    loading(isLoading: boolean, type: "axios" | "route") {
       if (isLoading) {
-        this.loadersCounter++
-        this[type] = true
+        this.loadersCounter++;
+        this[type] = true;
       } else {
         if (this.loadersCounter > 0) {
-          this.loadersCounter--
+          this.loadersCounter--;
         } else {
-          this.loadersCounter = 0
+          this.loadersCounter = 0;
         }
-        this[type] = false
+        this[type] = false;
       }
     },
   },
-})
+});

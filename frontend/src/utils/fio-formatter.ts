@@ -12,41 +12,41 @@
 export default function fioParse(
   fio: string,
   mode: {
-    f: { enabled: boolean; short: boolean }
-    i: { enabled: boolean; short: boolean }
-    o: { enabled: boolean; short: boolean }
+    f: { enabled: boolean; short: boolean };
+    i: { enabled: boolean; short: boolean };
+    o: { enabled: boolean; short: boolean };
   } = {
     f: { enabled: true, short: false },
     i: { enabled: false, short: true },
     o: { enabled: false, short: true },
   },
 ) {
-  const fioParsed = fio.trim().split(' ')
+  const fioParsed = fio.trim().split(" ");
 
-  let f = '',
-    i = '',
-    o = ''
+  let f = "";
+  let i = "";
+  let o = "";
 
   if (mode.f.enabled) {
-    f = fioParsed[0]
+    f = fioParsed[0];
 
-    if (mode.f.short) f = `${f.charAt(0)}.`
+    if (mode.f.short) f = `${f.charAt(0)}.`;
   }
 
   if (mode.i.enabled || fioParsed[1] !== undefined) {
-    i = fioParsed[1]
+    i = fioParsed[1];
 
-    if (mode.i.short && i?.length) i = `${i.charAt(0)}.`
+    if (mode.i.short && i?.length) i = `${i.charAt(0)}.`;
   }
 
   if (mode.o.enabled || fioParsed[2] !== undefined) {
-    o = fioParsed[2]
+    o = fioParsed[2];
 
-    if (mode.o.short && o?.length) o = `${o.charAt(0)}.`
+    if (mode.o.short && o?.length) o = `${o.charAt(0)}.`;
   }
 
   const result = fioParsed.length
-    ? `${f} ${i ?? ''}${mode.i.enabled && mode.i.short && fioParsed[1] !== undefined && mode.o.enabled && mode.o.short && fioParsed[2] !== undefined ? '' : ' '}${o ?? ''}`.trim()
-    : `Безымянный пользователь`
-  return result
+    ? `${f} ${i ?? ""}${mode.i.enabled && mode.i.short && fioParsed[1] !== undefined && mode.o.enabled && mode.o.short && fioParsed[2] !== undefined ? "" : " "}${o ?? ""}`.trim()
+    : "Безымянный пользователь";
+  return result;
 }

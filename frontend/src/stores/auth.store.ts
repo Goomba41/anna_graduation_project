@@ -64,27 +64,19 @@ export const useAuthStore = defineStore({
           Password: password,
         })
         .then((response) => {
-          if (response.status >= 400) {
-            toast("Ошибка входа", JSON.stringify(response.statusText), "error");
-          } else {
-            const token: string = response.data.accessToken;
+          const token: string = response.data.accessToken;
 
-            if (token) {
-              this.refreshToken(token);
+          if (token) {
+            this.refreshToken(token);
 
-              // const signalRStore = useSignalRStore();
-              // signalRStore.connect();
+            // const signalRStore = useSignalRStore();
+            // signalRStore.connect();
 
-              // Перенаправим на главную, или на указанный для возвращения адрес
-              router.push(this.returnUrl || "/");
-            } else {
-              toast(
-                "Ошибка входа",
-                "Токен доступа не найден в ответе сервера",
-                "error",
-              );
-            }
+            // Перенаправим на главную, или на указанный для возвращения адрес
+            router.push(this.returnUrl || "/");
           }
+
+          if (!token) toast("Ошибка входа", JSON.stringify(response), "error");
         });
     },
     /**

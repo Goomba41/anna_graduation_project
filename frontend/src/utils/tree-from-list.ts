@@ -1,8 +1,8 @@
 interface item {
-  Id: string
-  children: item[]
-  key: string
-  label: string
+  Id: string;
+  children: item[];
+  key: string;
+  label: string;
 }
 
 /**
@@ -19,37 +19,38 @@ export default function treeFromList(
   keyField?: string,
   labelField?: string,
 ) {
-  let node: item, i: number
+  let node: item;
+  let i: number;
 
-  const map: { [key: string]: number } = {},
-    roots: item[] = []
+  const map: { [key: string]: number } = {};
+  const roots: item[] = [];
 
   // Пройдем по списку
   for (i = 0; i < list.length; i += 1) {
-    map[list[i].Id] = i // составим карту
-    list[i].children = [] // добавим свойство для потомков (нодов)
-    if (keyField) list[i].key = list[i][keyField]
-    if (labelField) list[i].label = list[i][labelField]
+    map[list[i].Id] = i; // составим карту
+    list[i].children = []; // добавим свойство для потомков (нодов)
+    if (keyField) list[i].key = list[i][keyField];
+    if (labelField) list[i].label = list[i][labelField];
   }
 
   // Пройдемся по списку
   for (i = 0; i < list.length; i += 1) {
-    node = list[i] // текущий элемент
-    const findedParent = list.find((item) => node[parentIdField] === item.Id)
+    node = list[i]; // текущий элемент
+    const findedParent = list.find((item) => node[parentIdField] === item.Id);
 
     if (findedParent) {
       // если это не корневой элемент и найден родитель,
       // то в карте по Id родителя найдем его index в списке
       // по index возьмем элемент из списка и в его потомки добавим
       // текущий элемент
-      list[map[node[parentIdField]]].children.push(node)
+      list[map[node[parentIdField]]].children.push(node);
     } else if (node[parentIdField] !== null) {
-      roots.push(node) // положим его в общий массив
+      roots.push(node); // положим его в общий массив
     } else {
       // если это корневой элемент
-      roots.push(node) // положим его в общий массив
+      roots.push(node); // положим его в общий массив
     }
   }
 
-  return roots
+  return roots;
 }

@@ -34,14 +34,9 @@
           />
           <span
             v-if="errors.Login"
-            class="tw-justify-start tw-mt-2 tw-font-medium tw-text-danger tw-text-xs tw-flex tw-flex-row tw-items-center tw-mb-2 last:tw-mb-0"
+            class="tw-justify-start tw-mt-2 tw-font-semibold tw-text-danger tw-text-xs tw-flex tw-flex-row tw-items-center tw-mb-2 last:tw-mb-0"
           >
-            <font-awesome-icon
-              :icon="['fas', 'fa-exclamation-triangle']"
-              fixed-width
-              aria-hidden="true"
-              class="tw-mr-2"
-            />
+            <ExclamationTriangle class="tw-mr-2 tw-h-4" />
             {{ errors.Login }}
           </span>
         </div>
@@ -67,12 +62,7 @@
             v-if="errors.Password"
             class="tw-justify-start tw-mt-2 tw-font-medium tw-text-danger tw-text-xs tw-flex tw-flex-row tw-items-center tw-mb-2 last:tw-mb-0"
           >
-            <font-awesome-icon
-              :icon="['fas', 'fa-exclamation-triangle']"
-              fixed-width
-              aria-hidden="true"
-              class="tw-mr-2"
-            />
+            <ExclamationTriangle class="tw-mr-2" />
             {{ errors.Password }}
           </span>
         </div>
@@ -123,6 +113,7 @@ import SignIn from "@/components/icons/SignIn.vue";
 import EyeOpened from "@/components/icons/EyeOpened.vue";
 import EyeSlashed from "@/components/icons/EyeSlashed.vue";
 import SpinnerDotted from "@/components/icons/SpinnerDotted.vue";
+import ExclamationTriangle from "@/components/icons/ExclamationTriangle.vue";
 
 const app_name: string =
   process.env.NODE_ENV === "development"

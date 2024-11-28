@@ -32,6 +32,7 @@
     "fast-deep-equal": "^3.1.3",
     "file-saver": "^2.0.5",
     "inferno-create-element": "^8.2.3",
+    "js-base64": "^3.7.7",
     "luxon": "^3.5.0",
     "luxon-financial-year-data": "^1.2.0",
     "lvovich": "^2.0.2",

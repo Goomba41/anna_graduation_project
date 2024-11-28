@@ -1,10 +1,12 @@
 <template>
   <div :class="['panel', props.panelClass]">
     <div class="panel-heading">
-      <div class="title">{{ props.panelTitle || 'Панель' }}</div>
+      <div class="title">{{ props.panelTitle || "Панель" }}</div>
       <slot name="controls" class="panel-controls"></slot>
     </div>
-    <div :class="['panel-content tw-h-full tw-w-full', props.panelContentClass]">
+    <div
+      :class="['panel-content tw-h-full tw-w-full', props.panelContentClass]"
+    >
       <slot
         ><div
           class="tw-w-full tw-h-full tw-flex tw-flex-row tw-justify-center tw-items-center tw-font-semibold tw-text-gray-400"
@@ -21,7 +23,7 @@ const props = defineProps({
   panelClass: String,
   panelContentClass: String,
   panelTitle: String,
-})
+});
 </script>
 
 <style lang="css" scoped>

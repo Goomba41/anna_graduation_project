@@ -1,4 +1,4 @@
-import { Buffer } from 'buffer'
+import { decode } from "js-base64";
 
 /**
  * Функция принимает токен JWT, разбивает его на три части, декодирует вторую часть и возвращает
@@ -8,22 +8,11 @@ import { Buffer } from 'buffer'
  */
 export default function jwtParse(token: string | null): unknown {
   if (token) {
-    const base64Url = token.split('.')[1]
-    // ! atob устарел, заменен на Buffer
-    // const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-    // const jsonPayload = decodeURIComponent(
-    //   atob(base64)
-    //     .split("")
-    //     .map((c) => {
-    //       const charcode = `00${c.charCodeAt(0).toString(16)}`.slice(-2);
-    //       return `%${charcode}`;
-    //     })
-    //     .join("")
-    // );
+    const base64UrlText = token.split(".")[1];
 
-    const base64 = Buffer.from(base64Url, 'base64').toString()
-    return JSON.parse(base64)
+    const base64 = decode(base64UrlText);
+    return JSON.parse(base64);
   }
 
-  return null
+  return null;
 }
