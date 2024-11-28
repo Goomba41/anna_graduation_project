@@ -12,7 +12,7 @@ import jwtParse from "@/utils/jwt-parse";
 import toast from "@/utils/toast";
 
 import { useUsersStore } from "./users.store";
-import { useSignalRStore } from "./signalr.store";
+// import { useSignalRStore } from "./signalr.store";
 
 export const User = z.object({
   UserId: z.coerce.number(),
@@ -39,7 +39,7 @@ export const useAuthStore = defineStore({
   state: () => ({
     user: getUserData() as User | null, // подгурзка изначального состояния
     // логина пользователя после обновления страницы F5
-    returnUrl: null || "",
+    returnUrl: "",
     // ! В теории, функционала сигнализирования о новых уведомлениях в
     // ! заголовке вкладки здесь быть не должно, потому что он не подходит
     // ! сюда по логике, но коли уж это хранилище все равно используется в роутере и
@@ -50,7 +50,7 @@ export const useAuthStore = defineStore({
     notificationsCount: 0,
     tabTitle: "АИС «Документооборот»",
     // "ИС «ЭКО» - Экономика Кировской области",
-    timer: undefined as any,
+    timer: undefined,
     titleToggled: false,
   }),
   actions: {
@@ -59,30 +59,38 @@ export const useAuthStore = defineStore({
      **/
     async login(username: string, password: string) {
       return await axios
-        .post("/api/Authentication/Login", {
+        .post<{ accessToken: string }>("/api/Authentication/Login", {
           Login: username,
           Password: password,
         })
-        .then((response: { accessToken: string }) => {
-          const token: string = response.accessToken;
+        .then((response) => {
+          if (response.status >= 400) {
+            toast("Ошибка входа", JSON.stringify(response.statusText), "error");
+          } else {
+            const token: string = response.data.accessToken;
 
-          if (token) {
-            this.refreshToken(token);
+            if (token) {
+              this.refreshToken(token);
 
-            // const signalRStore = useSignalRStore();
-            // signalRStore.connect();
+              // const signalRStore = useSignalRStore();
+              // signalRStore.connect();
 
-            // Перенаправим на главную, или на указанный для возвращения адрес
-            router.push(this.returnUrl || "/");
+              // Перенаправим на главную, или на указанный для возвращения адрес
+              router.push(this.returnUrl || "/");
+            } else {
+              toast(
+                "Ошибка входа",
+                "Токен доступа не найден в ответе сервера",
+                "error",
+              );
+            }
           }
-
-          if (!token) toast("Ошибка входа", JSON.stringify(response), "error");
         });
     },
     /**
      * Выход из системы
      **/
-    async logout(expired: boolean = false) {
+    async logout(expired = false) {
       if (!expired)
         await useUsersStore().activity("write", null, "Выход из системы");
 

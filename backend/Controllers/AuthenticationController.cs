@@ -28,7 +28,7 @@ namespace backend.Controllers
         [HttpPost("Login")]
         public async Task<ActionResult<User>> Login(LoginRequest form)
         {
-            User user = await _context.Users.FirstOrDefaultAsync(u => !u.Deleted && u.Login == form.Login);
+            User? user = await _context.Users.FirstOrDefaultAsync(u => !u.Deleted && u.Login == form.Login);
 
             if (user == null)
             {
@@ -41,7 +41,7 @@ namespace backend.Controllers
             }
 
             var claims = new[] {
-              new Claim(JwtRegisteredClaimNames.Sub, _configuration["Token:subject"]),
+              new Claim(JwtRegisteredClaimNames.Sub, _configuration["Token:subject"]!),
               new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
               new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString()),
               new Claim("UserId", user.Id.ToString()),
@@ -50,7 +50,7 @@ namespace backend.Controllers
             };
 
             //Create Signing Credentials to sign the token
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Token:key"]));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Token:key"]!));
             var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             // Create the token

@@ -5,6 +5,7 @@
   "main": "main.ts",
   "author": "Anton Borodavkin",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "dev": "vite --force",
     "build": "run-p type-check build-only",
@@ -89,5 +90,5 @@
     "vitest": "^2.1.6",
     "vue-tsc": "^2.1.10"
   },
-  "packageManager": "yarn@4.2.1"
+  "packageManager": "yarn@4.5.3"
 }
