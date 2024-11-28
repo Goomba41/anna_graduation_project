@@ -1,7 +1,18 @@
 <template>
-  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    viewBox="0 0 24 24"
+  >
     <mask id="lineMdFileDocumentPlusTwotone0">
-      <g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <g
+        fill="none"
+        stroke="#fff"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+      >
         <path
           fill="#fff"
           fillOpacity="0"
@@ -57,7 +68,12 @@
           stroke="none"
           d="M19 13c3.31 0 6 2.69 6 6c0 3.31 -2.69 6 -6 6c-3.31 0 -6 -2.69 -6 -6c0 -3.31 2.69 -6 6 -6Z"
         >
-          <set fill="freeze" attributeName="fill-opacity" begin="1.4s" to="1"></set>
+          <set
+            fill="freeze"
+            attributeName="fill-opacity"
+            begin="1.4s"
+            to="1"
+          ></set>
         </path>
         <path stroke-dasharray="8" stroke-dashoffset="8" d="M16 19h6">
           <animate
@@ -90,6 +106,6 @@
 
 <script lang="ts">
 export default {
-  name: 'PlusDocumentTwotone',
-}
+  name: "PlusDocumentTwotone",
+};
 </script>

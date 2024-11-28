@@ -1,5 +1,10 @@
 <template>
-  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    viewBox="0 0 24 24"
+  >
     <g
       fill="none"
       stroke="currentColor"
@@ -7,10 +12,24 @@
       stroke-linejoin="round"
       stroke-width="2"
     >
-      <path stroke-dasharray="64" stroke-dashoffset="64" d="M13 3l6 6v12h-14v-18h8">
-        <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="64;0"></animate>
+      <path
+        stroke-dasharray="64"
+        stroke-dashoffset="64"
+        d="M13 3l6 6v12h-14v-18h8"
+      >
+        <animate
+          fill="freeze"
+          attributeName="stroke-dashoffset"
+          dur="0.6s"
+          values="64;0"
+        ></animate>
       </path>
-      <path stroke-dasharray="14" stroke-dashoffset="14" stroke-width="1" d="M12.5 3v5.5h6.5">
+      <path
+        stroke-dasharray="14"
+        stroke-dashoffset="14"
+        stroke-width="1"
+        d="M12.5 3v5.5h6.5"
+      >
         <animate
           fill="freeze"
           attributeName="stroke-dashoffset"
@@ -52,6 +71,6 @@
 
 <script lang="ts">
 export default {
-  name: 'DeleteDocumentTwotone',
-}
+  name: "DeleteDocumentTwotone",
+};
 </script>

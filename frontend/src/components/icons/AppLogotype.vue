@@ -20,8 +20,7 @@
 .fil0 {
   fill: white;
 }
-.fil1 {
-  /* fill: none */
+/* .fil1 {
   @apply tw-fill-primary;
-}
+} */
 </style>

@@ -1,7 +1,18 @@
 <template>
-  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    viewBox="0 0 24 24"
+  >
     <mask id="lineMdFilterOffTwotone0">
-      <g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <g
+        fill="none"
+        stroke="#fff"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+      >
         <path
           fill="#fff"
           fillOpacity="0"
@@ -54,12 +65,17 @@
         </path>
       </g>
     </mask>
-    <rect width="24" height="24" fill="currentColor" mask="url(#lineMdFilterOffTwotone0)"></rect>
+    <rect
+      width="24"
+      height="24"
+      fill="currentColor"
+      mask="url(#lineMdFilterOffTwotone0)"
+    ></rect>
   </svg>
 </template>
 
 <script lang="ts">
 export default {
-  name: 'FilterReset',
-}
+  name: "FilterReset",
+};
 </script>

@@ -1,5 +1,10 @@
 <template>
-  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    viewBox="0 0 24 24"
+  >
     <g
       fill="none"
       stroke="currentColor"
@@ -21,9 +26,18 @@
           dur="0.15s"
           values="0;0.3"
         ></animate>
-        <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="56;0"></animate>
+        <animate
+          fill="freeze"
+          attributeName="stroke-dashoffset"
+          dur="0.6s"
+          values="56;0"
+        ></animate>
       </path>
-      <path stroke-dasharray="10" stroke-dashoffset="10" d="M16 18l2 2l3.5 -3.5">
+      <path
+        stroke-dasharray="10"
+        stroke-dashoffset="10"
+        d="M16 18l2 2l3.5 -3.5"
+      >
         <animate
           fill="freeze"
           attributeName="stroke-dashoffset"
@@ -38,6 +52,6 @@
 
 <script lang="ts">
 export default {
-  name: 'FilterApply',
-}
+  name: "FilterApply",
+};
 </script>

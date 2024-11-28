@@ -1,7 +1,18 @@
 <template>
-  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    viewBox="0 0 24 24"
+  >
     <mask id="lineMdCloudAltUploadTwotoneLoop0">
-      <g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+      <g
+        fill="none"
+        stroke="#fff"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+      >
         <path
           stroke-dasharray="64"
           stroke-dashoffset="64"
@@ -75,7 +86,12 @@
               values="12;11;12;13;12"
             ></animate>
           </rect>
-          <set fill="freeze" attributeName="fill-opacity" begin="0.7s" to="1"></set>
+          <set
+            fill="freeze"
+            attributeName="fill-opacity"
+            begin="0.7s"
+            to="1"
+          ></set>
           <animate
             fill="freeze"
             attributeName="opacity"
@@ -126,6 +142,6 @@
 
 <script lang="ts">
 export default {
-  name: 'FileUploadTwotoneLoop',
-}
+  name: "FileUploadTwotoneLoop",
+};
 </script>

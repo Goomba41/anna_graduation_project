@@ -14,7 +14,9 @@
       >
         <div class="skeleton-box tw-w-1/2 tw-h-full tw-rounded-lg"></div>
         <div class="tw-flex tw-flex-row tw-min-w-fit tw-h-full">
-          <div class="skeleton-box tw-rounded-lg tw-h-full tw-w-14 tw-mr-2"></div>
+          <div
+            class="skeleton-box tw-rounded-lg tw-h-full tw-w-14 tw-mr-2"
+          ></div>
           <div class="skeleton-box tw-rounded-lg tw-h-full tw-w-32"></div>
         </div>
       </div>
@@ -27,11 +29,7 @@
           <div class="tw-flex tw-flex-row tw-items-center breadcrumbs">
             <template v-if="route.name !== 'home'">
               <router-link :to="{ name: 'home' }">
-                <font-awesome-icon
-                  :icon="`fas fa-house`"
-                  title="К выбору подсистем"
-                  class="tw-mr-2 tw-text-2xl"
-                ></font-awesome-icon>
+                <HomePage class="tw-mr-2 tw-text-2xl" />
               </router-link>
               <span class="tw-mr-2 tw-text-2xl">•</span>
             </template>
@@ -64,7 +62,12 @@
 
         <div class="right-part tw-flex tw-flex-row tw-min-w-fit">
           <div class="notification tw-mr-12">
-            <div :class="['icon-container', unreadedNotifications > 0 ? 'new' : '']">
+            <div
+              :class="[
+                'icon-container',
+                unreadedNotifications > 0 ? 'new' : '',
+              ]"
+            >
               <font-awesome-icon
                 :icon="['fa-solid', `fa-bell`]"
                 class="icon fa-fw"
@@ -91,7 +94,8 @@
                       <div class="notification-controls tw-flex tw-flex-row">
                         <div
                           v-if="
-                            notification.MessageTypeId === 'ad98c117-5eb1-4446-b60c-ff6ade1afe43'
+                            notification.MessageTypeId ===
+                            'ad98c117-5eb1-4446-b60c-ff6ade1afe43'
                           "
                           class="action"
                         >
@@ -119,7 +123,9 @@
                             <font-awesome-icon
                               :icon="[
                                 'fas fa-fw',
-                                notification?.readed ? `fa-check-double` : `fa-check`,
+                                notification?.readed
+                                  ? `fa-check-double`
+                                  : `fa-check`,
                               ]"
                               class="icon"
                             ></font-awesome-icon>
@@ -128,7 +134,10 @@
                             {{ notification.MessageDate }}
                           </div>
                         </div>
-                        <div class="notification-text" :title="notification.Message">
+                        <div
+                          class="notification-text"
+                          :title="notification.Message"
+                        >
                           {{ notification.Message }}
                         </div>
                       </div>
@@ -140,19 +149,24 @@
           </div>
 
           <div class="user-data">
-            <div class="user-link tw-flex tw-flex-row tw-items-center tw-h-full">
+            <div
+              class="user-link tw-flex tw-flex-row tw-items-center tw-h-full"
+            >
               <font-awesome-icon
                 :icon="['fas fa-fw', `fa-circle-user`]"
                 class="icon tw-mr-4 tw-text-primary tw-font-semibold tw-text-3xl"
               ></font-awesome-icon>
               <div class="user-name tw-text-xl tw-cursor-default">
-                {{ fioParse(authStore.user?.FIO || '') || '🤷' }}
+                {{ fioParse(authStore.user?.FIO || "") || "🤷" }}
               </div>
             </div>
 
             <div class="overlay-panel">
               <div class="overlay-wrapper">
-                <router-link :to="{ name: 'preferences' }" class="router-link item-wrapper">
+                <router-link
+                  :to="{ name: 'preferences' }"
+                  class="router-link item-wrapper"
+                >
                   <div class="item item-info">
                     <font-awesome-icon
                       icon="fas fa-user-gear"
@@ -166,7 +180,10 @@
 
                 <div class="divider"></div>
 
-                <router-link :to="{ name: 'about' }" class="router-link item-wrapper">
+                <router-link
+                  :to="{ name: 'about' }"
+                  class="router-link item-wrapper"
+                >
                   <div class="item item-info">
                     <font-awesome-icon
                       icon="fas fa-circle-info"
@@ -201,131 +218,159 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, onBeforeUnmount, onMounted, ref, watch, type Ref } from 'vue'
-import { useRoute, type RouteLocationMatched } from 'vue-router'
+import {
+  onBeforeMount,
+  onBeforeUnmount,
+  onMounted,
+  ref,
+  watch,
+  type Ref,
+} from "vue";
+import { useRoute, type RouteLocationMatched } from "vue-router";
 
-import axios from 'axios'
-import { DateTime as luxon } from 'luxon'
+import axios from "axios";
+import { DateTime as luxon } from "luxon";
 
-import { useAuthStore } from '@/stores/auth.store'
-import { useLoadingStore } from '@/stores/loading.store'
-import { useSignalRStore } from '@/stores/signalr.store'
+import { useAuthStore } from "@/stores/auth.store";
+import { useLoadingStore } from "@/stores/loading.store";
+import { useSignalRStore } from "@/stores/signalr.store";
 
-import toast from '@/utils/toast'
-import fioParse from '@/utils/fio-formatter'
+import toast from "@/utils/toast";
+import fioParse from "@/utils/fio-formatter";
 
-import ScrollPanel from 'primevue/scrollpanel'
+import ScrollPanel from "primevue/scrollpanel";
 
-import Sidebar from './SidebarMenu.vue'
+import Sidebar from "./SidebarMenu.vue";
 
-const route = useRoute()
-const authStore = useAuthStore()
-const loadingStore = useLoadingStore()
-const signalRStore = useSignalRStore()
+import HomePage from "./icons/HomePage.vue";
 
-const pageTitle: Ref<string> = ref(route.meta.pageTitle as string)
+const route = useRoute();
+const authStore = useAuthStore();
+const loadingStore = useLoadingStore();
+const signalRStore = useSignalRStore();
 
-const pageSubTitle: Ref<string> = ref(route.meta.pageSubTitle as string)
+const pageTitle: Ref<string> = ref(route.meta.pageTitle as string);
+
+const pageSubTitle: Ref<string> = ref(route.meta.pageSubTitle as string);
 
 // TODO: исправить any после того, как будет известна структура объекта уведомлений
-const notifications: Ref<any[]> = ref([])
+const notifications: Ref<any[]> = ref([]);
 
-let subsystem: boolean = false
+let subsystem: boolean = false;
 
-let subsystemRoute: RouteLocationMatched | undefined = undefined
+let subsystemRoute: RouteLocationMatched | undefined = undefined;
 
-let unreadedNotifications: Ref<number> = ref(0)
+let unreadedNotifications: Ref<number> = ref(0);
 
 // Вешаем наблюдатель за изменением текущего маршрута
 // При изменении маршрута поменять заголовок страницы
 watch(
   () => route.meta.id,
   async () => {
-    pageTitle.value = route.meta.pageTitle as string
-    pageSubTitle.value = route.meta.pageSubTitle as string
-    detectSubsystemRoute()
+    pageTitle.value = route.meta.pageTitle as string;
+    pageSubTitle.value = route.meta.pageSubTitle as string;
+    detectSubsystemRoute();
   },
-)
+);
 
 // Вешаем наблюдатель за состоянием соединения с WS
 watch(
   () => signalRStore.connection?.state,
   async (state) => {
     // Если присоединился, повесим действие на событие
-    if (state === 'Connected')
-      signalRStore.connection?.on('NotifyMe', (wsMessage) => {
+    if (state === "Connected")
+      signalRStore.connection?.on("NotifyMe", (wsMessage) => {
         setTimeout(() => {
           // Если не сообщение с обновленным токеном
-          if (wsMessage.MessageTypeId !== '449439cc-1bbf-4d6c-b236-32b9e2753824') {
+          if (
+            wsMessage.MessageTypeId !== "449439cc-1bbf-4d6c-b236-32b9e2753824"
+          ) {
             const formattedDateTime = luxon
               .fromISO(wsMessage.MessageDate)
-              .setLocale('ru-ru')
-              .toFormat('EEEE, d MMMM в T')
-            wsMessage.MessageDate = formattedDateTime[0].toUpperCase() + formattedDateTime.slice(1)
+              .setLocale("ru-ru")
+              .toFormat("EEEE, d MMMM в T");
+            wsMessage.MessageDate =
+              formattedDateTime[0].toUpperCase() + formattedDateTime.slice(1);
 
-            wsMessage.readed = false
-            unreadedNotifications.value += 1
-            notifications.value.unshift({ ...wsMessage })
+            wsMessage.readed = false;
+            unreadedNotifications.value += 1;
+            notifications.value.unshift({ ...wsMessage });
 
             // Если сообщение для локального хранения
-            if (wsMessage.MessageTypeId === 'ad98c117-5eb1-4446-b60c-ff6ade1afe43') {
-              const lsvalue = localStorage.getItem('localNotifications')
-              const localNotifications: any[] = lsvalue ? (JSON.parse(lsvalue) as any) : []
-              localNotifications.push({ ...wsMessage })
-              localStorage.setItem('localNotifications', JSON.stringify(localNotifications))
+            if (
+              wsMessage.MessageTypeId === "ad98c117-5eb1-4446-b60c-ff6ade1afe43"
+            ) {
+              const lsvalue = localStorage.getItem("localNotifications");
+              const localNotifications: any[] = lsvalue
+                ? (JSON.parse(lsvalue) as any)
+                : [];
+              localNotifications.push({ ...wsMessage });
+              localStorage.setItem(
+                "localNotifications",
+                JSON.stringify(localNotifications),
+              );
             }
           } else {
-            authStore.refreshToken(wsMessage.Message)
+            authStore.refreshToken(wsMessage.Message);
           }
-        }, 500)
-      })
+        }, 500);
+      });
   },
-)
+);
 
 // Функция, которая вызывается, когда пользователь щелкает уведомление
 function checkAsReaded(id: string) {
   const nonAffectableNotificationTypes: string[] = [
-    '378499e8-122c-43db-9ffc-48280d7d5c5c', // Мероприятия, по которым нужны отчеты или задания
-    'f946502d-174b-49f1-a105-57b7d6697647', // Документы с просроком
-    'ad98c117-5eb1-4446-b60c-ff6ade1afe43', // Локальное уведомление
-  ]
+    "378499e8-122c-43db-9ffc-48280d7d5c5c", // Мероприятия, по которым нужны отчеты или задания
+    "f946502d-174b-49f1-a105-57b7d6697647", // Документы с просроком
+    "ad98c117-5eb1-4446-b60c-ff6ade1afe43", // Локальное уведомление
+  ];
 
-  const notification = notifications.value.find((item: any) => item.MessageId === id)
+  const notification = notifications.value.find(
+    (item: any) => item.MessageId === id,
+  );
 
-  const index = notifications.value.findIndex((object: any) => object.MessageId === id)
+  const index = notifications.value.findIndex(
+    (object: any) => object.MessageId === id,
+  );
 
   if (!nonAffectableNotificationTypes.includes(notification.MessageTypeId)) {
     axios.post(`/api/Messages/${id}`).then((response: any) => {
       if (response && response.result === 0) {
-        notifications.value.splice(index, 1)
-        unreadedNotifications.value -= 1
-        authStore.notificationsCount -= 1
-        authStore.updateTabTitle()
+        notifications.value.splice(index, 1);
+        unreadedNotifications.value -= 1;
+        authStore.notificationsCount -= 1;
+        authStore.updateTabTitle();
       } else if (response && response.result === -1) {
-        toast('Ошибка!', response.Error || response.ErrorMsg, 'error')
+        toast("Ошибка!", response.Error || response.ErrorMsg, "error");
       }
-    })
+    });
   } else {
-    notification.readed = true
-    unreadedNotifications.value -= 1
-    authStore.notificationsCount -= 1
-    authStore.updateTabTitle()
+    notification.readed = true;
+    unreadedNotifications.value -= 1;
+    authStore.notificationsCount -= 1;
+    authStore.updateTabTitle();
 
-    if (notification.MessageTypeId === 'ad98c117-5eb1-4446-b60c-ff6ade1afe43') {
-      const lsvalue = localStorage.getItem('localNotifications')
-      let localNotifications: any[] = lsvalue ? (JSON.parse(lsvalue) as any) : []
+    if (notification.MessageTypeId === "ad98c117-5eb1-4446-b60c-ff6ade1afe43") {
+      const lsvalue = localStorage.getItem("localNotifications");
+      let localNotifications: any[] = lsvalue
+        ? (JSON.parse(lsvalue) as any)
+        : [];
 
       localNotifications = localNotifications.filter(
         (notification: any) => notification.MessageId !== id,
-      )
-      localStorage.setItem('localNotifications', JSON.stringify(localNotifications))
+      );
+      localStorage.setItem(
+        "localNotifications",
+        JSON.stringify(localNotifications),
+      );
     }
   }
 }
 
 onBeforeMount(() => {
-  detectSubsystemRoute()
-})
+  detectSubsystemRoute();
+});
 
 onMounted(() => {
   // ! Отключено, пока что не нужны уведомления
@@ -351,36 +396,39 @@ onMounted(() => {
   //   }
   // });
 
-  const lsvalue = localStorage.getItem('localNotifications')
-  let localNotifications: any[] = lsvalue ? (JSON.parse(lsvalue) as any) : []
+  const lsvalue = localStorage.getItem("localNotifications");
+  let localNotifications: any[] = lsvalue ? (JSON.parse(lsvalue) as any) : [];
 
   localNotifications.forEach((notification: any) => {
-    unreadedNotifications.value += 1
-    authStore.notificationsCount += 1
-    authStore.updateTabTitle()
-    notifications.value.unshift({ ...notification })
-  })
+    unreadedNotifications.value += 1;
+    authStore.notificationsCount += 1;
+    authStore.updateTabTitle();
+    notifications.value.unshift({ ...notification });
+  });
 
   if (!signalRStore.connection) {
-    signalRStore.connect()
-  } else if (signalRStore.connection && signalRStore.connection.state === 'Disconnected') {
-    signalRStore.start()
+    signalRStore.connect();
+  } else if (
+    signalRStore.connection &&
+    signalRStore.connection.state === "Disconnected"
+  ) {
+    signalRStore.start();
   }
-})
+});
 
 function detectSubsystemRoute() {
   if (route.matched[2]) {
-    subsystem = true
-    subsystemRoute = route.matched[2]
+    subsystem = true;
+    subsystemRoute = route.matched[2];
   } else {
-    subsystem = false
+    subsystem = false;
   }
 }
 
 onBeforeUnmount(() => {
-  const signalRStore = useSignalRStore()
-  signalRStore.stop('NotifyMe')
-})
+  const signalRStore = useSignalRStore();
+  signalRStore.stop("NotifyMe");
+});
 </script>
 
 <style lang="css" scoped>
@@ -513,7 +561,7 @@ onBeforeUnmount(() => {
 .overlay-wrapper:after {
   bottom: 100%;
   right: calc((49px / 2) - 10px);
-  content: ' ';
+  content: " ";
   height: 0;
   width: 0;
   position: absolute;

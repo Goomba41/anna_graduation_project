@@ -1,5 +1,10 @@
 <template>
-  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    viewBox="0 0 24 24"
+  >
     <g
       fill="currentColor"
       fillOpacity="0"
@@ -13,7 +18,12 @@
         stroke-dashoffset="20"
         d="M10 5c1.66 0 3 1.34 3 3c0 1.66 -1.34 3 -3 3c-1.66 0 -3 -1.34 -3 -3c0 -1.66 1.34 -3 3 -3Z"
       >
-        <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.4s" values="20;0"></animate>
+        <animate
+          fill="freeze"
+          attributeName="stroke-dashoffset"
+          dur="0.4s"
+          values="20;0"
+        ></animate>
       </path>
       <path
         stroke-dasharray="36"
@@ -59,6 +69,6 @@
 
 <script lang="ts">
 export default {
-  name: 'PlusUserTwotone',
-}
+  name: "PlusUserTwotone",
+};
 </script>

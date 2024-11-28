@@ -1,5 +1,10 @@
 <template>
-  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    viewBox="0 0 24 24"
+  >
     <path
       fill="currentColor"
       fillOpacity="0"
@@ -18,13 +23,18 @@
         dur="0.15s"
         values="0;0.3"
       ></animate>
-      <animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="56;0"></animate>
+      <animate
+        fill="freeze"
+        attributeName="stroke-dashoffset"
+        dur="0.6s"
+        values="56;0"
+      ></animate>
     </path>
   </svg>
 </template>
 
 <script lang="ts">
 export default {
-  name: 'FilterTwotone',
-}
+  name: "FilterTwotone",
+};
 </script>
