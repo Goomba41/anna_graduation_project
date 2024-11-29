@@ -3,8 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using backend.Models;
 
-using System.Security.Claims;
-
 namespace backend.Controllers
 {
     [ApiController]

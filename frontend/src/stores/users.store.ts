@@ -6,24 +6,10 @@ import axios from "axios";
 import toast from "@/utils/toast";
 import queryString from "@/utils/query-string-transformer";
 
-import {
-  TSubsystem,
-  TSubsystems,
-  ZSubsystems,
-} from "@/typings/subsystem.types";
-import {
-  TRights,
-  TUser,
-  TUsers,
-  TUsersActivities,
-  ZUser,
-  ZUsers,
-  ZUsersActivities,
-  ZRights,
-} from "@/typings/user.types";
+import type { TUser, TUsers, TUsersActivities } from "@/typings/user.types";
+import { ZUser, ZUsers, ZUsersActivities } from "@/typings/user.types";
 import { errorResult, successResult } from "@/typings/http.types";
 
-import { useAuthStore } from "./auth.store";
 import callParseErrorToast from "@/utils/type-parse-error";
 // import { DataSource } from './data-sources.store'
 
@@ -50,13 +36,14 @@ async function read(id?: number, query?: { [key: string]: unknown }) {
         const { data } = response.data;
 
         return Promise.resolve(data);
-      } else if (error.success === true) {
+      }
+      if (error.success === true) {
         const { data } = error;
         toast("Ошибка", data.ErrorMsg || data.Error, "error");
-      } else {
-        callParseErrorToast(response.error);
-        callParseErrorToast(error.error);
       }
+
+      callParseErrorToast(response.error);
+      callParseErrorToast(error.error);
     })
     .catch((error) => {
       callParseErrorToast(error);
@@ -68,8 +55,6 @@ export const useUsersStore = defineStore({
   id: "users",
   state: () => ({
     activities: [] as TUsersActivities,
-    subsystems: [] as TSubsystems,
-    rights: [] as TRights,
   }),
   actions: {
     /**
@@ -78,7 +63,7 @@ export const useUsersStore = defineStore({
      */
     async create(form: TUser) {
       return await axios
-        .post(`/api/users`, form)
+        .post("/api/users", form)
         .then((responseJSON) => {
           const result = successResult.extend({
             createdId: z.number(),
@@ -92,32 +77,35 @@ export const useUsersStore = defineStore({
             const { createdId, data: form } = response.data;
 
             return Promise.resolve({ createdId, form });
-          } else if (error.success === true) {
+          }
+          if (error.success === true) {
             const { data } = error;
             toast("Ошибка", data.ErrorMsg || data.Error, "error");
             return Promise.reject(data.ErrorMsg || data.Error);
-          } else {
-            callParseErrorToast(response.error);
-            callParseErrorToast(error.error);
-            return Promise.reject(`${error.error}; ${response.error}`);
           }
+
+          callParseErrorToast(response.error);
+          callParseErrorToast(error.error);
+          return Promise.reject(`${error.error}; ${response.error}`);
         })
         .catch((error) => {
           callParseErrorToast(error);
           return Promise.reject(error);
         });
     },
+
     /**
      * Получение данных (строка или список строк)
      * @param {string} [id] - ID строки для получения данных по ней
      */
     read,
+
     /**
      * Обновление объекта
      **/
     async update(form: TUser) {
       return await axios
-        .put(`/api/users`, form)
+        .put("/api/users", form)
         .then((responseJSON) => {
           const result = successResult.extend({
             updatedId: z.number(),
@@ -131,21 +119,23 @@ export const useUsersStore = defineStore({
             const { updatedId, data: form } = response.data;
 
             return Promise.resolve({ updatedId, form });
-          } else if (error.success === true) {
+          }
+          if (error.success === true) {
             const { data } = error;
             toast("Ошибка", data.ErrorMsg || data.Error, "error");
             return Promise.reject(data.ErrorMsg || data.Error);
-          } else {
-            callParseErrorToast(response.error);
-            callParseErrorToast(error.error);
-            return Promise.reject(`${error.error}; ${response.error}`);
           }
+
+          callParseErrorToast(response.error);
+          callParseErrorToast(error.error);
+          return Promise.reject(`${error.error}; ${response.error}`);
         })
         .catch((error) => {
           callParseErrorToast(error);
           return Promise.reject(error);
         });
     },
+
     async delete(id: number) {
       return await axios
         .delete(`/api/users/${id}`)
@@ -159,15 +149,16 @@ export const useUsersStore = defineStore({
             const { deletedId } = response.data;
 
             return Promise.resolve(deletedId);
-          } else if (error.success === true) {
+          }
+          if (error.success === true) {
             const { data } = error;
             toast("Ошибка", data.ErrorMsg || data.Error, "error");
             return Promise.reject(data.ErrorMsg || data.Error);
-          } else {
-            callParseErrorToast(response.error);
-            callParseErrorToast(error.error);
-            return Promise.reject(`${error.error}; ${response.error}`);
           }
+
+          callParseErrorToast(response.error);
+          callParseErrorToast(error.error);
+          return Promise.reject(`${error.error}; ${response.error}`);
         })
         .catch((error) => {
           callParseErrorToast(error);
