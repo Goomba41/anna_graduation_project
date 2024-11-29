@@ -885,6 +885,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tsconfig/node22@npm:^22.0.0":
+  version: 22.0.0
+  resolution: "@tsconfig/node22@npm:22.0.0"
+  checksum: 10/9fc45789304640e1e37e1f1e04c02dca593c290d4f1cb55af7e9cab799fb2c6356e1cc15ee9f140185591a81f491a4c7f2d6c08c1e5a3d758658ba69f1afee6d
+  languageName: node
+  linkType: hard
+
 "@types/color-convert@npm:*":
   version: 2.0.1
   resolution: "@types/color-convert@npm:2.0.1"
@@ -963,12 +970,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^22.10.0":
-  version: 22.10.0
-  resolution: "@types/node@npm:22.10.0"
+"@types/node@npm:^22.10.1":
+  version: 22.10.1
+  resolution: "@types/node@npm:22.10.1"
   dependencies:
     undici-types: "npm:~6.20.0"
-  checksum: 10/e2561e15eaac6261cf828cd7dcd4882a5ce2e10104db4123566b00418acf30e18518e39c7a906682f44118b420c555cc774ac3e0e6f80e37f55884cfe6cf1f78
+  checksum: 10/c802a526da2f3fa3ccefd00a71244e7cb825329951719e79e8fec62b1dbc2855388c830489770611584665ce10be23c05ed585982038b24924e1ba2c2cce03fd
   languageName: node
   linkType: hard
 
@@ -1510,18 +1517,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vue/tsconfig@npm:^0.6.0":
-  version: 0.6.0
-  resolution: "@vue/tsconfig@npm:0.6.0"
+"@vue/tsconfig@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "@vue/tsconfig@npm:0.7.0"
   peerDependencies:
     typescript: 5.x
-    vue: ^3.3.0
+    vue: ^3.4.0
   peerDependenciesMeta:
     typescript:
       optional: true
     vue:
       optional: true
-  checksum: 10/992f2015760d4ba74320ffcc33348bd356c2845ac4f15d74f833fe8e835852ca1c713a503f301834c491053adca4bde95dca636492504d2f3b4a25461f9ff6c4
+  checksum: 10/29b5dd11cc179de707dfd549d0e80e220f4a0f6f7d90b9a52769bc655e599b9166b28af1218819245fbdd30a74d80fdd484538cdda6876d9d369ae623f234834
   languageName: node
   linkType: hard
 
@@ -6640,9 +6647,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pinia@npm:^2.2.6":
-  version: 2.2.6
-  resolution: "pinia@npm:2.2.6"
+"pinia@npm:^2.2.8":
+  version: 2.2.8
+  resolution: "pinia@npm:2.2.8"
   dependencies:
     "@vue/devtools-api": "npm:^6.6.3"
     vue-demi: "npm:^0.14.10"
@@ -6655,7 +6662,7 @@ __metadata:
       optional: true
     typescript:
       optional: true
-  checksum: 10/1e8558a80a5b39faaedf56ed574d7b35e09bf743b9321cabc02bd76be5546ceafc7587b602fad6f8567c22bc553025ca719c1fc5c92d67bce1f5ca48a8e1d28e
+  checksum: 10/c2d534e46442d5033604a37fe83a34068c89eab021962b27330a394b69afddc77abdd743fc9f9a40ea0103e46d210f78099665a0a1aee68b93a6b85dda35202b
   languageName: node
   linkType: hard
 
@@ -7191,11 +7198,12 @@ __metadata:
     "@microsoft/signalr": "npm:^8.0.7"
     "@rushstack/eslint-patch": "npm:^1.10.4"
     "@total-typescript/ts-reset": "npm:^0.6.1"
+    "@tsconfig/node22": "npm:^22.0.0"
     "@types/color": "npm:^4.2.0"
     "@types/file-saver": "npm:^2.0.7"
     "@types/jsdom": "npm:^21.1.7"
     "@types/luxon": "npm:^3.4.2"
-    "@types/node": "npm:^22.10.0"
+    "@types/node": "npm:^22.10.1"
     "@types/sockjs-client": "npm:^1"
     "@types/uuid": "npm:^10.0.0"
     "@typescript-eslint/eslint-plugin": "npm:^8.16.0"
@@ -7204,7 +7212,7 @@ __metadata:
     "@vitejs/plugin-vue": "npm:^5.2.1"
     "@vue/eslint-config-typescript": "npm:^14.1.4"
     "@vue/test-utils": "npm:^2.4.6"
-    "@vue/tsconfig": "npm:^0.6.0"
+    "@vue/tsconfig": "npm:^0.7.0"
     "@vueuse/components": "npm:^12.0.0"
     "@vueuse/core": "npm:^12.0.0"
     autoprefixer: "npm:^10.4.20"
@@ -7233,7 +7241,7 @@ __metadata:
     lvovich: "npm:^2.0.2"
     npm-run-all: "npm:^4.1.5"
     nprogress: "npm:^0.2.0"
-    pinia: "npm:^2.2.6"
+    pinia: "npm:^2.2.8"
     plural-ru: "npm:^2.0.2"
     postcss: "npm:^8.4.49"
     prettier: "npm:^3.4.1"
