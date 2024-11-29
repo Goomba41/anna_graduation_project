@@ -4,7 +4,6 @@ import axios from "axios";
 import plural from "plural-ru";
 
 import { z } from "zod";
-import { DateTime as luxon } from "luxon";
 
 import router from "@/router";
 
@@ -19,7 +18,7 @@ export const User = z.object({
   UserName: z.string(),
   UserLogin: z.string(),
 
-  exp: z.number().transform((val: number) => luxon.fromSeconds(val).toISO()),
+  exp: z.date(),
 });
 
 export type User = z.infer<typeof User>;

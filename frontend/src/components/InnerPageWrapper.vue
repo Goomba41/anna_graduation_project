@@ -1,11 +1,9 @@
 <template>
-  <Sidebar v-if="subsystem"></Sidebar>
+  <Sidebar />
 
   <main
-    class="tw-mx-auto tw-flex tw-flex-row tw-py-8 tw-pr-8 tw-w-[1px] tw-flex-1 tw-h-screen"
-    :class="[subsystem ? 'tw-pl-4' : 'tw-pl-8']"
+    class="tw-mx-auto tw-flex tw-flex-row tw-py-8 tw-pr-8 tw-w-[1px] tw-flex-1 tw-h-screen tw-pl-8"
   >
-    <!-- !authStore.user?.IsAdmin ? 'tw-h-screen' : 'tw-h-[calc(100vh-3rem)]', -->
     <div class="tw-flex tw-flex-col tw-w-full">
       <div
         v-if="loadingStore.loadingState"
@@ -30,17 +28,6 @@
             <template v-if="route.name !== 'home'">
               <router-link :to="{ name: 'home' }">
                 <HomePage class="tw-mr-2 tw-text-2xl" />
-              </router-link>
-              <span class="tw-mr-2 tw-text-2xl">•</span>
-            </template>
-            <template v-if="subsystem">
-              <router-link :to="{ name: subsystemRoute?.name || '/' }">
-                <h1
-                  class="page-header-text tw-font-bold tw-text-3xl tw-whitespace-pre tw-overflow-x-hidden tw-text-ellipsis tw-w-full tw-h-10 tw-mr-2"
-                  :title="subsystemRoute?.meta.pageTitle as string"
-                >
-                  {{ subsystemRoute?.meta.pageTitle }}
-                </h1>
               </router-link>
               <span class="tw-mr-2 tw-text-2xl">•</span>
             </template>
@@ -185,15 +172,8 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  onBeforeMount,
-  onBeforeUnmount,
-  onMounted,
-  ref,
-  watch,
-  type Ref,
-} from "vue";
-import { useRoute, type RouteLocationMatched } from "vue-router";
+import { onBeforeUnmount, onMounted, ref, watch, type Ref } from "vue";
+import { useRoute } from "vue-router";
 
 import axios from "axios";
 import { DateTime as luxon } from "luxon";
@@ -231,10 +211,6 @@ const pageSubTitle: Ref<string> = ref(route.meta.pageSubTitle as string);
 // TODO: исправить any после того, как будет известна структура объекта уведомлений
 const notifications: Ref<unknown[]> = ref([]);
 
-let subsystem = false;
-
-let subsystemRoute: RouteLocationMatched | undefined = undefined;
-
 const unreadedNotifications: Ref<number> = ref(0);
 
 // Вешаем наблюдатель за изменением текущего маршрута
@@ -244,7 +220,6 @@ watch(
   async () => {
     pageTitle.value = route.meta.pageTitle as string;
     pageSubTitle.value = route.meta.pageSubTitle as string;
-    detectSubsystemRoute();
   },
 );
 
@@ -343,10 +318,6 @@ function checkAsReaded(id: string) {
   }
 }
 
-onBeforeMount(() => {
-  detectSubsystemRoute();
-});
-
 onMounted(() => {
   // ! Отключено, пока что не нужны уведомления
   // axios.get("/api/MyTasks/GetMyInformation").then((response: any) => {
@@ -390,15 +361,6 @@ onMounted(() => {
     signalRStore.start();
   }
 });
-
-function detectSubsystemRoute() {
-  if (route.matched[2]) {
-    subsystem = true;
-    subsystemRoute = route.matched[2];
-  } else {
-    subsystem = false;
-  }
-}
 
 onBeforeUnmount(() => {
   const signalRStore = useSignalRStore();
