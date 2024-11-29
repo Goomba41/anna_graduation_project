@@ -8,7 +8,7 @@ using backend.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddControllers();
 
 //Add Authentication middleware
@@ -24,7 +24,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         ValidateLifetime = true,
         // ValidAudience = builder.Configuration["Token:audience"],
         // ValidIssuer = builder.Configuration["Token:issuer"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Token:key").Value))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Token:key").Value!))
     };
 });
 

@@ -28,33 +28,33 @@ namespace backend.Controllers
         [HttpPost("Login")]
         public async Task<ActionResult<User>> Login(LoginRequest form)
         {
-            User? user = await _context.Users.FirstOrDefaultAsync(u => !u.Deleted && u.Login == form.Login);
+            User? User = await _context.Users.FirstOrDefaultAsync(u => !u.Deleted && u.Login == form.Login);
 
-            if (user == null)
+            if (User == null)
             {
                 return NotFound();
             }
 
-            if (user.Password != GetPasswordHash(form.Password))
+            if (User.Password != GetPasswordHash(form.Password))
             {
                 return BadRequest("Invalid credentials");
             }
 
-            var claims = new[] {
+            Claim[]? claims = new[] {
               new Claim(JwtRegisteredClaimNames.Sub, _configuration["Token:subject"]!),
               new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
               new Claim(JwtRegisteredClaimNames.Iat, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()),
-              new Claim("UserId", user.Id.ToString()),
-              new Claim("UserName", String.Format("{0} {1} {2}", user.LastName, user.FirstName, user.Patronymic)),
-              new Claim("UserLogin", user.Login)
+              new Claim("UserId", User.Id.ToString()),
+              new Claim("UserName", String.Format("{0} {1} {2}", User.LastName, User.FirstName, User.Patronymic)),
+              new Claim("UserLogin", User.Login)
             };
 
             //Create Signing Credentials to sign the token
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Token:key"]!));
-            var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+            SymmetricSecurityKey? key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Token:key"]!));
+            SigningCredentials? signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
 
             // Create the token
-            var token = new JwtSecurityToken(
+            JwtSecurityToken? token = new JwtSecurityToken(
                 _configuration["Token:issuer"],
                 _configuration["Token:audience"],
                 claims,
@@ -62,10 +62,18 @@ namespace backend.Controllers
                 signingCredentials: signIn);
 
             // Serialize the token to a string
-            var tokenStr = new JwtSecurityTokenHandler().WriteToken(token);
+            string? tokenStr = new JwtSecurityTokenHandler().WriteToken(token);
 
             //Add token string to response object and send it back to requestor
-            var authResponse = new LoginResponse(tokenStr);
+            LoginResponse? authResponse = new LoginResponse(tokenStr);
+
+            UsersActivity LoginAction = new()
+            {
+                Action = "Вход в систему",
+                User = User
+            };
+
+            Utils.WriteActionToLog(LoginAction, _context);
 
             return Ok(authResponse);
         }

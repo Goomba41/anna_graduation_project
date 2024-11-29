@@ -105,7 +105,6 @@ public partial class AnnaGraduationProjectContext : DbContext
             entity.Property(e => e.Actiondate)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("actiondate");
-            entity.Property(e => e.Description).HasDefaultValueSql("''::text");
             entity.Property(e => e.Userid).HasColumnName("userid");
 
             entity.HasOne(d => d.User).WithMany(p => p.UsersActivities)

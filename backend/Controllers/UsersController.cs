@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using backend.Models;
 
+using System.Security.Claims;
+
 namespace backend.Controllers
 {
     [ApiController]
@@ -12,9 +14,15 @@ namespace backend.Controllers
     {
         private readonly AnnaGraduationProjectContext _context;
 
-        public UsersController(AnnaGraduationProjectContext context)
+        private readonly ILogger<AboutController> _logger;
+
+        private readonly IHttpContextAccessor _http;
+
+        public UsersController(ILogger<AboutController> logger, AnnaGraduationProjectContext context, IHttpContextAccessor httpContextAccessor)
         {
+            _logger = logger;
             _context = context;
+            _http = httpContextAccessor;
         }
 
         // GET: api/Users
@@ -99,6 +107,26 @@ namespace backend.Controllers
         private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.Id == id);
+        }
+
+        // POST: api/Users/activity
+        [HttpPost("activity")]
+        public ActionResult PostUserActivity(UsersActivity activity)
+        {
+            try
+            {
+                activity.Userid = int.Parse(_http.HttpContext?.User.FindFirst("UserId")?.Value ?? "0");
+                Utils.WriteActionToLog(activity, _context);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(Utils.GetErrorMessageByException(ex));
+                return new JsonResult(new { result = -1, Error = Utils.GetErrorMessageByException(ex) });
+            }
+
+
         }
     }
 }
