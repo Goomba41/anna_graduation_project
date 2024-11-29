@@ -83,8 +83,7 @@ export const useAuthStore = defineStore({
      * Выход из системы
      **/
     async logout(expired = false) {
-      if (!expired)
-        await useUsersStore().activity("write", null, "Выход из системы");
+      if (!expired) await useUsersStore().activity("write", "Выход из системы");
 
       const exiting = new Promise((resolve) => {
         this.user = null;

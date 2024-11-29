@@ -73,10 +73,7 @@
           "
           @click="onConfirm"
         >
-          <font-awesome-icon
-            :icon="['fas', 'fa-fire']"
-            :class="['p-button-icon p-button-icon-left']"
-          ></font-awesome-icon>
+          <FireTwotone class="p-button-icon p-button-icon-left" />
           <div class="p-button-label">Да{{ time !== 0 ? ` ${time}` : "" }}</div>
         </Button>
         <Button
@@ -86,10 +83,7 @@
           class="deletion-confirmation-no"
           @click="onReject"
         >
-          <font-awesome-icon
-            :icon="['fas', 'fa-fire-extinguisher']"
-            :class="['p-button-icon p-button-icon-left']"
-          ></font-awesome-icon>
+          <FireExtinguisher class="p-button-icon p-button-icon-left" />
           <div class="p-button-label">Нет</div>
         </Button>
       </div>
@@ -104,14 +98,13 @@
   >
     <div class="tw-flex tw-flex-col tw-items-center">
       <div class="tw-flex tw-flex-row">
-        <font-awesome-icon
-          :icon="['fas', 'fa-exclamation-triangle']"
+        <ExclamationTriangle
           :class="`${
             customConfirmationStyle
               ? `tw-text-${customConfirmationStyle}`
               : 'tw-text-primary'
           } tw-mr-8 tw-text-3xl`"
-        ></font-awesome-icon>
+        />
         <div class="message" v-html="customConfirmationMessage"></div>
       </div>
 
@@ -152,10 +145,7 @@
           "
           @click="onCustomConfirm"
         >
-          <font-awesome-icon
-            :icon="['fas', 'fa-check']"
-            :class="['p-button-icon p-button-icon-left']"
-          ></font-awesome-icon>
+          <CheckCircle class="p-button-icon p-button-icon-left" />
           <div class="p-button-label">Да{{ time !== 0 ? ` ${time}` : "" }}</div>
         </Button>
         <Button
@@ -165,10 +155,7 @@
           class="neutral tw-mr-4"
           @click="onCustomReject"
         >
-          <font-awesome-icon
-            :icon="['fas', 'fa-times']"
-            :class="['p-button-icon p-button-icon-left']"
-          ></font-awesome-icon>
+          <TimesCircle class="p-button-icon p-button-icon-left" />
           <div class="p-button-label">Нет</div>
         </Button>
       </div>
@@ -206,7 +193,11 @@ import { useSignalRStore } from "./stores/signalr.store";
 // import { Setting } from './typings/settings.types'
 import { type TCustomColor, ZCustomColor } from "./typings/preferences.types";
 
+import FireTwotone from "./components/icons/FireTwotone.vue";
+import FireExtinguisher from "./components/icons/FireExtinguisher.vue";
 import ExclamationTriangle from "./components/icons/ExclamationTriangle.vue";
+import CheckCircle from "./components/icons/CheckCircle.vue";
+import TimesCircle from "./components/icons/TimesCircle.vue";
 
 const { bus, emit } = useEmitter();
 

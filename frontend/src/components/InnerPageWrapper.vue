@@ -61,17 +61,14 @@
         </div>
 
         <div class="right-part tw-flex tw-flex-row tw-min-w-fit">
-          <div class="notification tw-mr-12">
+          <div class="notification tw-mr-4">
             <div
               :class="[
                 'icon-container',
                 unreadedNotifications > 0 ? 'new' : '',
               ]"
             >
-              <font-awesome-icon
-                :icon="['fa-solid', `fa-bell`]"
-                class="icon fa-fw"
-              ></font-awesome-icon>
+              <BellTwotone class="icon" />
             </div>
 
             <div class="overlay-panel">
@@ -99,36 +96,17 @@
                           "
                           class="action"
                         >
-                          <font-awesome-icon
-                            :icon="['fas fa-fw', `fa-exclamation-triangle`]"
-                            class="icon"
-                          ></font-awesome-icon>
+                          <ExclamationTriangle class="icon" />
                         </div>
-                        <!-- <div class="action">
-              <font-awesome-icon
-                :icon="['fas fa-fw', `fa-poo`]"
-                class="icon"
-              ></font-awesome-icon>
-            </div>
-            <div v-if="index % 2 === 0" class="action">
-              <font-awesome-icon
-                :icon="['fas fa-fw', `fa-poo`]"
-                class="icon"
-              ></font-awesome-icon>
-            </div> -->
                       </div>
                       <div class="notification-content">
                         <div class="notification-info">
                           <div class="notification-state">
-                            <font-awesome-icon
-                              :icon="[
-                                'fas fa-fw',
-                                notification?.readed
-                                  ? `fa-check-double`
-                                  : `fa-check`,
-                              ]"
+                            <CheckIcon
+                              v-if="notification?.readed"
                               class="icon"
-                            ></font-awesome-icon>
+                            />
+                            <CheckDouble v-else class="icon" />
                           </div>
                           <div class="notification-datetime">
                             {{ notification.MessageDate }}
@@ -152,12 +130,13 @@
             <div
               class="user-link tw-flex tw-flex-row tw-items-center tw-h-full"
             >
-              <font-awesome-icon
-                :icon="['fas fa-fw', `fa-circle-user`]"
-                class="icon tw-mr-4 tw-text-primary tw-font-semibold tw-text-3xl"
-              ></font-awesome-icon>
+              <UserCircle
+                class="icon tw-mr-2 tw-text-primary tw-font-semibold tw-text-3xl"
+              />
               <div class="user-name tw-text-xl tw-cursor-default">
-                {{ fioParse(authStore.user?.FIO || "") || "🤷" }}
+                {{
+                  `${authStore.user ? fioParse(authStore.user.UserName) : "🤷"} @${authStore.user?.UserLogin}`
+                }}
               </div>
             </div>
 
@@ -168,11 +147,7 @@
                   class="router-link item-wrapper"
                 >
                   <div class="item item-info">
-                    <font-awesome-icon
-                      icon="fas fa-user-gear"
-                      fixed-width
-                      class="icon"
-                    ></font-awesome-icon>
+                    <UserGear class="icon tw-text-xl" />
                     <div class="text">Предпочтения</div>
                   </div>
                   <div class="active-state"></div>
@@ -185,11 +160,7 @@
                   class="router-link item-wrapper"
                 >
                   <div class="item item-info">
-                    <font-awesome-icon
-                      icon="fas fa-circle-info"
-                      fixed-width
-                      class="icon"
-                    ></font-awesome-icon>
+                    <InfoCircle class="icon tw-text-xl" />
                     <div class="text">О программе</div>
                   </div>
                   <div class="active-state"></div>
@@ -199,11 +170,7 @@
 
                 <div class="item-wrapper">
                   <div class="item item-logout" @click="authStore.logout()">
-                    <font-awesome-icon
-                      icon="fas fa-sign-out-alt"
-                      fixed-width
-                      class="icon"
-                    ></font-awesome-icon>
+                    <SignOut class="icon tw-text-xl" />
                     <div class="text">Выйти</div>
                   </div>
                 </div>
@@ -243,6 +210,14 @@ import ScrollPanel from "primevue/scrollpanel";
 import Sidebar from "./SidebarMenu.vue";
 
 import HomePage from "./icons/HomePage.vue";
+import BellTwotone from "./icons/BellTwotone.vue";
+import ExclamationTriangle from "./icons/ExclamationTriangle.vue";
+import CheckIcon from "./icons/CheckIcon.vue";
+import CheckDouble from "./icons/CheckDouble.vue";
+import UserGear from "./icons/UserGear.vue";
+import UserCircle from "./icons/UserCircle.vue";
+import SignOut from "./icons/SignOut.vue";
+import InfoCircle from "./icons/InfoCircle.vue";
 
 const route = useRoute();
 const authStore = useAuthStore();
@@ -254,13 +229,13 @@ const pageTitle: Ref<string> = ref(route.meta.pageTitle as string);
 const pageSubTitle: Ref<string> = ref(route.meta.pageSubTitle as string);
 
 // TODO: исправить any после того, как будет известна структура объекта уведомлений
-const notifications: Ref<any[]> = ref([]);
+const notifications: Ref<unknown[]> = ref([]);
 
-let subsystem: boolean = false;
+let subsystem = false;
 
 let subsystemRoute: RouteLocationMatched | undefined = undefined;
 
-let unreadedNotifications: Ref<number> = ref(0);
+const unreadedNotifications: Ref<number> = ref(0);
 
 // Вешаем наблюдатель за изменением текущего маршрута
 // При изменении маршрута поменять заголовок страницы
@@ -397,14 +372,14 @@ onMounted(() => {
   // });
 
   const lsvalue = localStorage.getItem("localNotifications");
-  let localNotifications: any[] = lsvalue ? (JSON.parse(lsvalue) as any) : [];
+  const localNotifications: any[] = lsvalue ? (JSON.parse(lsvalue) as any) : [];
 
-  localNotifications.forEach((notification: any) => {
+  for (const notification of localNotifications) {
     unreadedNotifications.value += 1;
     authStore.notificationsCount += 1;
     authStore.updateTabTitle();
     notifications.value.unshift({ ...notification });
-  });
+  }
 
   if (!signalRStore.connection) {
     signalRStore.connect();

@@ -174,14 +174,10 @@ export const useUsersStore = defineStore({
           return Promise.reject(error);
         });
     },
-    /**
-     * Получение данных (строка или список строк)
-     * @param {object} [query] - дополнительные параметры
-     */
+
     async activity(
       action: "write" | "read" = "read",
-      app: number | null = null,
-      sysAction: string = "",
+      sysAction = "",
       query?: { [key: string]: unknown },
     ) {
       if (action === "read") {
@@ -198,98 +194,26 @@ export const useUsersStore = defineStore({
 
               this.activities = data;
               return Promise.resolve(data);
-            } else if (error.success === true) {
+            }
+            if (error.success === true) {
               const { data } = error;
               toast("Ошибка", data.ErrorMsg || data.Error, "error");
               return Promise.reject(data.ErrorMsg || data.Error);
-            } else {
-              callParseErrorToast(response.error);
-              callParseErrorToast(error.error);
-              return Promise.reject(`${error.error}; ${response.error}`);
             }
+
+            callParseErrorToast(response.error);
+            callParseErrorToast(error.error);
+            return Promise.reject(`${error.error}; ${response.error}`);
           })
           .catch((error) => {
             callParseErrorToast(error);
             return Promise.reject(error);
           });
-      } else if (action === "write") {
-        return await axios.post(`/api/users/activity`, {
-          Riasappid: app,
-          Message: sysAction,
-        });
       }
-    },
 
-    async readSubsystems(id?: number) {
-      return await axios
-        .get(`/api/users/${id || useAuthStore().user?.UserId}/subsystems`)
-        .then((responseJSON) => {
-          const result = successResult.extend({ data: ZSubsystems });
-
-          const error = errorResult.safeParse(responseJSON);
-          const response = result.safeParse(responseJSON);
-
-          if (response.success === true) {
-            const { data } = response.data;
-
-            this.subsystems = data;
-
-            const subsystemsOnlyForAdmins: number[] = [2];
-
-            if (!useAuthStore().user?.IsAdmin) {
-              this.subsystems = this.subsystems.filter(
-                (subsystem: TSubsystem) =>
-                  !subsystemsOnlyForAdmins.includes(subsystem.Id),
-              );
-            }
-
-            this.rights = data;
-            return Promise.resolve(data);
-          } else if (error.success === true) {
-            const { data } = error;
-            toast("Ошибка", data.ErrorMsg || data.Error, "error");
-            return Promise.reject(data.ErrorMsg || data.Error);
-          } else {
-            callParseErrorToast(response.error);
-            callParseErrorToast(error.error);
-            return Promise.reject(`${error.error}; ${response.error}`);
-          }
-        })
-        .catch((error) => {
-          callParseErrorToast(error);
-          return Promise.reject(error);
-        });
-    },
-
-    async readRights(id: number, subsystemId?: number | string) {
-      subsystemId = subsystemId ? subsystemId.toString() + "/" : "";
-      return await axios
-        .get(`/api/users/${id}/subsystems/${subsystemId}rights`)
-        .then((responseJSON) => {
-          const result = successResult.extend({ data: ZRights });
-
-          const error = errorResult.safeParse(responseJSON);
-          const response = result.safeParse(responseJSON);
-
-          if (response.success === true) {
-            const { data } = response.data;
-
-            this.rights = data;
-            return Promise.resolve(data);
-          } else if (error.success === true) {
-            const { data } = error;
-            toast("Ошибка", data.ErrorMsg || data.Error, "error");
-            return Promise.reject(data.ErrorMsg || data.Error);
-          } else {
-            callParseErrorToast(response.error);
-            callParseErrorToast(error.error);
-            return Promise.reject(`${error.error}; ${response.error}`);
-          }
-        })
-        .catch((error) => {
-          callParseErrorToast(error);
-          return Promise.reject(error);
-        });
+      return await axios.post("/api/users/activity", {
+        Action: sysAction,
+      });
     },
   },
 });

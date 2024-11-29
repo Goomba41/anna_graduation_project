@@ -1,45 +1,24 @@
 <script setup lang="ts">
-import { useRouter } from "vue-router";
-
 import { DateTime as luxon } from "luxon";
 
-import { useUsersStore } from "@/stores/users.store";
 import { useLoadingStore } from "@/stores/loading.store";
 import { useAuthStore } from "@/stores/auth.store";
 
 import fioParse from "@/utils/fio-formatter";
 import nameSystem from "@/utils/meme-naming";
 
-import ScrollPanel from "primevue/scrollpanel";
-import { onMounted } from "vue";
-
 // const signalRStore = useSignalRStore();
-const router = useRouter();
 
 const loadingStore = useLoadingStore();
-const usersStore = useUsersStore();
 const authStore = useAuthStore();
-
-const routerRoutesList = router.getRoutes();
-
-function findInRouter(name: string): { name: string } | object {
-  let resultObject = {};
-  const subsystemHasRoute = routerRoutesList.find(
-    (route) => route.name === name,
-  );
-
-  if (subsystemHasRoute) resultObject = { name };
-
-  return resultObject;
-}
 
 function dayTimeString() {
   const currentHour: number = luxon.now().hour;
 
-  if (currentHour >= 4 && currentHour <= 11) return "доброе утро"; // 🌅
-  if (currentHour >= 12 && currentHour <= 16) return "добрый день"; // ☀️
-  if (currentHour >= 17 && currentHour <= 23) return "добрый вечер"; // 🌇
-  if (currentHour >= 0 && currentHour <= 3) return "доброй ночи"; // 🌙
+  if (currentHour >= 4 && currentHour <= 11) return "доброе утро 🌅"; // 🌅
+  if (currentHour >= 12 && currentHour <= 16) return "добрый день ☀️"; // ☀️
+  if (currentHour >= 17 && currentHour <= 23) return "добрый вечер 🌇"; // 🌇
+  if (currentHour >= 0 && currentHour <= 3) return "доброй ночи 🌙"; // 🌙
 }
 
 // Чтение по роутеру
@@ -72,10 +51,6 @@ const app_name: string | string[] =
   process.env.NODE_ENV === "development"
     ? nameSystem()
     : "АИС «Документооборот»";
-
-onMounted(() => {
-  usersStore.readSubsystems();
-});
 </script>
 
 <template>
@@ -85,9 +60,9 @@ onMounted(() => {
     >
       {{ dayTimeString()
       }}{{
-        authStore.user?.FIO
-          ? `, ${fioParse(authStore.user?.FIO, {
-              f: { enabled: true, short: false },
+        authStore.user?.UserName
+          ? `, ${fioParse(authStore.user?.UserName, {
+              f: { enabled: false, short: false },
               i: { enabled: false, short: false },
               o: { enabled: false, short: false },
             })}`
@@ -99,10 +74,6 @@ onMounted(() => {
       <span :title="typeof app_name === 'string' ? app_name : app_name[1]"
         >«{{ typeof app_name === "string" ? app_name : app_name[2] }}»</span
       >!
-    </p>
-    <p class="tw-text-md tw-text-gray-500">
-      Для продолжения работы выберите одну из доступных ниже подсистем. В
-      случае, если подсистемы не найдены, обратитесь к администратору системы!
     </p>
   </div>
 
@@ -119,72 +90,6 @@ onMounted(() => {
     <div class="skeleton-box tw-rounded-lg tw-h-full tw-w-full"></div>
     <div class="skeleton-box tw-rounded-lg tw-h-full tw-w-full"></div>
   </div>
-
-  <ScrollPanel v-else class="tw-w-full -tw-ml-2">
-    <div
-      v-if="usersStore.subsystems?.length"
-      :class="[
-        'subsystems-grid tw-grid tw-gap-4 tw-px-4 tw-pb-4 tw-justify-center',
-      ]"
-    >
-      <template v-for="subsystem in usersStore.subsystems" :key="subsystem!.Id">
-        <router-link
-          v-if="subsystem!.Enabled"
-          class="subsystem"
-          :to="
-            subsystem!.WorkInProgress
-              ? {}
-              : findInRouter(subsystem.Id.toString())
-          "
-          :disabled="!subsystem!.WorkInProgress"
-          :event="!subsystem!.WorkInProgress ? '' : 'click'"
-        >
-          <div
-            :class="[
-              'subsystem__subsystem-wrapper',
-              subsystem.WorkInProgress
-                ? 'subsystem__subsystem-wrapper_disabled'
-                : '',
-            ]"
-          >
-            <h2 class="subsystem__header">
-              {{ subsystem!.AppName }}
-              <template v-if="subsystem!.WorkInProgress">
-                <br /><br />{{
-                  subsystem!.WorkInProgress ? "(в разработке)" : ""
-                }}
-              </template>
-            </h2>
-
-            <div
-              :class="[
-                'subsystem__logo',
-                subsystem!.WorkInProgress ? 'tw-w-full' : 'tw-w-4/5',
-              ]"
-            >
-              <font-awesome-icon
-                :icon="`fas ${subsystem!.WorkInProgress ? 'fa-person-digging' : subsystem!.Icon}`"
-                class="icon tw-text-[6rem]"
-              ></font-awesome-icon>
-            </div>
-
-            <div v-if="!subsystem!.WorkInProgress" class="subsystem__enter">
-              <font-awesome-icon
-                icon="fas fa-door-open"
-                class="icon tw-text-2xl"
-              ></font-awesome-icon>
-            </div>
-          </div>
-        </router-link>
-      </template>
-    </div>
-    <div
-      v-else
-      class="empty tw-h-full tw-w-full tw-flex tw-flex-row tw-justify-center tw-items-center tw-text-3xl tw-text-gray-400 tw-font-semibold tw-select-none"
-    >
-      Не найдено подсистем 🤷
-    </div>
-  </ScrollPanel>
 </template>
 
 <style scoped lang="scss">

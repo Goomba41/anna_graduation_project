@@ -1,0 +1,40 @@
+<template>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    viewBox="0 0 24 24"
+  >
+    <g fill="none">
+      <circle
+        cx="12"
+        cy="11.999"
+        r="9"
+        fill="currentColor"
+        opacity=".16"
+      ></circle>
+      <circle
+        cx="12"
+        cy="11.999"
+        r="9"
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+      ></circle>
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="m15 9l-6 6m0-6l6 6"
+      ></path>
+    </g>
+  </svg>
+</template>
+
+<script lang="ts">
+export default {
+  name: "TimesCircle",
+};
+</script>

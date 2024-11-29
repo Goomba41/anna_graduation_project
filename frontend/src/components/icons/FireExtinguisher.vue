@@ -1,0 +1,36 @@
+<template>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="1em"
+    height="1em"
+    viewBox="0 0 48 48"
+  >
+    <defs>
+      <mask id="ipTFireExtinguisherOne0">
+        <g fill="none" stroke="#fff" stroke-linejoin="round" stroke-width="4">
+          <path
+            fill="#555"
+            d="M16 18a8 8 0 1 1 16 0v24a2 2 0 0 1-2 2H18a2 2 0 0 1-2-2z"
+          ></path>
+          <path stroke-linecap="round" d="M24 24v10"></path>
+          <path fill="#555" d="M20 5h9v4h-9zm9 0l9-1v6l-9-1z"></path>
+          <path
+            stroke-linecap="round"
+            d="M20 7c-3 0-7.5-.5-10 2c-2.417 2.416-2 5-2 9"
+          ></path>
+        </g>
+      </mask>
+    </defs>
+    <path
+      fill="currentColor"
+      d="M0 0h48v48H0z"
+      mask="url(#ipTFireExtinguisherOne0)"
+    ></path>
+  </svg>
+</template>
+
+<script lang="ts">
+export default {
+  name: "FireExtinguisher",
+};
+</script>
