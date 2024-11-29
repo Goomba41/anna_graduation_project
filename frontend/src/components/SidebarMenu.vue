@@ -1,24 +1,16 @@
 <template>
   <div
-    class="menu-container tw-ml-4 tw-self-center tw-bg-primary tw-rounded-2xl tw-flex tw-flex-row tw-transition-width"
-    :class="[
-      sidebarState ? 'tw-w-[12%]' : 'tw-w-24',
-      !authStore.user?.IsAdmin
-        ? 'tw-h-[calc(100vh-2rem)]'
-        : 'tw-h-[calc(100vh-3rem)]',
-    ]"
+    class="menu-container tw-ml-4 tw-self-center tw-bg-primary tw-rounded-2xl tw-flex tw-flex-row tw-transition-width tw-h-[calc(100vh-2rem)]"
+    :class="[sidebarState ? 'tw-w-[12%]' : 'tw-w-24']"
     @mouseover="toggleSidebar(true)"
   >
     <div
       class="menu-items-wrapper tw-w-full tw-h-full tw-flex tw-flex-col tw-p-6 tw-justify-between tw-max-h-screen"
     >
       <router-link class="logo to-top" to="/">
-        <!-- <font-awesome-icon icon="fas fa-piggy-bank" class="icon"></font-awesome-icon> -->
         <logo class="icon" />
-        <!-- <img src="/images/logo.png" /> -->
 
         <div class="text" :class="[sidebarState ? 'tw-ml-2' : 'tw-opacity-0']">
-          <!-- ИС «ЭКО» -->
           АИС «Документооборот»
         </div>
       </router-link>
@@ -40,7 +32,6 @@
                 class="hint"
                 :style="sidebarState ? 'left: 14rem' : ''"
               >
-                <!-- v-if="!sidebarState && !(item.children && item.children.length)" -->
                 {{ item.text }}
               </div>
 
@@ -53,7 +44,6 @@
               >
                 <div class="overlay-wrapper tw-flex tw-flex-col">
                   <div class="submenu-title">
-                    <!-- v-if="!sidebarState" -->
                     {{ item.text }}
                   </div>
 
@@ -116,7 +106,6 @@
                 class="hint"
                 :style="sidebarState ? 'left: 14rem' : ''"
               >
-                <!-- v-if="!sidebarState && !(item.children && item.children.length)" -->
                 {{ item.text }}
               </div>
 
@@ -129,7 +118,6 @@
               >
                 <div class="overlay-wrapper tw-flex tw-flex-col">
                   <div class="submenu-title">
-                    <!-- v-if="!sidebarState" -->
                     {{ item.text }}
                   </div>
 
@@ -191,7 +179,6 @@
     </div>
   </div>
 
-  <!-- Фиксатор сайдбара -->
   <div
     class="tw-flex tw-flex-col tw-justify-center tw-z-10"
     @mouseover="toggleSidebar(sidebarState)"
@@ -199,14 +186,11 @@
   >
     <div
       id="pin"
-      class="tw-h-12 tw-w-12 -tw-ml-5 tw-bg-primary hover:tw-bg-primary-dark tw-rounded-full tw-cursor-pointer tw-z-10 tw-text-white tw-flex tw-flex-col tw-content-center tw-justify-center tw-text-lg tw-border-solid tw-border-8 tw-border-gray-200 tw-transition-colors"
+      class="tw-h-12 tw-w-12 -tw-ml-5 tw-bg-primary hover:tw-bg-primary-dark tw-rounded-full tw-cursor-pointer tw-z-10 tw-text-white tw-flex tw-flex-col tw-content-center tw-justify-center tw-text-2xl tw-border-solid tw-border-8 tw-border-gray-200 tw-transition-colors tw-flex-wrap"
+      :style="[sidebarPinState ? '' : 'transform: rotate(45deg)']"
       @click="pinSidebar"
     >
-      <font-awesome-icon
-        icon="fas fa-thumbtack"
-        :class="[sidebarPinState ? '' : 'fa-rotate-by']"
-        style="--fa-rotate-angle: 45deg"
-      ></font-awesome-icon>
+      <ThumbtackTwotone />
     </div>
   </div>
 </template>
@@ -216,16 +200,15 @@ import axios from "axios";
 import { onMounted, ref, watch, type Ref } from "vue";
 import { useRoute } from "vue-router";
 
-import { useAuthStore } from "@/stores/auth.store";
 import { useLoadingStore } from "@/stores/loading.store";
 
 import logo from "@/components/icons/AppLogotype.vue";
+import ThumbtackTwotone from "@/components/icons/ThumbtackTwotone.vue";
 
 import callParseErrorToast from "@/utils/type-parse-error";
 
 const route = useRoute();
 
-const authStore = useAuthStore();
 const loadingStore = useLoadingStore();
 
 // Вешаем наблюдатель за изменением текущего маршрута
@@ -273,7 +256,7 @@ async function buildCustomMenu() {
       (mi) => mi.uploadItems?.yes,
     );
 
-    toGetItems.forEach((item) => {
+    for (const item of toGetItems) {
       requestsToAsk.push(
         axios
           .get(item.uploadItems.from)
@@ -286,40 +269,27 @@ async function buildCustomMenu() {
             if (response.success === true) {
               // const { createdId, data: form } = response.data
               return Promise.resolve();
-            } else if (error.success === true) {
+            }
+
+            if (error.success === true) {
               const { data } = error;
               return Promise.reject(data.ErrorMsg || data.Error);
-            } else {
-              callParseErrorToast(response.error);
-              callParseErrorToast(error.error);
-              return Promise.reject(`${error.error}; ${response.error}`);
             }
+
+            callParseErrorToast(response.error);
+            callParseErrorToast(error.error);
+            return Promise.reject(`${error.error}; ${response.error}`);
           })
           .catch((error) => {
             callParseErrorToast(error);
             return Promise.reject(error);
           }),
       );
-    });
+    }
 
     await Promise.all(requestsToAsk).then((response) => {
       console.log(response);
     });
-
-    //   {
-    //   id: '6dfd217c-a5c2-43d5-970b-2693147968c6',
-    //   type: 'router-link',
-    //   to: { name: 'handbookOne' },
-    //   text: 'Справочник 1',
-    //   icon: 'book',
-    // },
-    // {
-    //   id: 'a0b655fb-4bca-43ea-970d-d788fe585731',
-    //   type: 'router-link',
-    //   to: { name: 'handbookTwo' },
-    //   text: 'Справочник 2',
-    //   icon: 'book',
-    // },
   } else {
     customMenuItems.value = [];
   }

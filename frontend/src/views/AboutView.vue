@@ -13,7 +13,7 @@
     </div>
   </div>
 
-  <div class="tw-flex tw-flex-col">
+  <div v-if="!loadingStore.loadingState" class="tw-flex tw-flex-col">
     <div class="tw-flex tw-flex-row">
       <Panel panel-title="О системе">
         <div class="tw-flex tw-flex-col">

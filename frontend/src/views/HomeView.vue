@@ -75,6 +75,13 @@ const app_name: string | string[] =
         >«{{ typeof app_name === "string" ? app_name : app_name[2] }}»</span
       >!
     </p>
+    <p class="tw-text-base tw-mb-2 tw-text-gray-500">
+      Для начала работы воспользуйтесь боковым меню и перейдите на необходимую
+      страницу системы.
+    </p>
+    <p class="tw-text-xl tw-mb-4 tw-font-semibold tw-text-gray-700">
+      Ознакомтесь с последними изменениями и показателями:
+    </p>
   </div>
 
   <div

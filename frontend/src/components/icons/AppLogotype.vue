@@ -18,7 +18,7 @@
 
 <style type="text/css">
 .fil0 {
-  fill: white;
+  fill: transparent;
 }
 /* .fil1 {
   @apply tw-fill-primary;
