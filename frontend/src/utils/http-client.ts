@@ -66,7 +66,7 @@ axios.interceptors.request.use(
     const loadingStore = useLoadingStore();
     loadingStore.loading(false, "axios");
 
-    const title: string = `${error.response.status} - ${error.response.statusText}`;
+    const title: string = `${error.response?.status} - ${error.response?.statusText}`;
     const body: string = error.message;
 
     toast(title, body);
@@ -77,7 +77,7 @@ axios.interceptors.request.use(
 
 // Перехватчик на ответ
 axios.interceptors.response.use(
-  (response: AxiosResponse) => {
+  (response) => {
     // Остановим блокиратор интерфейса
     const loadingStore = useLoadingStore();
     loadingStore.loading(false, "axios");
@@ -86,7 +86,6 @@ axios.interceptors.response.use(
     const responseType: string | undefined =
       response.headers["content-type"]?.split(";")[0];
 
-    console.log(response, responseType);
     // Если есть тип и входит в файловые типы преобразуем в блоб
     // и сохраним
     if (responseType && responseType === "application/json") {
@@ -116,7 +115,7 @@ axios.interceptors.response.use(
 
     // FileSaver(file, filename || `ИС «ЭКО» ${v4()}`);
     FileSaver(file, filename || `АИС «Документооборот» ${v4()}`);
-    return;
+    return response;
   },
   (error: AxiosError) => {
     const authStore = useAuthStore();

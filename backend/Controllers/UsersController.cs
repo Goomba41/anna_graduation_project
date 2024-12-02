@@ -1,7 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+
+using DevExtreme.AspNet.Data;
+
 using backend.Models;
+using DevExtreme;
 
 namespace backend.Controllers
 {
@@ -123,8 +127,33 @@ namespace backend.Controllers
                 _logger.LogError(Utils.GetErrorMessageByException(ex));
                 return new JsonResult(new { result = -1, Error = Utils.GetErrorMessageByException(ex) });
             }
-
-
         }
+
+        [HttpGet("activity")]
+        public IActionResult GetUsersActivity([FromQuery] DataSourceLoadOptions loadOptions)
+        {
+            try
+            {
+                loadOptions.PrimaryKey = new[] { "id" };
+
+                var queryResult = _context.UsersActivities.AsQueryable()
+                    .Select(s => new
+                    {
+                        id = s.Id,
+                        userid = s.Userid,
+                        userfullname = String.Format("{0} {1} {2}", s.User!.LastName, s.User.FirstName, s.User.Patronymic) + '@' + s.User.Login,
+                        action = s.Action,
+                        actiondate = s.Actiondate
+                    });
+
+                return new JsonResult(DataSourceLoader.Load(queryResult, loadOptions));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(Utils.GetErrorMessageByException(ex));
+                return new JsonResult(new { result = -1, Error = Utils.GetErrorMessageByException(ex) });
+            }
+        }
+
     }
 }

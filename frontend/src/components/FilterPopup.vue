@@ -13,24 +13,15 @@
     <template #footer>
       <div class="tw-flex tw-flex-row tw-justify-end">
         <Button icon-pos="left" class="neutral tw-mr-4" @click="closeModal">
-          <font-awesome-icon
-            :icon="['fas', 'fa-xmark']"
-            :class="['p-button-icon p-button-icon-left']"
-          ></font-awesome-icon>
+          <TimesCircle class="p-button-icon p-button-icon-left" />
           <div class="p-button-label">Закрыть</div>
         </Button>
         <Button icon-pos="left" class="danger tw-mr-4" @click="clearFilters">
-          <font-awesome-icon
-            :icon="['fas', 'fa-filter-circle-xmark']"
-            :class="['p-button-icon p-button-icon-left']"
-          ></font-awesome-icon>
+          <FilterReset class="p-button-icon p-button-icon-left" />
           <div class="p-button-label">Сбросить</div>
         </Button>
         <Button icon-pos="left" class="success" @click="applyFilters">
-          <font-awesome-icon
-            :icon="['fas', 'fa-filter']"
-            :class="['p-button-icon p-button-icon-left']"
-          ></font-awesome-icon>
+          <FilterApply class="p-button-icon p-button-icon-left" />
           <div class="p-button-label">Применить</div>
         </Button>
       </div>
@@ -48,6 +39,10 @@ import Dialog from "primevue/dialog";
 
 import DxFilterBuilder from "devextreme-vue/filter-builder";
 import type { DxFilterBuilderTypes } from "devextreme-vue/filter-builder";
+
+import FilterApply from "./icons/FilterApply.vue";
+import FilterReset from "./icons/FilterReset.vue";
+import TimesCircle from "./icons/TimesCircle.vue";
 
 const dataTableFilter = ref(DxFilterBuilder);
 
