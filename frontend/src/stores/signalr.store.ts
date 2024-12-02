@@ -11,7 +11,7 @@ export const useSignalRStore = defineStore({
   id: "signalR",
   state: () => ({
     connection: null as HubConnection | null,
-    received: null as any | null,
+    incoming: null as any | null,
   }),
   actions: {
     /**

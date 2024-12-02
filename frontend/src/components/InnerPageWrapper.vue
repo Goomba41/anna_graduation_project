@@ -555,6 +555,14 @@ onBeforeUnmount(() => {
   @apply tw-w-1 tw-h-0 tw-transition-height;
 }
 
+.router-link-exact-active > .active-state {
+  @apply tw-bg-white tw-rounded-r-md tw-h-6;
+}
+
+.overlay-wrapper .router-link-exact-active > .active-state {
+  @apply tw-bg-primary tw-rounded-l-lg;
+}
+
 .breadcrumbs a {
   @apply tw-text-primary;
 }

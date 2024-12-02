@@ -190,9 +190,8 @@
 </template>
 
 <script lang="ts" setup>
-import axios from "axios";
-import { onMounted, ref, watch, type Ref } from "vue";
-import { useRoute } from "vue-router";
+import { ref, type Ref, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
 import { useLoadingStore } from "@/stores/loading.store";
 
@@ -201,18 +200,12 @@ import ThumbtackTwotone from "@/components/icons/ThumbtackTwotone.vue";
 
 import IconComponent from "./IconComponent.vue";
 
-import callParseErrorToast from "@/utils/type-parse-error";
-
 const route = useRoute();
+const router = useRouter();
 
 const loadingStore = useLoadingStore();
 
-// Вешаем наблюдатель за изменением текущего маршрута
-// При изменении маршрута поменять заголовок страницы
-watch(
-  () => route.path as string,
-  async () => buildCustomMenu(),
-);
+import type { TSidebarMenuItems } from "@/typings/menu-items.types";
 
 // Текущее состояние сайдбара - свернут/развернут
 const sidebarState: Ref<boolean> = ref(
@@ -236,62 +229,16 @@ function toggleSidebar(state: boolean) {
   }
 }
 
-const customMenuItems: Ref<any[]> = ref([]);
+const customMenuItems: Ref<TSidebarMenuItems> = ref(
+  (route.meta?.menuItems as TSidebarMenuItems) ||
+    (router.options.routes
+      .find((r) => r.name === "wrapper")
+      ?.children?.find((r) => r.name === "home")?.meta
+      ?.menuItems as TSidebarMenuItems) ||
+    [],
+);
 
-async function buildCustomMenu() {
-  const menuItems = (route.meta?.menuItems as any[]) || undefined;
-
-  if (menuItems && menuItems.length) {
-    customMenuItems.value = menuItems.filter(
-      (element) => !(element.hidden && element.hidden()),
-    );
-
-    const requestsToAsk: Promise<unknown>[] = [];
-
-    const toGetItems = customMenuItems.value.filter(
-      (mi) => mi.uploadItems?.yes,
-    );
-
-    for (const item of toGetItems) {
-      requestsToAsk.push(
-        axios
-          .get(item.uploadItems.from)
-          .then(async (responseJSON) => {
-            // const result = successResult.extend({ createdId: z.number(), data: ZUser })
-
-            const error = errorResult.safeParse(responseJSON);
-            const response = successResult.safeParse(responseJSON);
-
-            if (response.success === true) {
-              // const { createdId, data: form } = response.data
-              return Promise.resolve();
-            }
-
-            if (error.success === true) {
-              const { data } = error;
-              return Promise.reject(data.ErrorMsg || data.Error);
-            }
-
-            callParseErrorToast(response.error);
-            callParseErrorToast(error.error);
-            return Promise.reject(`${error.error}; ${response.error}`);
-          })
-          .catch((error) => {
-            callParseErrorToast(error);
-            return Promise.reject(error);
-          }),
-      );
-    }
-
-    await Promise.all(requestsToAsk).then((response) => {
-      console.log(response);
-    });
-  } else {
-    customMenuItems.value = [];
-  }
-}
-
-onMounted(() => buildCustomMenu());
+onMounted(() => {});
 </script>
 
 <style lang="css" scoped>
@@ -355,11 +302,11 @@ onMounted(() => buildCustomMenu());
   @apply tw-ml-0;
 }
 
-.router-link-active > .active-state {
+.router-link-exact-active > .active-state {
   @apply tw-bg-white tw-rounded-r-md tw-h-12;
 }
 
-.overlay-wrapper .router-link-active > .active-state {
+.overlay-wrapper .router-link-exact-active > .active-state {
   @apply tw-bg-primary tw-rounded-l-lg;
 }
 

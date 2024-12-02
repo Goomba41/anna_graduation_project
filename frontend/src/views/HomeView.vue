@@ -48,7 +48,7 @@ function dayTimeString() {
 // }
 
 const app_name: string | string[] =
-  process.env.NODE_ENV === "development"
+  import.meta.env.MODE === "development"
     ? nameSystem()
     : "АИС «Документооборот»";
 </script>

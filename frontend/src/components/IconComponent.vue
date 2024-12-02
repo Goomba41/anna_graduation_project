@@ -47,7 +47,7 @@
   </svg>
 
   <svg
-    v-if="props.icon === 'received'"
+    v-if="props.icon === 'incoming'"
     v-bind="$attrs"
     xmlns="http://www.w3.org/2000/svg"
     width="32"
@@ -160,14 +160,7 @@
 
 <script lang="ts" setup>
 interface Props {
-  icon:
-    | "dashboard"
-    | "received"
-    | "outgoing"
-    | "admin"
-    | "organizations"
-    | "log"
-    | "users";
+  icon: string;
 }
 
 const props = defineProps<Props>();
