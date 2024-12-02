@@ -72,7 +72,7 @@ export const router = createRouter({
               {
                 id: "222e2376-33ed-4928-bf7b-62eec3fb918b",
                 text: "Администрирование",
-                icon: "administrate",
+                icon: "admin",
                 children: [
                   // {
                   //   id: "0056054b-f4b9-4b6c-b72a-687c092a5714",

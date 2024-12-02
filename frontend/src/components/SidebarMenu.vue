@@ -54,7 +54,10 @@
                       class="router-link item-wrapper tw-flex tw-flex-row tw-items-center"
                     >
                       <div :class="['item', `item-${child.id}`]">
-                        <IconComponent :icon="child.icon" class="icon" />
+                        <IconComponent
+                          :icon="child.icon"
+                          :class="['icon', sidebarState ? '' : 'single']"
+                        />
                         <div class="text">{{ child.text }}</div>
                       </div>
                       <div class="active-state"></div>
@@ -64,7 +67,10 @@
                       class="router-link item-wrapper tw-flex tw-flex-row tw-items-center"
                     >
                       <div :class="['item', `item-${child.id}`]">
-                        <IconComponent :icon="child.icon" class="icon" />
+                        <IconComponent
+                          :icon="child.icon"
+                          :class="['icon', sidebarState ? '' : 'single']"
+                        />
                         <div class="text">
                           {{ child.text }}
                         </div>
@@ -120,7 +126,8 @@
                       class="router-link item-wrapper tw-flex tw-flex-row tw-items-center"
                     >
                       <div :class="['item', `item-${child.id}`]">
-                        <IconComponent :icon="child.icon" class="icon" />
+                        <IconComponent :icon="child.icon" />
+                        <!-- :class="['icon', sidebarState ? '' : 'single']" -->
                         <div class="text">
                           {{ child.text }}
                         </div>
@@ -132,7 +139,8 @@
                       class="router-link item-wrapper tw-flex tw-flex-row tw-items-center"
                     >
                       <div :class="['item', `item-${child.id}`]">
-                        <IconComponent :icon="child.icon" class="icon" />
+                        <IconComponent :icon="child.icon" />
+                        <!-- :class="['icon', sidebarState ? '' : 'single']" -->
                         <div class="text">
                           {{ child.text }}
                         </div>
@@ -143,7 +151,10 @@
                 </div>
               </div>
 
-              <IconComponent :icon="item.icon" />
+              <IconComponent
+                :icon="item.icon"
+                :class="['icon', sidebarState ? '' : 'single']"
+              />
               <div
                 class="text"
                 :class="[sidebarState ? 'tw-ml-2' : 'tw-opacity-0']"
