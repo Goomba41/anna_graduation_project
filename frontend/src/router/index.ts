@@ -7,9 +7,8 @@ import toast from "@/utils/toast";
 import jwtParse, { type TToken } from "@/utils/jwt-parse";
 import nameSystem from "@/utils/meme-naming";
 
-import adminRoutes from "./admin-routes";
-// import reportingRoutes from './reporting-routes'
-import monitoringRoutes from "./monitoring-routes";
+// import adminRoutes from "./admin-routes";
+// import monitoringRoutes from "./monitoring-routes";
 
 /* Создание объекта маршрутизатора */
 export const router = createRouter({
@@ -50,25 +49,58 @@ export const router = createRouter({
             id: "c3e1f260-d618-4b21-9594-c99d5aabf026",
             menuItems: [
               {
-                id: "0056054b-f4b9-4b6c-b72a-687c092a5714",
+                id: "f712bb93-6265-45d8-acf5-c2e6f6b0e549",
                 type: "router-link",
-                // to: { name: "dbArchiving" },
-                text: "Архивация БД",
-                icon: "database",
+                to: { name: "home" },
+                text: "Дэшборд",
+                icon: "dashboard",
               },
               {
-                id: "f60a2b70-342e-49b9-a098-3ab92de5a096",
-                type: "router-link",
-                // to: { name: "usersList" },
-                text: "Пользователи",
-                icon: "users",
+                id: "673bb66c-d07f-462e-99cc-242acf3f1f1c",
+                // type: "router-link",
+                // to: { name: "home" },
+                text: "Входящие",
+                icon: "received",
+              },
+              {
+                id: "a913b33a-814e-42d4-9a16-42844959ca48",
+                // type: "router-link",
+                // to: { name: "home" },
+                text: "Исходящие",
+                icon: "outgoing",
+              },
+              {
+                id: "222e2376-33ed-4928-bf7b-62eec3fb918b",
+                text: "Администрирование",
+                icon: "administrate",
                 children: [
+                  // {
+                  //   id: "0056054b-f4b9-4b6c-b72a-687c092a5714",
+                  //   type: "router-link",
+                  //   // to: { name: "dbArchiving" },
+                  //   text: "Архивация БД",
+                  //   icon: "database",
+                  // },
+                  {
+                    id: "f60a2b70-342e-49b9-a098-3ab92de5a096",
+                    type: "router-link",
+                    // to: { name: "usersList" },
+                    text: "Пользователи",
+                    icon: "users",
+                  },
                   {
                     id: "b1343077-fe38-4b9e-9471-a7036912b6a9",
                     type: "router-link",
                     // to: { name: "usersActivity" },
-                    text: "Активность",
-                    icon: "chart-simple",
+                    text: "Организации",
+                    icon: "organizations",
+                  },
+                  {
+                    id: "92c2320a-4e20-4c58-bea3-4b916e9c7ce3",
+                    type: "router-link",
+                    // to: { name: "usersActivity" },
+                    text: "Журнал действий",
+                    icon: "log",
                   },
                 ],
               },

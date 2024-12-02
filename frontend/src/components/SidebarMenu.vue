@@ -54,13 +54,8 @@
                       class="router-link item-wrapper tw-flex tw-flex-row tw-items-center"
                     >
                       <div :class="['item', `item-${child.id}`]">
-                        <font-awesome-icon
-                          :icon="['fas', `fa-${child.icon}`]"
-                          class="icon"
-                        ></font-awesome-icon>
-                        <div class="text">
-                          {{ child.text }}
-                        </div>
+                        <IconComponent :icon="child.icon" class="icon" />
+                        <div class="text">{{ child.text }}</div>
                       </div>
                       <div class="active-state"></div>
                     </router-link>
@@ -69,10 +64,7 @@
                       class="router-link item-wrapper tw-flex tw-flex-row tw-items-center"
                     >
                       <div :class="['item', `item-${child.id}`]">
-                        <font-awesome-icon
-                          :icon="['fas', `fa-${child.icon}`]"
-                          class="icon"
-                        ></font-awesome-icon>
+                        <IconComponent :icon="child.icon" class="icon" />
                         <div class="text">
                           {{ child.text }}
                         </div>
@@ -83,10 +75,10 @@
                 </div>
               </div>
 
-              <font-awesome-icon
-                :icon="['fas', `fa-${item.icon}`]"
-                class="icon"
-              ></font-awesome-icon>
+              <IconComponent
+                :icon="item.icon"
+                :class="['icon', sidebarState ? '' : 'single']"
+              />
               <div
                 class="text"
                 :class="[sidebarState ? 'tw-ml-2' : 'tw-opacity-0']"
@@ -128,10 +120,7 @@
                       class="router-link item-wrapper tw-flex tw-flex-row tw-items-center"
                     >
                       <div :class="['item', `item-${child.id}`]">
-                        <font-awesome-icon
-                          :icon="['fas', `fa-${child.icon}`]"
-                          class="icon"
-                        ></font-awesome-icon>
+                        <IconComponent :icon="child.icon" class="icon" />
                         <div class="text">
                           {{ child.text }}
                         </div>
@@ -143,10 +132,7 @@
                       class="router-link item-wrapper tw-flex tw-flex-row tw-items-center"
                     >
                       <div :class="['item', `item-${child.id}`]">
-                        <font-awesome-icon
-                          :icon="['fas', `fa-${child.icon}`]"
-                          class="icon"
-                        ></font-awesome-icon>
+                        <IconComponent :icon="child.icon" class="icon" />
                         <div class="text">
                           {{ child.text }}
                         </div>
@@ -157,10 +143,7 @@
                 </div>
               </div>
 
-              <font-awesome-icon
-                :icon="['fas', `fa-${item.icon}`]"
-                class="icon"
-              ></font-awesome-icon>
+              <IconComponent :icon="item.icon" />
               <div
                 class="text"
                 :class="[sidebarState ? 'tw-ml-2' : 'tw-opacity-0']"
@@ -204,6 +187,8 @@ import { useLoadingStore } from "@/stores/loading.store";
 
 import logo from "@/components/icons/AppLogotype.vue";
 import ThumbtackTwotone from "@/components/icons/ThumbtackTwotone.vue";
+
+import IconComponent from "./IconComponent.vue";
 
 import callParseErrorToast from "@/utils/type-parse-error";
 
@@ -342,10 +327,6 @@ onMounted(() => buildCustomMenu());
   box-shadow: 0 0 0 0.2rem theme("colors.primary-light");
 }
 
-.menu-items-wrapper .item .icon {
-  @apply tw-w-6 tw-justify-start tw-text-2xl;
-}
-
 .menu-items-wrapper .item .text,
 .menu-items-wrapper .logo .text {
   @apply tw-overflow-x-hidden tw-text-ellipsis tw-whitespace-pre tw-w-full tw-text-center;
@@ -457,6 +438,14 @@ onMounted(() => buildCustomMenu());
 .item-wrapper:last-child .submenu-overlay-panel .overlay-wrapper:before,
 .item-wrapper:last-child .submenu-overlay-panel .overlay-wrapper:after {
   bottom: calc(1.5rem - 10px);
+}
+
+.menu-items-wrapper .item :deep(.icon) {
+  @apply tw-w-8 tw-justify-start tw-text-2xl;
+
+  &.single {
+    @apply tw-absolute tw-w-6;
+  }
 }
 
 .overlay-wrapper > .item-wrapper:first-child .item:first-child {
