@@ -86,6 +86,7 @@ axios.interceptors.response.use(
     const responseType: string | undefined =
       response.headers["content-type"]?.split(";")[0];
 
+    console.log(response, responseType);
     // Если есть тип и входит в файловые типы преобразуем в блоб
     // и сохраним
     if (responseType && responseType === "application/json") {
@@ -97,6 +98,8 @@ axios.interceptors.response.use(
 
       return response;
     }
+
+    if (response && responseType === undefined) return response;
 
     let filename = "";
     const disposition = response.headers["content-disposition"];
@@ -119,7 +122,7 @@ axios.interceptors.response.use(
     const authStore = useAuthStore();
     const loadingStore = useLoadingStore();
 
-    const title: string = `${error.response.status} - ${error.response.statusText}`;
+    const title: string = `${error.response?.status} - ${error.response?.statusText}`;
     let body: string = error.message;
 
     if (error.response && error.response.status === 401) {
