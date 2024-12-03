@@ -76,65 +76,15 @@ export type TUser = z.infer<typeof ZUser>;
 export type TUsers = z.infer<typeof ZUsers>;
 
 export const ZUserActivity = z.object({
-  Id: z.coerce.number(),
-  Riasappid: z.coerce.number(),
-  AppName: z.string(),
-  Fio: z.string(),
-  Riasapp: z
-    .nullable(
-      z.object({
-        Id: z.coerce.number(),
-        AppName: z.string(),
-      }),
-    )
-    .optional(),
-  Userid: z.coerce.number(),
-  User: z
-    .object({
-      Id: z.coerce.number(),
-      Sysadmin: z.boolean(),
-      Name: z.string(),
-      Fio: z.string(),
-      Fam: z.string(),
-      Nam: z.string().nullable(),
-      Ot: z.string().nullable(),
-      Dol: z.string(),
-      Unit: z.string(),
-      Telephone: z.string().nullable(),
-      Email: z.string().nullable(),
-      SrcId: z.nullable(z.coerce.number()),
-      TerrId: z.nullable(z.coerce.number()),
-    })
-    .optional(),
-  Message: z.string(),
-  Actiondate: z.string().datetime({ offset: true }),
+  id: z.coerce.number(),
+  userid: z.coerce.number(),
+  userfullname: z.string(),
+  action: z.string(),
+  actiondate: z.string().datetime({ offset: true }),
 });
 
-export const ZUserActivityGroup = z.object({
-  key: z.string(),
-  items: z.array(z.any()).nullable(),
-  count: z.number(),
-  summary: z.any(),
-});
-
-export const ZUsersActivities = z.array(
-  z.union([ZUserActivity, ZUserActivityGroup]),
-);
+export const ZUsersActivities = z.array(ZUserActivity);
 
 export type TUserActivity = z.infer<typeof ZUserActivity>;
 
 export type TUsersActivities = z.infer<typeof ZUsersActivities>;
-
-export const ZRight = z.object({
-  Id: z.coerce.number(),
-  UsersId: z.coerce.number(),
-  AppId: z.coerce.number(),
-  AppName: z.nullable(z.string().optional()),
-  GroupsId: z.coerce.number().default(0),
-});
-
-export const ZRights = z.array(ZRight);
-
-export type TRight = z.infer<typeof ZRight>;
-
-export type TRights = z.infer<typeof ZRights>;

@@ -1,3 +1,6 @@
+using System.Dynamic;
+using System.Globalization;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
@@ -29,9 +32,55 @@ namespace backend.Controllers
 
         // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public ActionResult GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            try
+            {
+                var queryModel = _context.Users.AsQueryable();
+
+                dynamic responseObject = new ExpandoObject();
+
+                queryModel = queryModel
+                    .Where(t => !t.Deleted);
+
+                // Параметры из FromQuery
+                // if (node != null)
+                // {
+                //     queryModel = queryModel.Where(t => t.Node == node);
+                // }
+
+                queryModel = queryModel
+                    .OrderBy(t => t.LastName)
+                    .ThenBy(t => t.FirstName)
+                    .ThenBy(t => t.Patronymic);
+
+                var queryResult = queryModel
+                .Select(s => new
+                {
+                    s.Id,
+                    s.Sysadmin,
+                    FullName = String.Format("{0} {1} {2}", s.LastName, s.FirstName, s.Patronymic),
+                    s.FirstName,
+                    s.LastName,
+                    s.Patronymic,
+                    s.Login,
+                    s.Phone,
+                    s.Email,
+                }).ToList();
+
+                responseObject.result = 0;
+                responseObject.rowsQueried = queryModel.Count();
+                responseObject.rowsTotal = _context.Users.Count();
+                responseObject.data = queryResult;
+
+                return Ok(responseObject);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(Utils.GetErrorMessageByException(ex));
+                return new JsonResult(new { result = -1, Error = Utils.GetErrorMessageByException(ex) });
+            }
+
         }
 
         // GET: api/Users/5
@@ -92,18 +141,27 @@ namespace backend.Controllers
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public IActionResult DeleteUser(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
+            try
             {
-                return NotFound();
+                var user = _context.Users.Find(id);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                user.Deleted = true;
+                // _context.Users.Remove(user);
+                _context.SaveChanges();
+
+                return new JsonResult(new { result = 0, deletedId = user.Id });
             }
-
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
+            catch (Exception ex)
+            {
+                _logger.LogError(Utils.GetErrorMessageByException(ex));
+                return new JsonResult(new { result = -1, Error = Utils.GetErrorMessageByException(ex) });
+            }
         }
 
         private bool UserExists(int id)
@@ -143,8 +201,8 @@ namespace backend.Controllers
                         userid = s.Userid,
                         userfullname = String.Format("{0} {1} {2}", s.User!.LastName, s.User.FirstName, s.User.Patronymic) + '@' + s.User.Login,
                         action = s.Action,
-                        actiondate = s.Actiondate
-                    });
+                        actiondate = string.Concat(s.Actiondate!.Value.ToString("o", CultureInfo.InvariantCulture), "Z"),
+                    }).ToList();
 
                 return new JsonResult(DataSourceLoader.Load(queryResult, loadOptions));
             }

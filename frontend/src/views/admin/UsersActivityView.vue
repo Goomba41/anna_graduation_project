@@ -180,14 +180,16 @@ import DxDataGrid, {
   DxScrolling,
   DxColumn,
   DxGrouping,
-  DxRemoteOperations,
 } from "devextreme-vue/data-grid";
 import * as AspNetData from "devextreme-aspnet-data-nojquery";
 
 import { useLoadingStore } from "@/stores/loading.store";
 import { useUsersStore } from "@/stores/users.store";
 
+import { ZUsersActivities } from "@/typings/user.types";
+
 import useEmitter from "@/utils/emitter";
+import callParseErrorToast from "@/utils/type-parse-error";
 // import phoneParse from "@/utils/phone-formatter";
 
 import FilterPopup from "@/components/FilterPopup.vue";
@@ -280,6 +282,13 @@ const dataSource = AspNetData.createStore({
     ajaxOptions.headers = {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     };
+  },
+  onLoaded(result) {
+    console.log(result);
+    const parsedResult = ZUsersActivities.safeParse(result);
+    if (parsedResult.success === false) {
+      callParseErrorToast(parsedResult.error);
+    }
   },
 });
 
