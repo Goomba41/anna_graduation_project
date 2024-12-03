@@ -5,41 +5,41 @@ const passwordRegex = /^[a-zA-Z0-9!@#$%^&*()_+~|}{[\]:;?></=]*$/;
 const phoneRegex = /^[0-9]{10,14}$/;
 
 export const ZUserBase = z.object({
-  Id: z.number().nullish(),
+  id: z.number().nullish(),
 
   // Текстовая строка с собранными ФИО, нужна только на вывод в списке
-  Fio: z.string().optional(),
-  Fam: z
+  fullName: z.string().optional(),
+  lastName: z
     .string()
     .min(3, "Минимум 3 символа")
     .max(100, "Максимум 100 символов")
     .regex(/^[а-яёА-ЯЁ-]*$/, "Только символы кириллицы и дефис (-)"),
-  Nam: z
+  firstName: z
     .string()
     .min(2, "Минимум 2 символа")
     .max(100, "Максимум 100 символов")
     .regex(/^[а-яёА-ЯЁ-]*$/, "Только символы кириллицы и дефис (-)"),
-  Ot: z
+  patronymic: z
     .string()
     .max(100, "Максимум 100 символов")
     .regex(/^[а-яёА-ЯЁ-]*$/, "Только символы кириллицы и дефис (-)")
-    .default(null)
-    .nullish(),
+    .nullish()
+    .default(null),
 
-  Email: z.union([
+  email: z.union([
     z
       .literal("")
       .transform((val) => (val.length ? val : null))
-      .default(null)
-      .nullish(),
+      .nullish()
+      .default(null),
     z.string().email("Некорректный формат email").nullish(),
   ]),
-  Telephone: z.union([
+  phone: z.union([
     z
       .literal("")
       .transform((val) => (val.length ? val : null))
-      .default(null)
-      .nullish(),
+      .nullish()
+      .default(null),
     z.string().regex(phoneRegex, "Некорректный формат телефона").nullish(),
   ]),
 });
@@ -47,24 +47,21 @@ export const ZUserBase = z.object({
 export type TUserBase = z.infer<typeof ZUserBase>;
 
 const ZUserAdditional = z.object({
-  Name: z
+  login: z
     .string()
     .min(3, "Минимум 3 символа")
     .max(110, "Максимум 110 символов")
     .regex(loginRegex, "Только символы латиницы, цифры и подчеркивания (_)"),
-  Userpassword: z
+  password: z
     .string()
     .regex(
       passwordRegex,
       "Только символы латиницы, цифры и спец. символы !@#$%^&*()_+~|}{[\\]:;?></=",
     )
-    .default(null)
-    .nullish(),
+    .nullish()
+    .default(null),
 
-  Unit: z.string().default(null).nullish(),
-  Dol: z.string().default(null).nullish(),
-
-  Sysadmin: z.boolean().default(false),
+  sysadmin: z.boolean().default(false),
 });
 
 export const ZUser = ZUserBase.merge(ZUserAdditional);

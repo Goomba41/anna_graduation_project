@@ -24,13 +24,15 @@ async function read(
 async function read(id?: number, query?: { [key: string]: unknown }) {
   return await axios
     .get(`/api/users${id ? `/${id}` : ""}${query ? queryString(query) : ""}`)
-    .then((responseJSON) => {
+    .then((responseAXIOS) => {
+      const { data: responseData } = responseAXIOS;
+
       const result = successResult.extend({
         data: id ? ZUser : ZUsers,
       });
 
-      const error = errorResult.safeParse(responseJSON);
-      const response = result.safeParse(responseJSON);
+      const error = errorResult.safeParse(responseData);
+      const response = result.safeParse(responseData);
 
       if (response.success === true) {
         const { data } = response.data;
@@ -139,11 +141,13 @@ export const useUsersStore = defineStore({
     async delete(id: number) {
       return await axios
         .delete(`/api/users/${id}`)
-        .then((responseJSON) => {
+        .then((responseAXIOS) => {
+          const { data } = responseAXIOS;
+
           const result = successResult.extend({ deletedId: z.number() });
 
-          const error = errorResult.safeParse(responseJSON);
-          const response = result.safeParse(responseJSON);
+          const error = errorResult.safeParse(data);
+          const response = result.safeParse(data);
 
           if (response.success === true) {
             const { deletedId } = response.data;
