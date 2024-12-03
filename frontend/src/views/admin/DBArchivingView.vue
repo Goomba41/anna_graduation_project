@@ -2,11 +2,13 @@
   <div class="tw-flex tw-flex-row tw-h-full tw-justify-start">
     <div class="tw-w-1/3 tw-h-full tw-justify-start tw-flex tw-flex-col">
       <h2
-        class="tw-mb-8 tw-text-2xl tw-font-bold tw-text-gray-700 tw-flex tw-flex-row">
+        class="tw-mb-8 tw-text-2xl tw-font-bold tw-text-gray-700 tw-flex tw-flex-row"
+      >
         СУБД
         <PostgreSql
           v-if="database?.DBMSVersion.toLowerCase().includes('postgre')"
-          class="tw-mr-2 tw-ml-8 tw-self-center" />
+          class="tw-mr-2 tw-ml-8 tw-self-center"
+        />
         {{ database?.DBMSVersion }}
       </h2>
 
@@ -15,7 +17,8 @@
         <label
           for="database"
           title="База данных"
-          class="tw-text-gray-500 tw-mr-4 tw-font-bold tw-text-base tw-overflow-x-hidden tw-text-ellipsis tw-whitespace-nowrap">
+          class="tw-text-gray-500 tw-mr-4 tw-font-bold tw-text-base tw-overflow-x-hidden tw-text-ellipsis tw-whitespace-nowrap"
+        >
           База данных: «{{ database?.Description || database?.Name }}» ({{
             database?.Size
           }})
@@ -28,7 +31,8 @@
             id="database"
             inputId="database"
             class="tw-flex tw-flex-auto tw-flex-col tw-text-left"
-            :value="database?.Name" />
+            :value="database?.Name"
+          />
 
           <Dropdown
             :disabled="loadingStore.loadingState"
@@ -45,17 +49,20 @@
                 label: '.bak',
               },
             ]"
-            optionLabel="label" />
+            optionLabel="label"
+          />
 
           <Button
             :disabled="loadingStore.loadingState"
             iconPos="left"
             icon="fas fa-plus"
             class="tw-mr-2"
-            @click="requestBackup('database')">
+            @click="requestBackup('database')"
+          >
             <font-awesome-icon
               :icon="['fas', 'fa-download']"
-              :class="['p-button-icon']"></font-awesome-icon>
+              :class="['p-button-icon']"
+            ></font-awesome-icon>
           </Button>
         </div>
         <!-- </div> -->
@@ -65,7 +72,8 @@
         <label
           for="database-table"
           title="Таблица"
-          class="tw-text-gray-500 tw-mr-4 tw-font-bold tw-text-base tw-overflow-x-hidden tw-text-ellipsis tw-whitespace-nowrap">
+          class="tw-text-gray-500 tw-mr-4 tw-font-bold tw-text-base tw-overflow-x-hidden tw-text-ellipsis tw-whitespace-nowrap"
+        >
           Таблица
         </label>
 
@@ -79,7 +87,8 @@
             id="SrcId"
             class="tw-flex tw-flex-auto tw-w-4"
             :options="database?.Tables"
-            optionLabel="Name" />
+            optionLabel="Name"
+          />
           <Dropdown
             :disabled="loadingStore.loadingState"
             v-model="databaseTableDumpType"
@@ -95,23 +104,27 @@
                 label: '.bak',
               },
             ]"
-            optionLabel="label" />
+            optionLabel="label"
+          />
 
           <Button
             :disabled="!databaseTable || loadingStore.loadingState"
             iconPos="left"
             icon="fas fa-plus"
             class="tw-mr-2"
-            @click="requestBackup('table')">
+            @click="requestBackup('table')"
+          >
             <font-awesome-icon
               :icon="['fas', 'fa-download']"
-              :class="['p-button-icon']"></font-awesome-icon>
+              :class="['p-button-icon']"
+            ></font-awesome-icon>
           </Button>
         </div>
       </div>
       <div
         class="table-info tw-w-fit tw-flex tw-flex-col tw-mb-4"
-        v-if="databaseTable">
+        v-if="databaseTable"
+      >
         <div class="tw-w-full tw-rounded-lg tw-bg-white tw-shadow">
           <div class="tw-p-4">
             <div class="tw-flex tw-flex-col">
@@ -247,7 +260,7 @@ function requestBackup(object: "database" | "table") {
           object === "table" && databaseTable.value
             ? databaseTable.value.Name
             : undefined,
-      })}`
+      })}`,
       // {
       //   onDownloadProgress(progressEvent) {
 
@@ -257,8 +270,8 @@ function requestBackup(object: "database" | "table") {
     .then(async (response: any) => {
       if (response && response.result >= 0) {
         console.log(response);
-      } else if (response && response.Error) {
-        toast("Ошибка!", response.Error, "error");
+      } else if (response?.error) {
+        toast("Ошибка!", response.error, "error");
       }
     });
 }
@@ -273,8 +286,8 @@ onMounted(() => {
       } else {
         toast("Ошибка!", "Ошибка распознования данных", "error");
       }
-    } else if (response && response.Error) {
-      toast("Ошибка!", response.Error, "error");
+    } else if (response?.error) {
+      toast("Ошибка!", response.error, "error");
     }
   });
 

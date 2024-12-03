@@ -2,8 +2,8 @@ import z from "zod";
 
 export const errorResult = z.object({
   result: z.literal(-1),
-  Error: z.string().optional(),
-  ErrorMsg: z.string().optional(),
+  error: z.string().optional(),
+  errorMsg: z.string().optional(),
 });
 
 export const successResult = z.object({

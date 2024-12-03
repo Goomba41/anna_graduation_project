@@ -27,7 +27,11 @@
                 title="Фамилия, имя, отчество"
                 class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-text-ellipsis tw-whitespace-nowrap"
               >
-                <span v-if="SurnameMeta.required" class="asterisk tw-text-danger">*</span>
+                <span
+                  v-if="SurnameMeta.required"
+                  class="asterisk tw-text-danger"
+                  >*</span
+                >
                 ФИО
               </label>
 
@@ -58,7 +62,9 @@
                   input-id="Name"
                   class="tw-flex tw-flex-auto tw-flex-col"
                   :class="[
-                    (NameMeta.dirty || NameMeta.touched) && !NameMeta.valid && NameMeta.validated
+                    (NameMeta.dirty || NameMeta.touched) &&
+                    !NameMeta.valid &&
+                    NameMeta.validated
                       ? 'invalid'
                       : '',
                   ]"
@@ -89,7 +95,9 @@
                 ((SurnameMeta.dirty || SurnameMeta.touched) &&
                   !SurnameMeta.valid &&
                   SurnameMeta.validated) ||
-                ((NameMeta.dirty || NameMeta.touched) && !NameMeta.valid && NameMeta.validated) ||
+                ((NameMeta.dirty || NameMeta.touched) &&
+                  !NameMeta.valid &&
+                  NameMeta.validated) ||
                 ((PatronymicMeta.dirty || PatronymicMeta.touched) &&
                   !PatronymicMeta.valid &&
                   PatronymicMeta.validated)
@@ -98,17 +106,16 @@
             >
               <span
                 v-for="error of Object.keys(errors)
-                  .map((s) => (['Fam', 'Nam', 'Ot'].includes(s) ? s : undefined))
-                  .filter((s) => !!s)"
+                  .map((s) =>
+                    ['lastName', 'firstName', 'patronymic'].includes(s)
+                      ? s
+                      : undefined,
+                  )
+                  .filter((s) => s !== undefined)"
                 :key="error"
                 class="tw-font-medium tw-text-danger tw-text-xs tw-flex tw-flex-row tw-items-center tw-mb-2 last:tw-mb-0"
               >
-                <font-awesome-icon
-                  :icon="['fas', 'fa-exclamation-triangle']"
-                  fixed-width
-                  aria-hidden="true"
-                  class="tw-mr-2"
-                />
+                <ExclamationTriangle class="tw-mr-2" />
                 {{ errors[error] }}
               </span>
             </div>
@@ -121,7 +128,9 @@
                 title="Логин"
                 class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-overflow-x-hidden tw-text-ellipsis tw-whitespace-nowrap"
               >
-                <span v-if="LoginMeta.required" class="asterisk tw-text-danger">*</span>
+                <span v-if="LoginMeta.required" class="asterisk tw-text-danger"
+                  >*</span
+                >
                 Логин
               </label>
 
@@ -132,7 +141,9 @@
                 input-id="Login"
                 class="tw-flex tw-flex-auto tw-flex-col"
                 :class="[
-                  (LoginMeta.dirty || LoginMeta.touched) && !LoginMeta.valid && LoginMeta.validated
+                  (LoginMeta.dirty || LoginMeta.touched) &&
+                  !LoginMeta.valid &&
+                  LoginMeta.validated
                     ? 'invalid'
                     : '',
                 ]"
@@ -143,20 +154,17 @@
 
             <div
               v-if="
-                (LoginMeta.dirty || LoginMeta.touched) && !LoginMeta.valid && LoginMeta.validated
+                (LoginMeta.dirty || LoginMeta.touched) &&
+                !LoginMeta.valid &&
+                LoginMeta.validated
               "
               class="tw-mt-2"
             >
               <span
                 class="tw-font-medium tw-text-danger tw-text-xs tw-flex tw-flex-row tw-items-center tw-mb-2 last:tw-mb-0"
               >
-                <font-awesome-icon
-                  :icon="['fas', 'fa-exclamation-triangle']"
-                  fixed-width
-                  aria-hidden="true"
-                  class="tw-mr-2"
-                />
-                {{ errors.Name }}
+                <ExclamationTriangle class="tw-mr-2" />
+                {{ errors.login }}
               </span>
             </div>
           </div>
@@ -168,7 +176,11 @@
                 title="Пароль"
                 class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-text-ellipsis tw-whitespace-nowrap"
               >
-                <span v-if="PasswordMeta.required" class="asterisk tw-text-danger">*</span>
+                <span
+                  v-if="PasswordMeta.required"
+                  class="asterisk tw-text-danger"
+                  >*</span
+                >
                 Пароль
               </label>
 
@@ -192,21 +204,17 @@
                   />
 
                   <Button icon-pos="left" class="tw-mr-2" @click="getPassword">
-                    <font-awesome-icon
-                      :icon="['fas', 'fa-rotate']"
-                      :class="['p-button-icon']"
-                    ></font-awesome-icon>
+                    <ArrowsRotate class="p-button-icon" />
                   </Button>
                 </div>
                 <small
                   v-if="mode !== 'create'"
                   id="password-help"
-                  class="field-hint tw-text-xs tw-text-slate-400 tw-mt-2"
+                  class="tw-flex tw-items-center tw-text-xs tw-text-slate-400 tw-mt-2"
                 >
-                  <font-awesome-icon
-                    :icon="['fas', 'fa-lightbulb']"
-                    :class="['p-button-icon', 'tw-mr-2']"
-                  ></font-awesome-icon>
+                  <LightbulbTwotone
+                    class="p-button-icon tw-mr-2 tw-h-5 tw-w-5 tw-text-amber-500"
+                  />
                   При заполнении пароль будет перезаписан!</small
                 >
                 <small
@@ -214,10 +222,7 @@
                   id="password-warning"
                   class="tw-text-warning tw-text-xs tw-mt-2"
                 >
-                  <font-awesome-icon
-                    :icon="['fas', 'fa-exclamation-triangle']"
-                    :class="['p-button-icon', 'tw-mr-2']"
-                  ></font-awesome-icon>
+                  <ExclamationTriangle class="p-button-icon tw-mr-2" />
                   Слабый пароль! Используйте его на свой страх и риск!</small
                 >
               </div>
@@ -234,20 +239,18 @@
               <span
                 class="tw-font-medium tw-text-danger tw-text-xs tw-flex tw-flex-row tw-items-center tw-mb-2 last:tw-mb-0"
               >
-                <font-awesome-icon
-                  :icon="['fas', 'fa-exclamation-triangle']"
-                  fixed-width
-                  aria-hidden="true"
-                  class="tw-mr-2"
-                />
-                {{ errors.Userpassword }}
+                <ExclamationTriangle class="tw-mr-2" />
+                {{ errors.password }}
               </span>
             </div>
           </div>
 
           <div
             v-if="
-              Number.parseInt(useAuthStore().user?.UserId.toString() || '-1', 10) !== props.user?.Id
+              Number.parseInt(
+                useAuthStore().user?.UserId.toString() || '-1',
+                10,
+              ) !== props.user?.id
             "
             class="field tw-flex tw-flex-col tw-w-full tw-mb-4"
           >
@@ -257,7 +260,11 @@
                 title="Системный администратор"
                 class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-text-ellipsis tw-whitespace-nowrap"
               >
-                <span v-if="SysadminMeta.required" class="asterisk tw-text-danger">*</span>
+                <span
+                  v-if="SysadminMeta.required"
+                  class="asterisk tw-text-danger"
+                  >*</span
+                >
                 Системный администратор
               </label>
 
@@ -281,7 +288,11 @@
                   title="Телефон"
                   class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-overflow-x-hidden tw-text-ellipsis tw-whitespace-nowrap"
                 >
-                  <span v-if="PhoneMeta.required" class="asterisk tw-text-danger">*</span>
+                  <span
+                    v-if="PhoneMeta.required"
+                    class="asterisk tw-text-danger"
+                    >*</span
+                  >
                   Телефон
                 </label>
 
@@ -308,20 +319,17 @@
 
               <div
                 v-if="
-                  (PhoneMeta.dirty || PhoneMeta.touched) && !PhoneMeta.valid && PhoneMeta.validated
+                  (PhoneMeta.dirty || PhoneMeta.touched) &&
+                  !PhoneMeta.valid &&
+                  PhoneMeta.validated
                 "
                 class="tw-mt-2"
               >
                 <span
                   class="tw-font-medium tw-text-danger tw-text-xs tw-flex tw-flex-row tw-items-center tw-mb-2 last:tw-mb-0"
                 >
-                  <font-awesome-icon
-                    :icon="['fas', 'fa-exclamation-triangle']"
-                    fixed-width
-                    aria-hidden="true"
-                    class="tw-mr-2"
-                  />
-                  {{ errors.Telephone }}
+                  <ExclamationTriangle class="tw-mr-2" />
+                  {{ errors.phone }}
                 </span>
               </div>
             </div>
@@ -333,7 +341,11 @@
                   title="Эл. почта"
                   class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-overflow-x-hidden tw-text-ellipsis tw-whitespace-nowrap"
                 >
-                  <span v-if="EmailMeta.required" class="asterisk tw-text-danger">*</span>
+                  <span
+                    v-if="EmailMeta.required"
+                    class="asterisk tw-text-danger"
+                    >*</span
+                  >
                   Эл. почта
                 </label>
 
@@ -357,26 +369,23 @@
 
               <div
                 v-if="
-                  (EmailMeta.dirty || EmailMeta.touched) && !EmailMeta.valid && EmailMeta.validated
+                  (EmailMeta.dirty || EmailMeta.touched) &&
+                  !EmailMeta.valid &&
+                  EmailMeta.validated
                 "
                 class="tw-mt-2"
               >
                 <span
                   class="tw-font-medium tw-text-danger tw-text-xs tw-flex tw-flex-row tw-items-center tw-mb-2 last:tw-mb-0"
                 >
-                  <font-awesome-icon
-                    :icon="['fas', 'fa-exclamation-triangle']"
-                    fixed-width
-                    aria-hidden="true"
-                    class="tw-mr-2"
-                  />
-                  {{ errors.Email }}
+                  <ExclamationTriangle class="tw-mr-2" />
+                  {{ errors.email }}
                 </span>
               </div>
             </div>
           </div>
 
-          <!-- {{ SurnameMeta }} <br /><br />
+          {{ SurnameMeta }} <br /><br />
           {{ NameMeta }} <br /><br />
           {{ PatronymicMeta }} <br /><br />
           {{ LoginMeta }} <br /><br />
@@ -385,7 +394,7 @@
           {{ PhoneMeta }} <br /><br />
           {{ EmailMeta }} <br /><br />
           {{ meta }} <br /><br />
-          {{ errors }} -->
+          {{ errors }}
         </div>
       </form>
     </ScrollPanel>
@@ -393,10 +402,7 @@
     <template #footer>
       <div class="tw-flex tw-flex-row tw-justify-end">
         <Button icon-pos="left" class="neutral tw-mr-4" @click="closeModal">
-          <font-awesome-icon
-            :icon="['fas', 'fa-xmark']"
-            :class="['p-button-icon p-button-icon-left']"
-          ></font-awesome-icon>
+          <TimesCircle class="p-button-icon p-button-icon-left" />
           <div class="p-button-label">Закрыть</div>
         </Button>
         <Button
@@ -407,26 +413,20 @@
           type="reset"
           form="formUser"
         >
-          <font-awesome-icon
-            :icon="['fas', 'fa-eraser']"
-            :class="['p-button-icon p-button-icon-left']"
-          ></font-awesome-icon>
+          <EraserTwotone class="p-button-icon p-button-icon-left" />
           <div class="p-button-label">Сбросить</div>
         </Button>
         <Button
           v-if="mode !== 'read'"
           icon-pos="left"
           class="success"
-          :disabled="!(meta.dirty && meta.touched && meta.valid)"
+          :disabled="!(meta.dirty && meta.valid)"
           type="submit"
           form="formUser"
         >
-          <font-awesome-icon
-            :icon="['fas', `${mode === 'create' ? 'fa-check' : 'fa-floppy-disk'}`]"
-            :class="['p-button-icon p-button-icon-left']"
-          ></font-awesome-icon>
+          <FloppyDisk class="p-button-icon p-button-icon-left" />
           <div class="p-button-label">
-            {{ mode === 'create' ? 'Создать' : 'Сохранить' }}
+            {{ mode === "create" ? "Создать" : "Сохранить" }}
           </div>
         </Button>
       </div>
@@ -435,30 +435,38 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, type Ref, type PropType, computed } from 'vue'
+import { ref, watch, type Ref, type PropType, computed } from "vue";
 
-import Button from 'primevue/button'
-import Dialog from 'primevue/dialog'
-import Checkbox from 'primevue/checkbox'
-import InputText from 'primevue/inputtext'
-import InputMask from 'primevue/inputmask'
-import ScrollPanel from 'primevue/scrollpanel'
+import Button from "primevue/button";
+import Dialog from "primevue/dialog";
+import Checkbox from "primevue/checkbox";
+import InputText from "primevue/inputtext";
+import InputMask from "primevue/inputmask";
+import ScrollPanel from "primevue/scrollpanel";
 
-import { z } from 'zod'
-import { useFocus } from '@vueuse/core'
-import { useField, useForm } from 'vee-validate'
-import { toTypedSchema } from '@vee-validate/zod'
+import { z } from "zod";
+import { useFocus } from "@vueuse/core";
+import { useField, useForm } from "vee-validate";
+import { toTypedSchema } from "@vee-validate/zod";
 
-import toast from '@/utils/toast'
-import typeError from '@/utils/type-parse-error'
-import useEmitter from '@/utils/emitter'
-import transliterate from '@/utils/transliterate'
-import generate, { strengthCheck as weak } from '@/utils/password-generator'
+import toast from "@/utils/toast";
+import typeError from "@/utils/type-parse-error";
+import useEmitter from "@/utils/emitter";
+import transliterate from "@/utils/transliterate";
+import generate, { strengthCheck as weak } from "@/utils/password-generator";
 
-import { useAuthStore } from '@/stores/auth.store'
-import { useUsersStore } from '@/stores/users.store'
+import { useAuthStore } from "@/stores/auth.store";
+import { useUsersStore } from "@/stores/users.store";
 
-import { TUser, ZUser } from '@/typings/user.types'
+import type { TUser } from "@/typings/user.types";
+import { ZUser } from "@/typings/user.types";
+
+import FloppyDisk from "@/components/icons/FloppyDisk.vue";
+import TimesCircle from "@/components/icons/TimesCircle.vue";
+import EraserTwotone from "@/components/icons/EraserTwotone.vue";
+import ExclamationTriangle from "@/components/icons/ExclamationTriangle.vue";
+import LightbulbTwotone from "@/components/icons/LightbulbTwotone.vue";
+import ArrowsRotate from "@/components/icons/ArrowsRotate.vue";
 
 const props = defineProps({
   user: {
@@ -466,141 +474,183 @@ const props = defineProps({
     default: () => undefined,
     validator(value) {
       if (value !== undefined) {
-        const parsed = ZUser.safeParse(value)
+        const parsed = ZUser.safeParse(value);
         if (parsed.success === false) {
-          console.warn(parsed)
-          typeError(parsed.error, 'warn')
+          console.warn(parsed);
+          typeError(parsed.error, "warn");
           // throw new TypeError(
           //   "Invalid prop: custom validator check failed for prop 'user'"
           // );
         }
       }
-      return true
+      return true;
     },
   },
   disabled: {
     type: Boolean,
     default: () => false,
   },
-})
+});
 
-const visible: Ref<boolean> = ref(false)
+const visible: Ref<boolean> = ref(false);
 
-let formHeader: Ref<string> = ref('...')
+const formHeader: Ref<string> = ref("...");
 
-let mode: Ref<string> = ref(props.disabled ? 'read' : props.user ? 'update' : 'create')
+const mode: Ref<string> = ref(
+  props.disabled ? "read" : props.user ? "update" : "create",
+);
 
-const usersStore = useUsersStore()
+const usersStore = useUsersStore();
 
-const firstFormField = ref()
+const firstFormField = ref();
 
-const { bus } = useEmitter()
+const { bus } = useEmitter();
 
 // ? Если нужно будет запросить справочники
 // const options: Ref<{ [key: string]: unknown[] }> = ref({})
 
 const validationSchema = computed(() =>
   toTypedSchema(
-    mode.value === 'create'
+    mode.value === "create"
       ? ZUser.merge(
           z.object({
-            Userpassword: z
+            password: z
               .string()
-              .min(6, 'Минимум 6 символов')
+              .min(6, "Минимум 6 символов")
               .regex(
                 /^[a-zA-Z0-9!@#$%^&*()_+~|}{[\]:;?></=]*$/,
-                'Только символы латиницы, цифры и спец. символы !@#$%^&*()_+~|}{[\\]:;?></=',
+                "Только символы латиницы, цифры и спец. символы !@#$%^&*()_+~|}{[\\]:;?></=",
               )
               .default(null),
           }),
         )
       : ZUser,
   ),
-)
+);
 
-const { handleSubmit, errors, resetForm, meta, setFieldTouched, setFieldValue } = useForm({
+const {
+  handleSubmit,
+  errors,
+  resetForm,
+  meta,
+  setFieldTouched,
+  setFieldValue,
+} = useForm({
   validationSchema,
-})
+});
 
-const onSubmit = handleSubmit(onSuccess, onInvalid)
+const onSubmit = handleSubmit(onSuccess, onInvalid);
 
 // 👇 Поля формы
-const { value: Surname, meta: SurnameMeta } = useField<string>('Fam')
-const { value: Name, meta: NameMeta } = useField<string>('Nam')
-const { value: Patronymic, meta: PatronymicMeta } = useField<string>('Ot', undefined, {
+const { value: Surname, meta: SurnameMeta } = useField<string>("lastName");
+const { value: Name, meta: NameMeta } = useField<string>("firstName");
+const { value: Patronymic, meta: PatronymicMeta } = useField<
+  string | undefined
+>("patronymic", undefined, {
+  initialValue: undefined,
+});
+const { value: Password, meta: PasswordMeta } = useField<string>("password", {
   initialValue: null,
-})
-const { value: Password, meta: PasswordMeta } = useField<string>('Userpassword', {
-  initialValue: null,
-})
-const { value: Login, meta: LoginMeta } = useField<string>('Name')
-const { value: Email, meta: EmailMeta } = useField<string>('Email', undefined, {
-  initialValue: null,
-})
-const { value: Phone, meta: PhoneMeta } = useField<string>('Telephone', undefined, {
-  initialValue: null,
-})
-const { value: Sysadmin, meta: SysadminMeta } = useField<boolean>('Sysadmin', undefined, {
-  initialValue: false,
-})
+});
+const { value: Login, meta: LoginMeta } = useField<string>("login");
+const { value: Email, meta: EmailMeta } = useField<string | undefined>(
+  "email",
+  undefined,
+  {
+    initialValue: undefined,
+  },
+);
+const { value: Phone, meta: PhoneMeta } = useField<string | undefined>(
+  "phone",
+  undefined,
+  {
+    initialValue: undefined,
+  },
+);
+const { value: Sysadmin, meta: SysadminMeta } = useField<boolean>(
+  "sysadmin",
+  undefined,
+  {
+    initialValue: false,
+  },
+);
 
 const emitEvent = defineEmits<{
-  created: [response: { createdId: number; form: TUser }]
-  updated: [response: { updatedId: number; form: TUser }]
-}>()
+  created: [response: { createdId: number; form: TUser }];
+  updated: [response: { updatedId: number; form: TUser }];
+}>();
 
 async function onSuccess(user: TUser) {
-  user.Fio = `${user.Fam} ${user.Nam}${user.Ot ? ' ' + user.Ot : null}`
+  user.fullName = `${user.lastName} ${user.firstName}${user.patronymic ? ` ${user.patronymic}` : ""}`;
 
-  const parsed = ZUser.safeParse(user)
+  const parsed = ZUser.safeParse(user);
   if (parsed.success) {
-    let query: Promise<{ createdId: number; form: TUser } | { updatedId: number; form: TUser }>
-    if (mode.value === 'create') {
-      query = usersStore.create(parsed.data)
-    } else if (mode.value === 'update') {
-      query = usersStore.update(parsed.data)
+    let query:
+      | Promise<
+          | { createdId: number; form: TUser }
+          | { updatedId: number; form: TUser }
+        >
+      | undefined;
+    if (mode.value === "create") {
+      query = usersStore.create(parsed.data);
+    } else if (mode.value === "update") {
+      query = usersStore.update(parsed.data);
     }
 
     await query?.then(async (response) => {
-      let message = 'Пользователь создан'
+      let message = "Пользователь создан";
 
-      if ('updatedId' in response) {
-        message = 'Пользователь обновлён'
-        emitEvent('updated', response)
-        usersStore.activity('write', 2, `Изменение пользователя ${response.updatedId}`)
-      } else if ('createdId' in response) {
-        emitEvent('created', response)
-        usersStore.activity('write', 2, `Добавление пользователя ${response.createdId}`)
+      if ("updatedId" in response) {
+        message = "Пользователь обновлён";
+        emitEvent("updated", response);
+        usersStore.activity(
+          "write",
+          `Изменение пользователя ${response.updatedId}`,
+        );
+      } else if ("createdId" in response) {
+        emitEvent("created", response);
+        usersStore.activity(
+          "write",
+          `Добавление пользователя ${response.createdId}`,
+        );
       }
 
-      toast('Успех', message, 'success')
-      closeModal()
-    })
+      toast("Успех", message, "success");
+      closeModal();
+    });
+    // console.log(parsed.data);
+    // toast("Успех", `Пользователь «${parsed.data.fullName}» создан`, "success");
+    // closeModal();
   } else {
-    toast('Ошибка!', "Ошибка приведения к типу 'User'", 'error')
+    toast("Ошибка!", "Ошибка приведения к типу 'User'", "error");
   }
 }
 
-function onInvalid({ values, errors, results }) {
-  console.log(values) // current form values
-  console.error(errors) // a map of field names and their first error message
-  console.warn(results) // a detailed map of field names and their validation results
+function onInvalid(data: {
+  values: unknown;
+  errors: unknown;
+  results: unknown;
+}) {
+  const { values, errors, results } = data;
+  console.log(values); // current form values
+  console.error(errors); // a map of field names and their first error message
+  console.warn(results); // a detailed map of field names and their validation results
 }
 
 watch(
-  () => bus.value.get('openAdminUserForm'),
+  () => bus.value.get("openAdminUserForm"),
   async () => {
-    visible.value = true
+    visible.value = true;
 
-    const isNotEmpty = props.user
+    const isNotEmpty = props.user;
 
-    mode.value = props.disabled ? 'read' : isNotEmpty ? 'update' : 'create'
+    mode.value = props.disabled ? "read" : isNotEmpty ? "update" : "create";
 
     formHeader.value = props.disabled
-      ? `Просмотр пользователя «${props.user.Name}»`
+      ? `Просмотр пользователя «${props.user?.login}»`
       : isNotEmpty
-        ? `Редактирование пользователя «${props.user.Name}»`
-        : 'Новый пользователь'
+        ? `Редактирование пользователя «${props.user.login}»`
+        : "Новый пользователь";
 
     // ? Если нужно будет запросить справочники
     // const optionsToAsk = [
@@ -619,61 +669,61 @@ watch(
     // )
 
     if (props.user) {
-      resetData(props.user)
+      resetData(props.user);
     } else {
-      resetData()
+      resetData();
     }
 
-    useFocus(firstFormField, { initialValue: true })
+    useFocus(firstFormField, { initialValue: true });
 
-    if (mode.value === 'create') getPassword()
+    if (mode.value === "create") getPassword();
   },
-)
+);
 
 watch([Surname, Name, Patronymic], ([Surname, Name, Patronymic]) => {
-  if (mode.value === 'create') {
-    const stringToTransliterate = `${Surname ?? ''}${Name ? Name.charAt(0) : ''}${Patronymic ? Patronymic.charAt(0) : ''}`
+  if (mode.value === "create") {
+    const stringToTransliterate = `${Surname ?? ""}${Name ? Name.charAt(0) : ""}${Patronymic ? Patronymic.charAt(0) : ""}`;
 
-    const transliterated = transliterate(stringToTransliterate)
+    const transliterated = transliterate(stringToTransliterate);
     if (transliterated) {
-      setFieldValue('Name', transliterated)
-      setFieldTouched('Name', true)
+      setFieldValue("login", transliterated);
+      setFieldTouched("login", true);
     }
   }
-})
+});
 
 function getPassword() {
-  setFieldValue('Userpassword', generate())
-  setFieldTouched('Userpassword', true)
+  setFieldValue("password", generate());
+  setFieldTouched("password", true);
 }
 
 // Сброс формы
 function resetData(form?: TUser) {
   if (form) {
-    resetForm({ values: form })
+    resetForm({ values: form });
   } else {
     resetForm({
       values: {
-        Id: undefined,
-        Fio: undefined,
-        Fam: null,
-        Nam: null,
-        Ot: null,
-        Name: null,
-        Email: null,
-        Telephone: null,
-        Sysadmin: false,
+        id: undefined,
+        fullName: undefined,
+        lastName: null,
+        firstName: null,
+        patronymic: undefined,
+        login: null,
+        email: undefined,
+        phone: undefined,
+        sysadmin: false,
       },
-    })
+    });
   }
 
-  if (mode.value === 'create') setFieldValue('Userpassword', generate())
+  if (mode.value === "create") setFieldValue("password", generate());
 }
 
 const closeModal = () => {
-  resetData()
-  visible.value = false
-}
+  resetData();
+  visible.value = false;
+};
 </script>
 
 <style lang="css" scoped></style>

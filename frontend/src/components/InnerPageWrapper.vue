@@ -292,7 +292,7 @@ function checkAsReaded(id: string) {
         authStore.notificationsCount -= 1;
         authStore.updateTabTitle();
       } else if (response && response.result === -1) {
-        toast("Ошибка!", response.Error || response.ErrorMsg, "error");
+        toast("Ошибка!", response.error || response.errorMsg, "error");
       }
     });
   } else {

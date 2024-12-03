@@ -1,3 +1,6 @@
+using System.Text;
+using System.Security.Cryptography;
+
 using backend.Models;
 
 namespace backend
@@ -30,5 +33,16 @@ namespace backend
             errorMessages.Add(stackTrace);
             return string.Join(separator, errorMessages);
         }
+
+        public static string GetPasswordHash(string password, string salt = "7Q}.3pOWl9pR=FmGVig]")
+        {
+            string hash = string.Empty;
+            foreach (byte b in MD5.HashData(Encoding.Default.GetBytes(password + salt)))
+            {
+                hash += b.ToString("X2");
+            }
+            return hash;
+        }
+
     }
 }

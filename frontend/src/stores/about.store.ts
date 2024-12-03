@@ -124,7 +124,7 @@ export const useAboutStore = defineStore({
           ).version = info.osVersion.versionString;
         } else if (error.success === true) {
           const { data } = error;
-          toast("Ошибка", data.ErrorMsg || data.Error, "error");
+          toast("Ошибка", data.errorMsg || data.error, "error");
         } else {
           callParseErrorToast(response.error);
           callParseErrorToast(error.error);

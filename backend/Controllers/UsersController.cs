@@ -102,30 +102,80 @@ namespace backend.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, User user)
         {
-            if (id != user.Id)
-            {
-                return BadRequest();
-            }
 
-            _context.Entry(user).State = EntityState.Modified;
+            User? userFromContext = _context.Users.AsNoTracking().FirstOrDefault(dbu => dbu.Id == user.Id);
 
-            try
+            if (userFromContext != null)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
+                if (!string.IsNullOrEmpty(user.Password))
                 {
-                    return NotFound();
+                    user.Password = Utils.GetPasswordHash(user.Password);
                 }
                 else
                 {
-                    throw;
+                    // Иначе пароль заменяется на null, потому что не отправляется с фронта
+                    user.Password = userFromContext.Password;
                 }
+
+                var existedLogin = _context.Users
+                    .FirstOrDefault(u => u.Login.ToLower().Equals(user.Login.ToLower()) && !u.Deleted && u.Id != user.Id);
+
+                if (existedLogin != null)
+                {
+                    _logger.LogError($"Попытка создать пользователя с существующим логином («{user.Login}»)");
+                    return new JsonResult(new { result = -1, Error = $"Пользователь с логином «{user.Login}» существует" });
+                }
+
+                if (id != user.Id)
+                {
+                    return BadRequest();
+                }
+
+                _context.Entry(user).State = EntityState.Modified;
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!UserExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return new JsonResult(new
+                {
+                    result = 0,
+                    updatedId = user.Id,
+                    data = new
+                    {
+                        user.Id,
+                        user.Sysadmin,
+                        FullName = String.Format("{0} {1} {2}", user.LastName, user.FirstName, user.Patronymic),
+                        user.FirstName,
+                        user.LastName,
+                        user.Patronymic,
+                        user.Login,
+                        user.Phone,
+                        user.Email,
+                    }
+                });
+            }
+            else
+            {
+                return new JsonResult(new
+                {
+                    result = -1,
+                    error = "Пользователь не существует"
+                });
             }
 
-            return NoContent();
         }
 
         // POST: api/Users
@@ -133,10 +183,44 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
+            user.Password = Utils.GetPasswordHash(user.Password!);
+
+            var existedLogin = _context.Users
+                .FirstOrDefault(u => u.Login.ToLower().Equals(user.Login.ToLower()) && !u.Deleted);
+
+            if (existedLogin != null)
+            {
+                _logger.LogError($"Попытка создать пользователя с существующим логином («{user.Login}»)");
+                return new JsonResult(new { result = -1, Error = $"Пользователь с логином «{user.Login}» существует" });
+            }
+
+            var numberOfSysadmins = _context.Users.Where(u => u.Sysadmin).Count();
+
+            if (numberOfSysadmins < 1)
+            {
+                user.Sysadmin = true;
+            }
+
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.Id }, user);
+            return new JsonResult(new
+            {
+                result = 0,
+                createdId = user.Id,
+                data = new
+                {
+                    user.Id,
+                    user.Sysadmin,
+                    FullName = String.Format("{0} {1} {2}", user.LastName, user.FirstName, user.Patronymic),
+                    user.FirstName,
+                    user.LastName,
+                    user.Patronymic,
+                    user.Login,
+                    user.Phone,
+                    user.Email,
+                }
+            });
         }
 
         // DELETE: api/Users/5

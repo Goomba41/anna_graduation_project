@@ -41,7 +41,7 @@ async function read(id?: number, query?: { [key: string]: unknown }) {
       }
       if (error.success === true) {
         const { data } = error;
-        toast("Ошибка", data.ErrorMsg || data.Error, "error");
+        toast("Ошибка", data.errorMsg || data.error, "error");
       }
 
       callParseErrorToast(response.error);
@@ -66,14 +66,16 @@ export const useUsersStore = defineStore({
     async create(form: TUser) {
       return await axios
         .post("/api/users", form)
-        .then((responseJSON) => {
+        .then((responseAXIOS) => {
+          const { data } = responseAXIOS;
+
           const result = successResult.extend({
             createdId: z.number(),
             data: ZUser,
           });
 
-          const error = errorResult.safeParse(responseJSON);
-          const response = result.safeParse(responseJSON);
+          const error = errorResult.safeParse(data);
+          const response = result.safeParse(data);
 
           if (response.success === true) {
             const { createdId, data: form } = response.data;
@@ -82,8 +84,8 @@ export const useUsersStore = defineStore({
           }
           if (error.success === true) {
             const { data } = error;
-            toast("Ошибка", data.ErrorMsg || data.Error, "error");
-            return Promise.reject(data.ErrorMsg || data.Error);
+            toast("Ошибка", data.errorMsg || data.error, "error");
+            return Promise.reject(data.errorMsg || data.error);
           }
 
           callParseErrorToast(response.error);
@@ -91,7 +93,6 @@ export const useUsersStore = defineStore({
           return Promise.reject(`${error.error}; ${response.error}`);
         })
         .catch((error) => {
-          callParseErrorToast(error);
           return Promise.reject(error);
         });
     },
@@ -107,15 +108,17 @@ export const useUsersStore = defineStore({
      **/
     async update(form: TUser) {
       return await axios
-        .put("/api/users", form)
-        .then((responseJSON) => {
+        .put(`/api/users/${form.id}`, form)
+        .then((responseAXIOS) => {
+          const { data } = responseAXIOS;
+
           const result = successResult.extend({
             updatedId: z.number(),
             data: ZUser,
           });
 
-          const error = errorResult.safeParse(responseJSON);
-          const response = result.safeParse(responseJSON);
+          const error = errorResult.safeParse(data);
+          const response = result.safeParse(data);
 
           if (response.success === true) {
             const { updatedId, data: form } = response.data;
@@ -124,8 +127,8 @@ export const useUsersStore = defineStore({
           }
           if (error.success === true) {
             const { data } = error;
-            toast("Ошибка", data.ErrorMsg || data.Error, "error");
-            return Promise.reject(data.ErrorMsg || data.Error);
+            toast("Ошибка", data.errorMsg || data.error, "error");
+            return Promise.reject(data.errorMsg || data.error);
           }
 
           callParseErrorToast(response.error);
@@ -156,8 +159,8 @@ export const useUsersStore = defineStore({
           }
           if (error.success === true) {
             const { data } = error;
-            toast("Ошибка", data.ErrorMsg || data.Error, "error");
-            return Promise.reject(data.ErrorMsg || data.Error);
+            toast("Ошибка", data.errorMsg || data.error, "error");
+            return Promise.reject(data.errorMsg || data.error);
           }
 
           callParseErrorToast(response.error);
@@ -192,8 +195,8 @@ export const useUsersStore = defineStore({
             }
             if (error.success === true) {
               const { data } = error;
-              toast("Ошибка", data.ErrorMsg || data.Error, "error");
-              return Promise.reject(data.ErrorMsg || data.Error);
+              toast("Ошибка", data.errorMsg || data.error, "error");
+              return Promise.reject(data.errorMsg || data.error);
             }
 
             callParseErrorToast(response.error);
