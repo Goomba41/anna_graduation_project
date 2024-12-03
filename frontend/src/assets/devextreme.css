@@ -273,7 +273,8 @@
 
 @font-face {
   font-family: FontAwesome;
-  src: local("FontAwesome"),
+  src:
+    local("FontAwesome"),
     url("/fonts/fa-solid-900.woff2") format("woff2"),
     url("/fonts/fa-solid-900.ttf") format("truetype");
   font-weight: 400;
@@ -3091,45 +3092,75 @@
 .dx-buttongroup-item.dx-button.dx-button-mode-contained:not(.dx-item-selected) {
   background-color: #fff;
 }
-.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(.dx-item-selected).dx-button-default {
+.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(
+    .dx-item-selected
+  ).dx-button-default {
   border-color: #2d6da3;
 }
-.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(.dx-item-selected).dx-button-default.dx-state-hover {
+.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(
+    .dx-item-selected
+  ).dx-button-default.dx-state-hover {
   background-color: #f5f5f5;
 }
-.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(.dx-item-selected).dx-button-default.dx-state-focused {
+.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(
+    .dx-item-selected
+  ).dx-button-default.dx-state-focused {
   background-color: #ebebeb;
 }
-.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(.dx-item-selected).dx-button-default,
-.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(.dx-item-selected).dx-button-default
+.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(
+    .dx-item-selected
+  ).dx-button-default,
+.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(
+    .dx-item-selected
+  ).dx-button-default
   .dx-icon {
   color: #2d6da3;
 }
-.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(.dx-item-selected).dx-button-success {
+.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(
+    .dx-item-selected
+  ).dx-button-success {
   border-color: #4cae4c;
 }
-.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(.dx-item-selected).dx-button-success.dx-state-hover {
+.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(
+    .dx-item-selected
+  ).dx-button-success.dx-state-hover {
   background-color: #f5f5f5;
 }
-.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(.dx-item-selected).dx-button-success.dx-state-focused {
+.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(
+    .dx-item-selected
+  ).dx-button-success.dx-state-focused {
   background-color: #ebebeb;
 }
-.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(.dx-item-selected).dx-button-success,
-.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(.dx-item-selected).dx-button-success
+.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(
+    .dx-item-selected
+  ).dx-button-success,
+.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(
+    .dx-item-selected
+  ).dx-button-success
   .dx-icon {
   color: #4cae4c;
 }
-.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(.dx-item-selected).dx-button-danger {
+.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(
+    .dx-item-selected
+  ).dx-button-danger {
   border-color: #d43f3a;
 }
-.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(.dx-item-selected).dx-button-danger.dx-state-hover {
+.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(
+    .dx-item-selected
+  ).dx-button-danger.dx-state-hover {
   background-color: #f5f5f5;
 }
-.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(.dx-item-selected).dx-button-danger.dx-state-focused {
+.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(
+    .dx-item-selected
+  ).dx-button-danger.dx-state-focused {
   background-color: #ebebeb;
 }
-.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(.dx-item-selected).dx-button-danger,
-.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(.dx-item-selected).dx-button-danger
+.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(
+    .dx-item-selected
+  ).dx-button-danger,
+.dx-buttongroup-item.dx-button.dx-button-mode-contained:not(
+    .dx-item-selected
+  ).dx-button-danger
   .dx-icon {
   color: #d43f3a;
 }
@@ -3525,33 +3556,50 @@
 }
 .dx-scrollbar-vertical.dx-scrollbar-hoverable {
   width: 8px;
-  -webkit-transition: width 0.2s linear 0.15s,
+  -webkit-transition:
+    width 0.2s linear 0.15s,
     background-color 0.2s linear 0.15s !important;
-  transition: width 0.2s linear 0.15s, background-color 0.2s linear 0.15s !important;
+  transition:
+    width 0.2s linear 0.15s,
+    background-color 0.2s linear 0.15s !important;
 }
 .dx-scrollbar-vertical.dx-scrollbar-hoverable .dx-scrollable-scroll {
-  -webkit-transition: background-color 0.5s linear 1s, width 0.2s linear 150ms !important;
-  transition: background-color 0.5s linear 1s, width 0.2s linear 150ms !important;
+  -webkit-transition:
+    background-color 0.5s linear 1s,
+    width 0.2s linear 150ms !important;
+  transition:
+    background-color 0.5s linear 1s,
+    width 0.2s linear 150ms !important;
 }
 .dx-scrollbar-vertical.dx-scrollbar-hoverable
   .dx-scrollable-scroll
   .dx-scrollable-scroll-content {
-  -webkit-transition: background-color 0.15s linear 0.15s,
+  -webkit-transition:
+    background-color 0.15s linear 0.15s,
     -webkit-box-shadow 0.15s linear 0.15s !important;
-  transition: box-shadow 0.15s linear 0.15s, background-color 0.15s linear 0.15s,
+  transition:
+    box-shadow 0.15s linear 0.15s,
+    background-color 0.15s linear 0.15s,
     -webkit-box-shadow 0.15s linear 0.15s !important;
 }
 .dx-scrollbar-vertical.dx-scrollbar-hoverable
   .dx-scrollable-scroll.dx-state-invisible {
-  -webkit-transition: background-color 0.5s linear 1s, width 0.2s linear 0.15s !important;
-  transition: background-color 0.5s linear 1s, width 0.2s linear 0.15s !important;
+  -webkit-transition:
+    background-color 0.5s linear 1s,
+    width 0.2s linear 0.15s !important;
+  transition:
+    background-color 0.5s linear 1s,
+    width 0.2s linear 0.15s !important;
 }
 .dx-scrollbar-vertical.dx-scrollbar-hoverable
   .dx-scrollable-scroll.dx-state-invisible
   .dx-scrollable-scroll-content {
-  -webkit-transition: background-color 0.5s linear 1s,
+  -webkit-transition:
+    background-color 0.5s linear 1s,
     -webkit-box-shadow 0.5s linear 1s !important;
-  transition: box-shadow 0.5s linear 1s, background-color 0.5s linear 1s,
+  transition:
+    box-shadow 0.5s linear 1s,
+    background-color 0.5s linear 1s,
     -webkit-box-shadow 0.5s linear 1s !important;
 }
 .dx-scrollbar-vertical.dx-scrollbar-hoverable.dx-scrollable-scrollbar-active,
@@ -3567,33 +3615,50 @@
 }
 .dx-scrollbar-horizontal.dx-scrollbar-hoverable {
   height: 8px;
-  -webkit-transition: height 0.2s linear 0.15s,
+  -webkit-transition:
+    height 0.2s linear 0.15s,
     background-color 0.2s linear 0.15s !important;
-  transition: height 0.2s linear 0.15s, background-color 0.2s linear 0.15s !important;
+  transition:
+    height 0.2s linear 0.15s,
+    background-color 0.2s linear 0.15s !important;
 }
 .dx-scrollbar-horizontal.dx-scrollbar-hoverable .dx-scrollable-scroll {
-  -webkit-transition: background-color 0.5s linear 1s, height 0.2s linear 0.15s !important;
-  transition: background-color 0.5s linear 1s, height 0.2s linear 0.15s !important;
+  -webkit-transition:
+    background-color 0.5s linear 1s,
+    height 0.2s linear 0.15s !important;
+  transition:
+    background-color 0.5s linear 1s,
+    height 0.2s linear 0.15s !important;
 }
 .dx-scrollbar-horizontal.dx-scrollbar-hoverable
   .dx-scrollable-scroll
   .dx-scrollable-scroll-content {
-  -webkit-transition: background-color 0.15s linear 0.15s,
+  -webkit-transition:
+    background-color 0.15s linear 0.15s,
     -webkit-box-shadow 0.15s linear 0.15s !important;
-  transition: box-shadow 0.15s linear 0.15s, background-color 0.15s linear 0.15s,
+  transition:
+    box-shadow 0.15s linear 0.15s,
+    background-color 0.15s linear 0.15s,
     -webkit-box-shadow 0.15s linear 0.15s !important;
 }
 .dx-scrollbar-horizontal.dx-scrollbar-hoverable
   .dx-scrollable-scroll.dx-state-invisible {
-  -webkit-transition: background-color 0.5s linear 1s, height 0.2s linear 0.15s !important;
-  transition: background-color 0.5s linear 1s, height 0.2s linear 0.15s !important;
+  -webkit-transition:
+    background-color 0.5s linear 1s,
+    height 0.2s linear 0.15s !important;
+  transition:
+    background-color 0.5s linear 1s,
+    height 0.2s linear 0.15s !important;
 }
 .dx-scrollbar-horizontal.dx-scrollbar-hoverable
   .dx-scrollable-scroll.dx-state-invisible
   .dx-scrollable-scroll-content {
-  -webkit-transition: background-color 0.5s linear 1s,
+  -webkit-transition:
+    background-color 0.5s linear 1s,
     -webkit-box-shadow 0.5s linear 1s !important;
-  transition: box-shadow 0.5s linear 1s, background-color 0.5s linear 1s,
+  transition:
+    box-shadow 0.5s linear 1s,
+    background-color 0.5s linear 1s,
     -webkit-box-shadow 0.5s linear 1s !important;
 }
 .dx-scrollbar-horizontal.dx-scrollbar-hoverable.dx-scrollable-scrollbar-active,
@@ -3677,7 +3742,9 @@
   .dx-scrollview-pull-down.dx-scrollview-pull-down-loading {
   -webkit-transition: -webkit-transform 0.1s linear !important;
   transition: transform 0.1s linear !important ;
-  transition: transform 0.1s linear, -webkit-transform 0.1s linear !important;
+  transition:
+    transform 0.1s linear,
+    -webkit-transform 0.1s linear !important;
 }
 .dx-scrollable-native.dx-scrollable-native-android
   .dx-scrollview-pull-down
@@ -3737,14 +3804,18 @@
   overflow-y: auto;
   -webkit-transition: -webkit-transform 0.4s !important;
   transition: transform 0.4s !important;
-  transition: transform 0.4s, -webkit-transform 0.4s !important;
+  transition:
+    transform 0.4s,
+    -webkit-transform 0.4s !important;
   -webkit-transform: translate(0, 0);
   transform: translate(0, 0);
 }
 .dx-scrollable-native.dx-scrollable-native-ios .dx-scrollview-content {
   -webkit-transition: -webkit-transform 0.4s !important;
   transition: transform 0.4s !important;
-  transition: transform 0.4s, -webkit-transform 0.4s !important;
+  transition:
+    transform 0.4s,
+    -webkit-transform 0.4s !important;
   -webkit-transform: none;
   transform: none;
 }
@@ -3824,7 +3895,9 @@
   -webkit-transform: translate(0, 0) rotate(0);
   transform: translate(0, 0) rotate(0);
   -webkit-transition: -webkit-transform 0.2s linear !important;
-  transition: transform 0.2s linear, -webkit-transform 0.2s linear !important;
+  transition:
+    transform 0.2s linear,
+    -webkit-transform 0.2s linear !important;
   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAABkCAQAAABebbrxAAABD0lEQVRo3u2XvQ3CMBCFLbmjYYGsAA2wA1X2gAbEAEwB2eIKflagh6zACJAuUihASUic+M5GNH56dT7J8efTPUXKkDkzrS8LpQAEMBygcwAss2UGQADDBmLa+AMvzAAIYNhATBt/YMEMgACGDcS0wbQBEEAAAQQQwD8CEzaiL7sKqOnojTuQrh95SKkX7kqD5j+M6O6Mu1NkupQJZU64B426bjmmXIzLKe7TZiUGLmweyhTa28XWdJKpYn8pXIVub1U4T4+jUKkKbyWeWhR6Vqpwd+w+hb5U4S/ta54qkhZgVihxrxWaznZVZD2lqVDaVkVafOoKGVWRN6nZR6GMxr+qZjHl3aq4db0NLXld7wVjuu7NS9f7yAAAAABJRU5ErkJggg==")
     0 0/100% no-repeat;
 }
@@ -5065,10 +5138,12 @@
   .dx-texteditor-label,
 .dx-editor-filled.dx-texteditor-with-floating-label.dx-texteditor-empty.dx-state-readonly
   .dx-texteditor-label {
-  -webkit-transition: font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
+  -webkit-transition:
+    font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
     top 0.2s cubic-bezier(0, 0, 0.2, 1),
     -webkit-transform 0.2s cubic-bezier(0, 0, 0.2, 1) !important;
-  transition: font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
+  transition:
+    font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
     transform 0.2s cubic-bezier(0, 0, 0.2, 1),
     top 0.2s cubic-bezier(0, 0, 0.2, 1),
     -webkit-transform 0.2s cubic-bezier(0, 0, 0.2, 1) !important;
@@ -5197,10 +5272,12 @@
   .dx-texteditor-label
   .dx-label
   span {
-  -webkit-transition: font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
+  -webkit-transition:
+    font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
     top 0.2s cubic-bezier(0, 0, 0.2, 1),
     -webkit-transform 0.2s cubic-bezier(0, 0, 0.2, 1);
-  transition: font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
+  transition:
+    font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
     transform 0.2s cubic-bezier(0, 0, 0.2, 1),
     top 0.2s cubic-bezier(0, 0, 0.2, 1),
     -webkit-transform 0.2s cubic-bezier(0, 0, 0.2, 1);
@@ -5281,10 +5358,12 @@
   .dx-texteditor-label
   .dx-label
   span {
-  -webkit-transition: font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
+  -webkit-transition:
+    font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
     top 0.2s cubic-bezier(0, 0, 0.2, 1),
     -webkit-transform 0.2s cubic-bezier(0, 0, 0.2, 1);
-  transition: font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
+  transition:
+    font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
     transform 0.2s cubic-bezier(0, 0, 0.2, 1),
     top 0.2s cubic-bezier(0, 0, 0.2, 1),
     -webkit-transform 0.2s cubic-bezier(0, 0, 0.2, 1);
@@ -5365,10 +5444,12 @@
   .dx-texteditor-label
   .dx-label
   span {
-  -webkit-transition: font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
+  -webkit-transition:
+    font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
     top 0.2s cubic-bezier(0, 0, 0.2, 1),
     -webkit-transform 0.2s cubic-bezier(0, 0, 0.2, 1);
-  transition: font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
+  transition:
+    font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
     transform 0.2s cubic-bezier(0, 0, 0.2, 1),
     top 0.2s cubic-bezier(0, 0, 0.2, 1),
     -webkit-transform 0.2s cubic-bezier(0, 0, 0.2, 1);
@@ -5531,10 +5612,12 @@
   .dx-texteditor-label
   .dx-label
   span {
-  -webkit-transition: font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
+  -webkit-transition:
+    font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
     top 0.2s cubic-bezier(0, 0, 0.2, 1),
     -webkit-transform 0.2s cubic-bezier(0, 0, 0.2, 1);
-  transition: font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
+  transition:
+    font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
     transform 0.2s cubic-bezier(0, 0, 0.2, 1),
     top 0.2s cubic-bezier(0, 0, 0.2, 1),
     -webkit-transform 0.2s cubic-bezier(0, 0, 0.2, 1);
@@ -5717,10 +5800,12 @@
   .dx-texteditor-label
   .dx-label
   span {
-  -webkit-transition: font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
+  -webkit-transition:
+    font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
     top 0.2s cubic-bezier(0, 0, 0.2, 1),
     -webkit-transform 0.2s cubic-bezier(0, 0, 0.2, 1);
-  transition: font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
+  transition:
+    font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
     transform 0.2s cubic-bezier(0, 0, 0.2, 1),
     top 0.2s cubic-bezier(0, 0, 0.2, 1),
     -webkit-transform 0.2s cubic-bezier(0, 0, 0.2, 1);
@@ -5849,10 +5934,12 @@
   .dx-texteditor-label
   .dx-label
   span {
-  -webkit-transition: font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
+  -webkit-transition:
+    font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
     top 0.2s cubic-bezier(0, 0, 0.2, 1),
     -webkit-transform 0.2s cubic-bezier(0, 0, 0.2, 1);
-  transition: font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
+  transition:
+    font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
     transform 0.2s cubic-bezier(0, 0, 0.2, 1),
     top 0.2s cubic-bezier(0, 0, 0.2, 1),
     -webkit-transform 0.2s cubic-bezier(0, 0, 0.2, 1);
@@ -6101,10 +6188,12 @@
   .dx-texteditor-label
   .dx-label
   span {
-  -webkit-transition: font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
+  -webkit-transition:
+    font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
     top 0.2s cubic-bezier(0, 0, 0.2, 1),
     -webkit-transform 0.2s cubic-bezier(0, 0, 0.2, 1);
-  transition: font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
+  transition:
+    font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
     transform 0.2s cubic-bezier(0, 0, 0.2, 1),
     top 0.2s cubic-bezier(0, 0, 0.2, 1),
     -webkit-transform 0.2s cubic-bezier(0, 0, 0.2, 1);
@@ -7672,10 +7761,12 @@
   .dx-texteditor-label,
 .dx-editor-underlined.dx-texteditor-with-floating-label.dx-texteditor-empty.dx-state-readonly
   .dx-texteditor-label {
-  -webkit-transition: font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
+  -webkit-transition:
+    font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
     top 0.2s cubic-bezier(0, 0, 0.2, 1),
     -webkit-transform 0.2s cubic-bezier(0, 0, 0.2, 1);
-  transition: font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
+  transition:
+    font-size 0.2s cubic-bezier(0, 0, 0.2, 1),
     transform 0.2s cubic-bezier(0, 0, 0.2, 1),
     top 0.2s cubic-bezier(0, 0, 0.2, 1),
     -webkit-transform 0.2s cubic-bezier(0, 0, 0.2, 1);
@@ -8203,7 +8294,9 @@
   @apply tw-bg-primary-light;
 }
 .dx-editor-filled.dx-dropdowneditor.dx-state-active .dx-dropdowneditor-icon,
-.dx-editor-filled.dx-dropdowneditor.dx-state-hover:not(.dx-custom-button-hovered)
+.dx-editor-filled.dx-dropdowneditor.dx-state-hover:not(
+    .dx-custom-button-hovered
+  )
   .dx-dropdowneditor-icon {
   background-color: rgba(var(--colors-primary), 0.2);
   @apply tw-text-white;
@@ -8250,7 +8343,9 @@
 .dx-rtl
   .dx-invalid.dx-dropdowneditor.dx-show-clear-button:not(.dx-texteditor-empty)
   .dx-texteditor-container::after,
-.dx-rtl.dx-invalid.dx-dropdowneditor.dx-show-clear-button:not(.dx-texteditor-empty)
+.dx-rtl.dx-invalid.dx-dropdowneditor.dx-show-clear-button:not(
+    .dx-texteditor-empty
+  )
   .dx-texteditor-container::after {
   right: auto;
   left: 68px;
@@ -8280,7 +8375,9 @@
 .dx-rtl
   .dx-valid.dx-dropdowneditor.dx-show-clear-button:not(.dx-texteditor-empty)
   .dx-texteditor-container::after,
-.dx-rtl.dx-valid.dx-dropdowneditor.dx-show-clear-button:not(.dx-texteditor-empty)
+.dx-rtl.dx-valid.dx-dropdowneditor.dx-show-clear-button:not(
+    .dx-texteditor-empty
+  )
   .dx-texteditor-container::after {
   right: auto;
   left: 68px;
@@ -8751,9 +8848,11 @@
   background: #fff;
   border-top: 1px solid rgba(var(--colors-primary), 0.5);
   border-bottom: 1px solid rgba(var(--colors-primary), 0.5);
-  -webkit-box-shadow: 0 0 1px rgba(var(--colors-primary), 0.1),
+  -webkit-box-shadow:
+    0 0 1px rgba(var(--colors-primary), 0.1),
     0 1px 3px rgba(var(--colors-primary), 0.2);
-  box-shadow: 0 0 1px rgba(var(--colors-primary), 0.1),
+  box-shadow:
+    0 0 1px rgba(var(--colors-primary), 0.1),
     0 1px 3px rgba(var(--colors-primary), 0.2);
 }
 .dx-list .dx-empty-message,
@@ -9113,9 +9212,11 @@
   background: #fff;
   border-top: 1px solid rgba(var(--colors-primary), 0.5);
   border-bottom: 1px solid rgba(var(--colors-primary), 0.5);
-  -webkit-box-shadow: 0 0 1px rgba(var(--colors-primary), 0.1),
+  -webkit-box-shadow:
+    0 0 1px rgba(var(--colors-primary), 0.1),
     0 1px 3px rgba(var(--colors-primary), 0.2);
-  box-shadow: 0 0 1px rgba(var(--colors-primary), 0.1),
+  box-shadow:
+    0 0 1px rgba(var(--colors-primary), 0.1),
     0 1px 3px rgba(var(--colors-primary), 0.2);
 }
 .dx-device-mobile .dx-list .dx-empty-message,
@@ -9696,11 +9797,19 @@
   color: #333;
 }
 .dx-calendar-cell.dx-calendar-empty-cell:not(.dx-calendar-selected-date),
-.dx-calendar-cell.dx-calendar-empty-cell:not(.dx-calendar-selected-date).dx-state-active,
-.dx-calendar-cell.dx-calendar-empty-cell:not(.dx-calendar-selected-date).dx-state-hover,
+.dx-calendar-cell.dx-calendar-empty-cell:not(
+    .dx-calendar-selected-date
+  ).dx-state-active,
+.dx-calendar-cell.dx-calendar-empty-cell:not(
+    .dx-calendar-selected-date
+  ).dx-state-hover,
 .dx-calendar-cell.dx-calendar-other-view:not(.dx-calendar-selected-date),
-.dx-calendar-cell.dx-calendar-other-view:not(.dx-calendar-selected-date).dx-state-active,
-.dx-calendar-cell.dx-calendar-other-view:not(.dx-calendar-selected-date).dx-state-hover {
+.dx-calendar-cell.dx-calendar-other-view:not(
+    .dx-calendar-selected-date
+  ).dx-state-active,
+.dx-calendar-cell.dx-calendar-other-view:not(
+    .dx-calendar-selected-date
+  ).dx-state-hover {
   color: #b0b0b0;
 }
 .dx-calendar-cell.dx-calendar-empty-cell {
@@ -9708,11 +9817,15 @@
   background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAAm0lEQVRIx7XVwQnAIAwF0ExSdBF1a6Er9dIRqsVAazWJmh4+iuBT4YMQ4w4pWxk1clt5YlOOFKeAumJZXAgKOKIBb6yBv9AansU/aAsexZtoD5biXZSCOZxEObiHs6gErnERKoURP0uCZM9IpRB2WvDz+eIqzvRUhMNkT1mcQz1xsKfwWZTFV1ASX0W7uAbaxPOCUUBr3MBfn+kF3CNLT2/yky4AAAAASUVORK5CYII=")
     center center no-repeat;
 }
-.dx-calendar-cell.dx-calendar-empty-cell.dx-state-hover:not(.dx-calendar-selected-date) {
+.dx-calendar-cell.dx-calendar-empty-cell.dx-state-hover:not(
+    .dx-calendar-selected-date
+  ) {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-.dx-calendar-cell.dx-state-active:not(.dx-calendar-empty-cell):not(.dx-calendar-selected-date) {
+.dx-calendar-cell.dx-state-active:not(.dx-calendar-empty-cell):not(
+    .dx-calendar-selected-date
+  ) {
   -webkit-box-shadow: inset 0 -1px 0 1000px rgba(96, 96, 96, 0.2);
   box-shadow: inset 0 -1px 0 1000px rgba(96, 96, 96, 0.2);
 }
@@ -9731,9 +9844,11 @@
 }
 .dx-calendar-cell.dx-calendar-selected-date.dx-calendar-contoured-date,
 .dx-calendar-cell.dx-calendar-selected-date.dx-calendar-today.dx-calendar-contoured-date {
-  -webkit-box-shadow: inset 0 0 0 1px theme("colors.primary"),
+  -webkit-box-shadow:
+    inset 0 0 0 1px theme("colors.primary"),
     inset 0 0 0 1000px theme("colors.primary");
-  box-shadow: inset 0 0 0 1px theme("colors.primary"),
+  box-shadow:
+    inset 0 0 0 1px theme("colors.primary"),
     inset 0 0 0 1000px theme("colors.primary");
 }
 .dx-invalid.dx-calendar {
@@ -10710,7 +10825,8 @@
 }
 .dx-menu-item.dx-state-hover {
   color: #333;
-  background-color: rgba(var(--colors-primary), 0.14);
+  /* background-color: rgba(111 111 111, 0.5); */
+  @apply tw-bg-primary-light;
 }
 .dx-menu-item.dx-state-focused {
   background-color: theme("colors.primary");
@@ -11978,7 +12094,9 @@
   -webkit-transform: scale(0.96);
   transform: scale(0.96);
   -webkit-transition: -webkit-transform 0.1s linear;
-  transition: transform 0.1s linear, -webkit-transform 0.1s linear;
+  transition:
+    transform 0.1s linear,
+    -webkit-transform 0.1s linear;
   background-color: rgba(96, 96, 96, 0.2);
   color: #333;
   border-color: transparent;
@@ -13460,7 +13578,9 @@
 .dx-accordion-item.dx-state-hover > .dx-accordion-item-title {
   background-color: rgba(var(--colors-primary), 0.14);
 }
-.dx-accordion-item.dx-state-hover:not(:last-child):not(.dx-accordion-item-opened):not(.dx-state-focused) {
+.dx-accordion-item.dx-state-hover:not(:last-child):not(
+    .dx-accordion-item-opened
+  ):not(.dx-state-focused) {
   border-bottom-color: rgba(var(--colors-primary), 0.14);
 }
 .dx-accordion-item-opened {
@@ -13796,10 +13916,14 @@
       #ccc
     );
   background-size: 16px 16px;
-  background-position: 0 0, 8px 8px;
+  background-position:
+    0 0,
+    8px 8px;
 }
 .dx-colorview-alpha-channel-wrapper {
-  background-position: 0 6px, 8px 14px;
+  background-position:
+    0 6px,
+    8px 14px;
 }
 .dx-colorbox-input-container {
   height: 100%;
@@ -13875,19 +13999,27 @@
 }
 .dx-colorview-hue-scale-handle {
   border: 1px solid rgba(var(--colors-primary), 0.2);
-  -webkit-box-shadow: inset -5px 0 0 3px #fff, inset 5px 0 0 3px #fff,
+  -webkit-box-shadow:
+    inset -5px 0 0 3px #fff,
+    inset 5px 0 0 3px #fff,
     inset -6px 0 1px 4px rgba(var(--colors-primary), 0.2),
     inset 6px 0 1px 4px rgba(var(--colors-primary), 0.2);
-  box-shadow: inset -5px 0 0 3px #fff, inset 5px 0 0 3px #fff,
+  box-shadow:
+    inset -5px 0 0 3px #fff,
+    inset 5px 0 0 3px #fff,
     inset -6px 0 1px 4px rgba(var(--colors-primary), 0.2),
     inset 6px 0 1px 4px rgba(var(--colors-primary), 0.2);
 }
 .dx-colorview-alpha-channel-handle {
   border: 1px solid rgba(var(--colors-primary), 0.2);
-  -webkit-box-shadow: inset 0 -5px 0 3px #fff, inset 0 5px 0 3px #fff,
+  -webkit-box-shadow:
+    inset 0 -5px 0 3px #fff,
+    inset 0 5px 0 3px #fff,
     inset 0 -6px 1px 4px rgba(var(--colors-primary), 0.2),
     inset 0 6px 1px 4px rgba(var(--colors-primary), 0.2);
-  box-shadow: inset 0 -5px 0 3px #fff, inset 0 5px 0 3px #fff,
+  box-shadow:
+    inset 0 -5px 0 3px #fff,
+    inset 0 5px 0 3px #fff,
     inset 0 -6px 1px 4px rgba(var(--colors-primary), 0.2),
     inset 0 6px 1px 4px rgba(var(--colors-primary), 0.2);
 }
@@ -14678,7 +14810,9 @@
 }
 .dx-header-row
   > td
-  > .dx-datagrid-text-content:not(.dx-sort-indicator):not(.dx-header-filter-indicator) {
+  > .dx-datagrid-text-content:not(.dx-sort-indicator):not(
+    .dx-header-filter-indicator
+  ) {
   max-width: 100%;
 }
 .dx-datagrid-filter-range-overlay .dx-editor-container .dx-texteditor {
@@ -15985,9 +16119,11 @@
   box-shadow: 0 1px 3px -1px rgba(var(--colors-primary), 0.2);
 }
 .dx-datagrid-drag-header {
-  -webkit-box-shadow: 0 0 1px rgba(var(--colors-primary), 0.1),
+  -webkit-box-shadow:
+    0 0 1px rgba(var(--colors-primary), 0.1),
     0 1px 3px rgba(var(--colors-primary), 0.2);
-  box-shadow: 0 0 1px rgba(var(--colors-primary), 0.1),
+  box-shadow:
+    0 0 1px rgba(var(--colors-primary), 0.1),
     0 1px 3px rgba(var(--colors-primary), 0.2);
   color: #959595;
   font-weight: 400;
@@ -16033,23 +16169,31 @@
   padding-top: 7px;
 }
 .dx-datagrid-table
-  .dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(.dx-row-removed):not(.dx-edit-row):not(.dx-row-focused)
+  .dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(
+    .dx-row-removed
+  ):not(.dx-edit-row):not(.dx-row-focused)
   > td:not(.dx-focused) {
   background-color: rgba(var(--colors-primary), 0.14);
   color: #333;
 }
 .dx-datagrid-table
-  .dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(.dx-row-removed):not(.dx-edit-row):not(.dx-row-focused)
+  .dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(
+    .dx-row-removed
+  ):not(.dx-edit-row):not(.dx-row-focused)
   > td:not(.dx-focused).dx-datagrid-group-space {
   border-right-color: rgba(var(--colors-primary), 0.14);
 }
 .dx-datagrid-table
-  .dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(.dx-row-removed):not(.dx-edit-row):not(.dx-row-focused)
+  .dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(
+    .dx-row-removed
+  ):not(.dx-edit-row):not(.dx-row-focused)
   > td:not(.dx-focused).dx-command-select {
   overflow: inherit;
 }
 .dx-datagrid-table
-  .dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(.dx-row-removed):not(.dx-edit-row):not(.dx-row-focused)
+  .dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(
+    .dx-row-removed
+  ):not(.dx-edit-row):not(.dx-row-focused)
   > .dx-datagrid-readonly
   .dx-texteditor
   .dx-texteditor-input {
@@ -16057,7 +16201,9 @@
   color: #333;
 }
 .dx-datagrid-table
-  .dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(.dx-row-removed):not(.dx-edit-row):not(.dx-row-focused)
+  .dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(
+    .dx-row-removed
+  ):not(.dx-edit-row):not(.dx-row-focused)
   > td.dx-pointer-events-none {
   background-color: transparent;
 }
@@ -16650,7 +16796,9 @@
   padding-left: 34px;
 }
 .dx-rtl
-  .dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(.dx-row-removed):not(.dx-edit-row):not(.dx-row-focused)
+  .dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(
+    .dx-row-removed
+  ):not(.dx-edit-row):not(.dx-row-focused)
   > td:not(.dx-focused).dx-datagrid-group-space {
   border-left-color: rgba(var(--colors-primary), 0.14);
   border-right-color: transparent;
@@ -17040,7 +17188,9 @@
 .dx-treelist-drag-action {
   cursor: pointer;
 }
-.dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-modified):not(.dx-row-inserted):not(.dx-row-removed):not(.dx-edit-row)
+.dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-modified):not(
+    .dx-row-inserted
+  ):not(.dx-row-removed):not(.dx-edit-row)
   > td:not(.dx-focused)
   .dx-link {
   color: inherit;
@@ -17362,7 +17512,9 @@ input.dx-hidden {
 .dx-header-row .dx-text-content-alignment-right,
 .dx-header-row
   > td
-  > .dx-treelist-text-content:not(.dx-sort-indicator):not(.dx-header-filter-indicator) {
+  > .dx-treelist-text-content:not(.dx-sort-indicator):not(
+    .dx-header-filter-indicator
+  ) {
   max-width: 100%;
 }
 .dx-header-row .dx-header-filter-indicator,
@@ -18712,9 +18864,11 @@ input.dx-hidden {
   box-shadow: 0 1px 3px -1px rgba(var(--colors-primary), 0.2);
 }
 .dx-treelist-drag-header {
-  -webkit-box-shadow: 0 0 1px rgba(var(--colors-primary), 0.1),
+  -webkit-box-shadow:
+    0 0 1px rgba(var(--colors-primary), 0.1),
     0 1px 3px rgba(var(--colors-primary), 0.2);
-  box-shadow: 0 0 1px rgba(var(--colors-primary), 0.1),
+  box-shadow:
+    0 0 1px rgba(var(--colors-primary), 0.1),
     0 1px 3px rgba(var(--colors-primary), 0.2);
   color: #959595;
   font-weight: 400;
@@ -18760,23 +18914,31 @@ input.dx-hidden {
   padding-top: 7px;
 }
 .dx-treelist-table
-  .dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(.dx-row-removed):not(.dx-edit-row):not(.dx-row-focused)
+  .dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(
+    .dx-row-removed
+  ):not(.dx-edit-row):not(.dx-row-focused)
   > td:not(.dx-focused) {
   background-color: rgba(var(--colors-primary), 0.14);
   color: #333;
 }
 .dx-treelist-table
-  .dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(.dx-row-removed):not(.dx-edit-row):not(.dx-row-focused)
+  .dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(
+    .dx-row-removed
+  ):not(.dx-edit-row):not(.dx-row-focused)
   > td:not(.dx-focused).dx-treelist-group-space {
   border-right-color: rgba(var(--colors-primary), 0.14);
 }
 .dx-treelist-table
-  .dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(.dx-row-removed):not(.dx-edit-row):not(.dx-row-focused)
+  .dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(
+    .dx-row-removed
+  ):not(.dx-edit-row):not(.dx-row-focused)
   > td:not(.dx-focused).dx-command-select {
   overflow: inherit;
 }
 .dx-treelist-table
-  .dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(.dx-row-removed):not(.dx-edit-row):not(.dx-row-focused)
+  .dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(
+    .dx-row-removed
+  ):not(.dx-edit-row):not(.dx-row-focused)
   > .dx-treelist-readonly
   .dx-texteditor
   .dx-texteditor-input {
@@ -18784,7 +18946,9 @@ input.dx-hidden {
   color: #333;
 }
 .dx-treelist-table
-  .dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(.dx-row-removed):not(.dx-edit-row):not(.dx-row-focused)
+  .dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(
+    .dx-row-removed
+  ):not(.dx-edit-row):not(.dx-row-focused)
   > td.dx-pointer-events-none {
   background-color: transparent;
 }
@@ -19414,7 +19578,9 @@ input.dx-hidden {
   padding-left: 27px;
 }
 .dx-rtl
-  .dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(.dx-row-removed):not(.dx-edit-row):not(.dx-row-focused)
+  .dx-data-row.dx-state-hover:not(.dx-selection):not(.dx-row-inserted):not(
+    .dx-row-removed
+  ):not(.dx-edit-row):not(.dx-row-focused)
   > td:not(.dx-focused).dx-treelist-group-space {
   border-left-color: rgba(var(--colors-primary), 0.14);
   border-right-color: transparent;
@@ -19883,9 +20049,11 @@ input.dx-hidden {
   opacity: 0.8;
 }
 .dx-pivotgrid-fields-container.dx-drag .dx-area-field.dx-area-box {
-  -webkit-box-shadow: 0 0 1px rgba(var(--colors-primary), 0.1),
+  -webkit-box-shadow:
+    0 0 1px rgba(var(--colors-primary), 0.1),
     0 1px 3px rgba(var(--colors-primary), 0.2);
-  box-shadow: 0 0 1px rgba(var(--colors-primary), 0.1),
+  box-shadow:
+    0 0 1px rgba(var(--colors-primary), 0.1),
     0 1px 3px rgba(var(--colors-primary), 0.2);
   border: 1px solid rgba(var(--colors-primary), 0.5);
 }
@@ -20523,7 +20691,8 @@ input.dx-hidden {
 .dx-context-menu:not(.dx-filter-menu)
   > .dx-submenu
   > .dx-menu-items-container
-  > li:not(:only-child):last-of-type .dx-state-hover
+  > li:not(:only-child):last-of-type
+  .dx-state-hover
   * {
   @apply tw-text-white;
 }
@@ -20531,25 +20700,27 @@ input.dx-hidden {
 .dx-context-menu:not(.dx-filter-menu)
   > .dx-submenu
   > .dx-menu-items-container
-  > li:not(:only-child):last-of-type >
-  .dx-state-hover.dx-menu-item-expanded > .dx-item-content >
-  * {
+  > li:not(:only-child):last-of-type
+  > .dx-state-hover.dx-menu-item-expanded
+  > .dx-item-content
+  > * {
   @apply tw-text-white;
 }
 
 .dx-context-menu:not(.dx-filter-menu)
   > .dx-submenu
   > .dx-menu-items-container
-  > li:not(:only-child):last-of-type > 
-  .dx-state-hover {
+  > li:not(:only-child):last-of-type
+  > .dx-state-hover {
   @apply tw-bg-danger;
 }
 
 .dx-context-menu:not(.dx-filter-menu)
   > .dx-submenu
   > .dx-menu-items-container
-  > li:not(:only-child):last-of-type > 
-  .dx-state-hover > * {
+  > li:not(:only-child):last-of-type
+  > .dx-state-hover
+  > * {
   @apply tw-text-white;
 }
 
@@ -20682,8 +20853,16 @@ input.dx-hidden {
   border: none;
   background-color: #f7f7f7;
   color: #ddd;
-  -webkit-box-shadow: inset 0 -1px #ddd, inset 0 1px, inset -1px 0, inset 1px 0;
-  box-shadow: inset 0 -1px #ddd, inset 0 1px, inset -1px 0, inset 1px 0;
+  -webkit-box-shadow:
+    inset 0 -1px #ddd,
+    inset 0 1px,
+    inset -1px 0,
+    inset 1px 0;
+  box-shadow:
+    inset 0 -1px #ddd,
+    inset 0 1px,
+    inset -1px 0,
+    inset 1px 0;
 }
 .dx-tabpanel > .dx-tabpanel-tabs .dx-tabs .dx-tab {
   color: #ddd;
@@ -20700,8 +20879,12 @@ input.dx-hidden {
 }
 .dx-tabpanel > .dx-tabpanel-tabs .dx-tab {
   width: 140px;
-  -webkit-box-shadow: inset 0 1px, inset 0 -1px #ddd;
-  box-shadow: inset 0 1px, inset 0 -1px #ddd;
+  -webkit-box-shadow:
+    inset 0 1px,
+    inset 0 -1px #ddd;
+  box-shadow:
+    inset 0 1px,
+    inset 0 -1px #ddd;
 }
 .dx-tabpanel > .dx-tabpanel-tabs .dx-tabs-scrollable {
   margin-top: 0;
@@ -20716,8 +20899,14 @@ input.dx-hidden {
   border-top: none;
 }
 .dx-tabpanel > .dx-tabpanel-tabs .dx-tab.dx-tab-selected {
-  -webkit-box-shadow: inset 0 1px #ddd, inset -1px 0 #ddd, inset 1px 0 #ddd;
-  box-shadow: inset 0 1px #ddd, inset -1px 0 #ddd, inset 1px 0 #ddd;
+  -webkit-box-shadow:
+    inset 0 1px #ddd,
+    inset -1px 0 #ddd,
+    inset 1px 0 #ddd;
+  box-shadow:
+    inset 0 1px #ddd,
+    inset -1px 0 #ddd,
+    inset 1px 0 #ddd;
 }
 .dx-tabpanel > .dx-tabpanel-tabs .dx-tab.dx-tab-active .dx-tab-content,
 .dx-tabpanel > .dx-tabpanel-tabs .dx-tab.dx-tab-selected .dx-tab-content {
@@ -20727,8 +20916,14 @@ input.dx-hidden {
   > .dx-tabpanel-tabs
   .dx-tabs-expanded
   .dx-tab:not(.dx-tab-selected):first-of-type {
-  -webkit-box-shadow: inset 0 -1px #ddd, inset 1px 0, inset 0 1px;
-  box-shadow: inset 0 -1px #ddd, inset 1px 0, inset 0 1px;
+  -webkit-box-shadow:
+    inset 0 -1px #ddd,
+    inset 1px 0,
+    inset 0 1px;
+  box-shadow:
+    inset 0 -1px #ddd,
+    inset 1px 0,
+    inset 0 1px;
 }
 .dx-rtl
   .dx-tabpanel
@@ -20743,8 +20938,14 @@ input.dx-hidden {
   > .dx-tabpanel-tabs
   .dx-tabs-stretched
   .dx-tab:not(.dx-tab-selected):last-of-type {
-  -webkit-box-shadow: inset 0 -1px #ddd, inset -1px 0, inset 0 1px;
-  box-shadow: inset 0 -1px #ddd, inset -1px 0, inset 0 1px;
+  -webkit-box-shadow:
+    inset 0 -1px #ddd,
+    inset -1px 0,
+    inset 0 1px;
+  box-shadow:
+    inset 0 -1px #ddd,
+    inset -1px 0,
+    inset 0 1px;
 }
 .dx-rtl
   .dx-tabpanel
@@ -20756,31 +20957,57 @@ input.dx-hidden {
   .dx-tabs-stretched
   .dx-tab:not(.dx-tab-selected):last-of-type,
 .dx-tabpanel > .dx-tabpanel-tabs .dx-tabs-nav-button-left {
-  -webkit-box-shadow: inset 0 -1px #ddd, inset 1px 0, inset 0 1px;
-  box-shadow: inset 0 -1px #ddd, inset 1px 0, inset 0 1px;
+  -webkit-box-shadow:
+    inset 0 -1px #ddd,
+    inset 1px 0,
+    inset 0 1px;
+  box-shadow:
+    inset 0 -1px #ddd,
+    inset 1px 0,
+    inset 0 1px;
 }
 .dx-tabpanel > .dx-tabpanel-tabs .dx-tabs-nav-button-right {
-  -webkit-box-shadow: inset 0 -1px #ddd, inset 0 1px, inset -1px 0;
-  box-shadow: inset 0 -1px #ddd, inset 0 1px, inset -1px 0;
+  -webkit-box-shadow:
+    inset 0 -1px #ddd,
+    inset 0 1px,
+    inset -1px 0;
+  box-shadow:
+    inset 0 -1px #ddd,
+    inset 0 1px,
+    inset -1px 0;
 }
 .dx-tabpanel > .dx-tabpanel-container > .dx-multiview-wrapper {
   border-color: #ddd;
 }
 .dx-tabpanel.dx-state-focused > .dx-tabpanel-tabs .dx-tabs {
-  -webkit-box-shadow: inset 0 -1px theme("colors.primary"), inset 0 1px,
-    inset -1px 0, inset 1px 0;
-  box-shadow: inset 0 -1px theme("colors.primary"), inset 0 1px, inset -1px 0,
+  -webkit-box-shadow:
+    inset 0 -1px theme("colors.primary"),
+    inset 0 1px,
+    inset -1px 0,
+    inset 1px 0;
+  box-shadow:
+    inset 0 -1px theme("colors.primary"),
+    inset 0 1px,
+    inset -1px 0,
     inset 1px 0;
 }
 .dx-tabpanel.dx-state-focused > .dx-tabpanel-tabs .dx-tab {
-  -webkit-box-shadow: inset 0 1px, inset 0 -1px theme("colors.primary");
-  box-shadow: inset 0 1px, inset 0 -1px theme("colors.primary");
+  -webkit-box-shadow:
+    inset 0 1px,
+    inset 0 -1px theme("colors.primary");
+  box-shadow:
+    inset 0 1px,
+    inset 0 -1px theme("colors.primary");
 }
 .dx-tabpanel.dx-state-focused > .dx-tabpanel-tabs .dx-tab.dx-tab-selected {
-  -webkit-box-shadow: inset 0 1px theme("colors.primary"),
-    inset -1px 0 theme("colors.primary"), inset 1px 0 theme("colors.primary");
-  box-shadow: inset 0 1px theme("colors.primary"),
-    inset -1px 0 theme("colors.primary"), inset 1px 0 theme("colors.primary");
+  -webkit-box-shadow:
+    inset 0 1px theme("colors.primary"),
+    inset -1px 0 theme("colors.primary"),
+    inset 1px 0 theme("colors.primary");
+  box-shadow:
+    inset 0 1px theme("colors.primary"),
+    inset -1px 0 theme("colors.primary"),
+    inset 1px 0 theme("colors.primary");
 }
 .dx-tabpanel.dx-state-focused
   > .dx-tabpanel-tabs
@@ -20796,9 +21023,14 @@ input.dx-hidden {
   > .dx-tabpanel-tabs
   .dx-tabs-expanded
   .dx-tab:not(.dx-tab-selected):first-of-type {
-  -webkit-box-shadow: inset 0 -1px theme("colors.primary"), inset 1px 0,
+  -webkit-box-shadow:
+    inset 0 -1px theme("colors.primary"),
+    inset 1px 0,
     inset 0 1px;
-  box-shadow: inset 0 -1px theme("colors.primary"), inset 1px 0, inset 0 1px;
+  box-shadow:
+    inset 0 -1px theme("colors.primary"),
+    inset 1px 0,
+    inset 0 1px;
 }
 .dx-rtl
   .dx-tabpanel.dx-state-focused
@@ -20813,9 +21045,14 @@ input.dx-hidden {
   > .dx-tabpanel-tabs
   .dx-tabs-stretched
   .dx-tab:not(.dx-tab-selected):last-of-type {
-  -webkit-box-shadow: inset 0 -1px theme("colors.primary"), inset -1px 0,
+  -webkit-box-shadow:
+    inset 0 -1px theme("colors.primary"),
+    inset -1px 0,
     inset 0 1px;
-  box-shadow: inset 0 -1px theme("colors.primary"), inset -1px 0, inset 0 1px;
+  box-shadow:
+    inset 0 -1px theme("colors.primary"),
+    inset -1px 0,
+    inset 0 1px;
 }
 .dx-rtl
   .dx-tabpanel.dx-state-focused
@@ -20827,14 +21064,24 @@ input.dx-hidden {
   .dx-tabs-stretched
   .dx-tab:not(.dx-tab-selected):last-of-type,
 .dx-tabpanel.dx-state-focused > .dx-tabpanel-tabs .dx-tabs-nav-button-left {
-  -webkit-box-shadow: inset 0 -1px theme("colors.primary"), inset 1px 0,
+  -webkit-box-shadow:
+    inset 0 -1px theme("colors.primary"),
+    inset 1px 0,
     inset 0 1px;
-  box-shadow: inset 0 -1px theme("colors.primary"), inset 1px 0, inset 0 1px;
+  box-shadow:
+    inset 0 -1px theme("colors.primary"),
+    inset 1px 0,
+    inset 0 1px;
 }
 .dx-tabpanel.dx-state-focused > .dx-tabpanel-tabs .dx-tabs-nav-button-right {
-  -webkit-box-shadow: inset 0 -1px theme("colors.primary"), inset 0 1px,
+  -webkit-box-shadow:
+    inset 0 -1px theme("colors.primary"),
+    inset 0 1px,
     inset -1px 0;
-  box-shadow: inset 0 -1px theme("colors.primary"), inset 0 1px, inset -1px 0;
+  box-shadow:
+    inset 0 -1px theme("colors.primary"),
+    inset 0 1px,
+    inset -1px 0;
 }
 .dx-tabpanel.dx-state-focused > .dx-tabpanel-container > .dx-multiview-wrapper {
   border-color: theme("colors.primary");
@@ -21319,9 +21566,11 @@ input.dx-hidden {
 }
 .dx-scheduler-appointment.dx-resizable-resizing,
 .dx-scheduler-appointment.dx-state-active {
-  -webkit-box-shadow: inset 0 -2px 0 0 rgba(var(--colors-primary), 0.3),
+  -webkit-box-shadow:
+    inset 0 -2px 0 0 rgba(var(--colors-primary), 0.3),
     inset 0 2px 0 0 rgba(var(--colors-primary), 0.3);
-  box-shadow: inset 0 -2px 0 0 rgba(var(--colors-primary), 0.3),
+  box-shadow:
+    inset 0 -2px 0 0 rgba(var(--colors-primary), 0.3),
     inset 0 2px 0 0 rgba(var(--colors-primary), 0.3);
 }
 .dx-scheduler-appointment .dx-scheduler-appointment,
@@ -21331,7 +21580,9 @@ input.dx-hidden {
 }
 .dx-scheduler-appointment
   .dx-scheduler-appointment:not(.dx-scheduler-appointment-drag-source)::before,
-.dx-scheduler-appointment.dx-state-focused:not(.dx-scheduler-appointment-drag-source)::before {
+.dx-scheduler-appointment.dx-state-focused:not(
+    .dx-scheduler-appointment-drag-source
+  )::before {
   pointer-events: none;
   content: "";
   position: absolute;
@@ -21347,9 +21598,11 @@ input.dx-hidden {
   box-shadow: inset 0 5px 0 0 rgba(var(--colors-primary), 0.3);
 }
 .dx-scheduler-appointment.dx-state-hover.dx-resizable {
-  -webkit-box-shadow: inset 0 5px 0 0 rgba(var(--colors-primary), 0.3),
+  -webkit-box-shadow:
+    inset 0 5px 0 0 rgba(var(--colors-primary), 0.3),
     inset 0 -2px 0 0 rgba(var(--colors-primary), 0.3);
-  box-shadow: inset 0 5px 0 0 rgba(var(--colors-primary), 0.3),
+  box-shadow:
+    inset 0 5px 0 0 rgba(var(--colors-primary), 0.3),
     inset 0 -2px 0 0 rgba(var(--colors-primary), 0.3);
 }
 .dx-scheduler-appointment.dx-state-hover .dx-resizable-handle-top {
@@ -21419,7 +21672,9 @@ input.dx-hidden {
   .dx-draggable-dragging
   .dx-scheduler-appointment:not(.dx-scheduler-appointment-drag-source)::before,
 .dx-scheduler-fixed-appointments
-  .dx-draggable-dragging.dx-state-focused:not(.dx-scheduler-appointment-drag-source)::before {
+  .dx-draggable-dragging.dx-state-focused:not(
+    .dx-scheduler-appointment-drag-source
+  )::before {
   pointer-events: none;
   content: "";
   position: absolute;
@@ -21433,10 +21688,12 @@ input.dx-hidden {
 .dx-scheduler-fixed-appointments
   .dx-draggable-dragging
   .dx-scheduler-appointment {
-  -webkit-box-shadow: 7px 7px 15px 0 rgba(50, 50, 50, 0.2),
+  -webkit-box-shadow:
+    7px 7px 15px 0 rgba(50, 50, 50, 0.2),
     inset 0 -2px 0 0 rgba(var(--colors-primary), 0.3),
     inset 0 2px 0 0 rgba(var(--colors-primary), 0.3);
-  box-shadow: 7px 7px 15px 0 rgba(50, 50, 50, 0.2),
+  box-shadow:
+    7px 7px 15px 0 rgba(50, 50, 50, 0.2),
     inset 0 -2px 0 0 rgba(var(--colors-primary), 0.3),
     inset 0 2px 0 0 rgba(var(--colors-primary), 0.3);
 }
@@ -21545,29 +21802,41 @@ input.dx-hidden {
   .dx-scheduler-appointment-content {
   padding: 0;
 }
-.dx-scheduler-work-space-day:not(.dx-scheduler-work-space-count):not(.dx-scheduler-work-space-grouped):not(.dx-scheduler-work-space-all-day)
+.dx-scheduler-work-space-day:not(.dx-scheduler-work-space-count):not(
+    .dx-scheduler-work-space-grouped
+  ):not(.dx-scheduler-work-space-all-day)
   .dx-scheduler-header-panel-container {
   display: none;
 }
-.dx-scheduler-work-space-day:not(.dx-scheduler-work-space-count):not(.dx-scheduler-work-space-grouped)
+.dx-scheduler-work-space-day:not(.dx-scheduler-work-space-count):not(
+    .dx-scheduler-work-space-grouped
+  )
   .dx-scheduler-header-panel-empty-cell {
   border: none;
 }
-.dx-scheduler-work-space-day:not(.dx-scheduler-work-space-count):not(.dx-scheduler-work-space-grouped)
+.dx-scheduler-work-space-day:not(.dx-scheduler-work-space-count):not(
+    .dx-scheduler-work-space-grouped
+  )
   .dx-scheduler-date-table-cell {
   border-right: none;
   border-left: none;
 }
-.dx-scheduler-work-space-day:not(.dx-scheduler-work-space-count):not(.dx-scheduler-work-space-grouped)
+.dx-scheduler-work-space-day:not(.dx-scheduler-work-space-count):not(
+    .dx-scheduler-work-space-grouped
+  )
   .dx-scheduler-all-day-table-cell {
   border-top: none;
   border-left: none;
 }
-.dx-scheduler-work-space-day:not(.dx-scheduler-work-space-count):not(.dx-scheduler-work-space-grouped)
+.dx-scheduler-work-space-day:not(.dx-scheduler-work-space-count):not(
+    .dx-scheduler-work-space-grouped
+  )
   .dx-scheduler-time-panel {
   border: none;
 }
-.dx-scheduler-work-space-day:not(.dx-scheduler-work-space-count).dx-scheduler-work-space-vertical-grouped
+.dx-scheduler-work-space-day:not(
+    .dx-scheduler-work-space-count
+  ).dx-scheduler-work-space-vertical-grouped
   .dx-scheduler-header-panel-container {
   display: none;
 }
@@ -21593,9 +21862,13 @@ input.dx-hidden {
   .dx-scheduler-header-panel {
   width: 100%;
 }
-.dx-scheduler-work-space-day.dx-scheduler-work-space-both-scrollbar:not(.dx-scheduler-work-space-count):not(.dx-scheduler-work-space-grouped)
+.dx-scheduler-work-space-day.dx-scheduler-work-space-both-scrollbar:not(
+    .dx-scheduler-work-space-count
+  ):not(.dx-scheduler-work-space-grouped)
   .dx-scheduler-header-panel-empty-cell,
-.dx-scheduler-work-space-day.dx-scheduler-work-space-both-scrollbar:not(.dx-scheduler-work-space-count):not(.dx-scheduler-work-space-grouped)
+.dx-scheduler-work-space-day.dx-scheduler-work-space-both-scrollbar:not(
+    .dx-scheduler-work-space-count
+  ):not(.dx-scheduler-work-space-grouped)
   .dx-scheduler-time-panel {
   border-right: 1px solid rgba(221, 221, 221, 0.6);
 }
@@ -21603,45 +21876,71 @@ input.dx-hidden {
   .dx-scheduler-all-day-table-cell {
   border-top: 1px solid rgba(221, 221, 221, 0.6);
 }
-.dx-scheduler-work-space-day.dx-scheduler-work-space-count:not(.dx-scheduler-work-space-grouped)
+.dx-scheduler-work-space-day.dx-scheduler-work-space-count:not(
+    .dx-scheduler-work-space-grouped
+  )
   .dx-scheduler-all-day-table-cell,
-.dx-scheduler-work-space-day.dx-scheduler-work-space-count:not(.dx-scheduler-work-space-grouped)
+.dx-scheduler-work-space-day.dx-scheduler-work-space-count:not(
+    .dx-scheduler-work-space-grouped
+  )
   .dx-scheduler-date-table-cell,
-.dx-scheduler-work-space-day.dx-scheduler-work-space-count:not(.dx-scheduler-work-space-grouped)
+.dx-scheduler-work-space-day.dx-scheduler-work-space-count:not(
+    .dx-scheduler-work-space-grouped
+  )
   .dx-scheduler-header-panel-cell {
   border-left: 1px solid rgba(221, 221, 221, 0.6);
   border-right: 1px solid rgba(221, 221, 221, 0.6);
 }
 .dx-rtl
-  .dx-scheduler-work-space-day:not(.dx-scheduler-work-space-count):not(.dx-scheduler-work-space-grouped)
+  .dx-scheduler-work-space-day:not(.dx-scheduler-work-space-count):not(
+    .dx-scheduler-work-space-grouped
+  )
   .dx-scheduler-header-panel-empty-cell,
-.dx-scheduler-work-space-day.dx-scheduler-work-space-count:not(.dx-scheduler-work-space-grouped)
+.dx-scheduler-work-space-day.dx-scheduler-work-space-count:not(
+    .dx-scheduler-work-space-grouped
+  )
   .dx-scheduler-all-day-table-cell:first-child,
-.dx-scheduler-work-space-day.dx-scheduler-work-space-count:not(.dx-scheduler-work-space-grouped)
+.dx-scheduler-work-space-day.dx-scheduler-work-space-count:not(
+    .dx-scheduler-work-space-grouped
+  )
   .dx-scheduler-date-table-cell:first-child,
-.dx-scheduler-work-space-day.dx-scheduler-work-space-count:not(.dx-scheduler-work-space-grouped)
+.dx-scheduler-work-space-day.dx-scheduler-work-space-count:not(
+    .dx-scheduler-work-space-grouped
+  )
   .dx-scheduler-header-panel-cell:first-child {
   border-left: none;
 }
 .dx-rtl
-  .dx-scheduler-work-space-day:not(.dx-scheduler-work-space-count):not(.dx-scheduler-work-space-grouped)
+  .dx-scheduler-work-space-day:not(.dx-scheduler-work-space-count):not(
+    .dx-scheduler-work-space-grouped
+  )
   .dx-scheduler-time-panel {
   border: none;
 }
 .dx-rtl
-  .dx-scheduler-work-space-day.dx-scheduler-work-space-count:not(.dx-scheduler-work-space-grouped)
+  .dx-scheduler-work-space-day.dx-scheduler-work-space-count:not(
+    .dx-scheduler-work-space-grouped
+  )
   .dx-scheduler-all-day-table-cell:first-child,
 .dx-rtl
-  .dx-scheduler-work-space-day.dx-scheduler-work-space-count:not(.dx-scheduler-work-space-grouped)
+  .dx-scheduler-work-space-day.dx-scheduler-work-space-count:not(
+    .dx-scheduler-work-space-grouped
+  )
   .dx-scheduler-date-table-cell:first-child,
 .dx-rtl
-  .dx-scheduler-work-space-day.dx-scheduler-work-space-count:not(.dx-scheduler-work-space-grouped)
+  .dx-scheduler-work-space-day.dx-scheduler-work-space-count:not(
+    .dx-scheduler-work-space-grouped
+  )
   .dx-scheduler-header-panel-cell:first-child,
 .dx-rtl
-  .dx-scheduler-work-space-day:not(.dx-scheduler-work-space-count):not(.dx-scheduler-work-space-grouped).dx-scheduler-work-space-both-scrollbar
+  .dx-scheduler-work-space-day:not(.dx-scheduler-work-space-count):not(
+    .dx-scheduler-work-space-grouped
+  ).dx-scheduler-work-space-both-scrollbar
   .dx-scheduler-header-panel-empty-cell,
 .dx-rtl
-  .dx-scheduler-work-space-day:not(.dx-scheduler-work-space-count):not(.dx-scheduler-work-space-grouped).dx-scheduler-work-space-both-scrollbar
+  .dx-scheduler-work-space-day:not(.dx-scheduler-work-space-count):not(
+    .dx-scheduler-work-space-grouped
+  ).dx-scheduler-work-space-both-scrollbar
   .dx-scheduler-time-panel {
   border-left: 1px solid rgba(221, 221, 221, 0.6);
   border-right: none;
@@ -21662,9 +21961,13 @@ input.dx-hidden {
   .dx-scrollable-content {
   min-height: 300px;
 }
-.dx-scheduler-work-space-month:not(.dx-scheduler-work-space-count):not(.dx-scheduler-work-space-vertical-grouped)
+.dx-scheduler-work-space-month:not(.dx-scheduler-work-space-count):not(
+    .dx-scheduler-work-space-vertical-grouped
+  )
   .dx-scheduler-date-table-scrollable-content,
-.dx-scheduler-work-space-month:not(.dx-scheduler-work-space-count):not(.dx-scheduler-work-space-vertical-grouped)
+.dx-scheduler-work-space-month:not(.dx-scheduler-work-space-count):not(
+    .dx-scheduler-work-space-vertical-grouped
+  )
   .dx-scrollable-content {
   height: 100%;
 }
@@ -22338,24 +22641,40 @@ input.dx-hidden {
   .dx-scheduler-date-table-cell {
   border-right: none;
 }
-.dx-scheduler-work-space.dx-scheduler-work-space-grouped:not(.dx-scheduler-agenda)
+.dx-scheduler-work-space.dx-scheduler-work-space-grouped:not(
+    .dx-scheduler-agenda
+  )
   .dx-scheduler-all-day-panel
   td {
   border-top: 1px solid rgba(221, 221, 221, 0.6);
 }
-.dx-scheduler-work-space:not(.dx-scheduler-work-space-all-day):not(.dx-scheduler-work-space-month):not(.dx-scheduler-timeline)
+.dx-scheduler-work-space:not(.dx-scheduler-work-space-all-day):not(
+    .dx-scheduler-work-space-month
+  ):not(.dx-scheduler-timeline)
   .dx-scheduler-header-panel,
-.dx-scheduler-work-space:not(.dx-scheduler-work-space-all-day):not(.dx-scheduler-work-space-month):not(.dx-scheduler-timeline)
+.dx-scheduler-work-space:not(.dx-scheduler-work-space-all-day):not(
+    .dx-scheduler-work-space-month
+  ):not(.dx-scheduler-timeline)
   .dx-scheduler-header-panel-empty-cell {
   border-bottom: 2px solid rgba(221, 221, 221, 0.6);
 }
-.dx-scheduler-work-space:not(.dx-scheduler-work-space-all-day):not(.dx-scheduler-work-space-month):not(.dx-scheduler-timeline).dx-scheduler-work-space-vertical-grouped.dx-scheduler-work-space-both-scrollbar
+.dx-scheduler-work-space:not(.dx-scheduler-work-space-all-day):not(
+    .dx-scheduler-work-space-month
+  ):not(
+    .dx-scheduler-timeline
+  ).dx-scheduler-work-space-vertical-grouped.dx-scheduler-work-space-both-scrollbar
   .dx-scheduler-header-panel,
-.dx-scheduler-work-space:not(.dx-scheduler-work-space-all-day):not(.dx-scheduler-work-space-month):not(.dx-scheduler-timeline).dx-scheduler-work-space-vertical-grouped.dx-scheduler-work-space-both-scrollbar
+.dx-scheduler-work-space:not(.dx-scheduler-work-space-all-day):not(
+    .dx-scheduler-work-space-month
+  ):not(
+    .dx-scheduler-timeline
+  ).dx-scheduler-work-space-vertical-grouped.dx-scheduler-work-space-both-scrollbar
   .dx-scheduler-header-panel-empty-cell {
   border-bottom: none;
 }
-.dx-scheduler-work-space.dx-scheduler-work-space-month:not(.dx-scheduler-work-space-vertical-grouped)
+.dx-scheduler-work-space.dx-scheduler-work-space-month:not(
+    .dx-scheduler-work-space-vertical-grouped
+  )
   .dx-scheduler-header-panel {
   border-bottom: 1px solid rgba(221, 221, 221, 0.6);
 }
@@ -22841,7 +23160,9 @@ input.dx-hidden {
   -ms-flex-preferred-size: auto;
   flex-basis: auto;
 }
-.dx-scheduler-work-space-horizontal-grouped.dx-scheduler-timeline:not(.dx-scheduler-work-space-group-by-date)
+.dx-scheduler-work-space-horizontal-grouped.dx-scheduler-timeline:not(
+    .dx-scheduler-work-space-group-by-date
+  )
   .dx-scheduler-header-row
   .dx-scheduler-header-panel-cell {
   border-right: none;
@@ -23411,9 +23732,11 @@ input.dx-hidden {
 .dx-scheduler-timeline .dx-scheduler-appointment.dx-state-active,
 .dx-scheduler-work-space-month .dx-scheduler-appointment.dx-resizable-resizing,
 .dx-scheduler-work-space-month .dx-scheduler-appointment.dx-state-active {
-  -webkit-box-shadow: inset -2px 0 0 0 rgba(var(--colors-primary), 0.3),
+  -webkit-box-shadow:
+    inset -2px 0 0 0 rgba(var(--colors-primary), 0.3),
     inset 2px 0 0 0 rgba(var(--colors-primary), 0.3);
-  box-shadow: inset -2px 0 0 0 rgba(var(--colors-primary), 0.3),
+  box-shadow:
+    inset -2px 0 0 0 rgba(var(--colors-primary), 0.3),
     inset 2px 0 0 0 rgba(var(--colors-primary), 0.3);
 }
 .dx-scheduler-all-day-appointment.dx-state-hover,
@@ -23426,9 +23749,11 @@ input.dx-hidden {
 .dx-scheduler-timeline .dx-scheduler-appointment.dx-state-hover.dx-resizable,
 .dx-scheduler-work-space-month
   .dx-scheduler-appointment.dx-state-hover.dx-resizable {
-  -webkit-box-shadow: inset 5px 0 0 0 rgba(var(--colors-primary), 0.3),
+  -webkit-box-shadow:
+    inset 5px 0 0 0 rgba(var(--colors-primary), 0.3),
     inset -2px 0 0 0 rgba(var(--colors-primary), 0.3);
-  box-shadow: inset 5px 0 0 0 rgba(var(--colors-primary), 0.3),
+  box-shadow:
+    inset 5px 0 0 0 rgba(var(--colors-primary), 0.3),
     inset -2px 0 0 0 rgba(var(--colors-primary), 0.3);
 }
 .dx-rtl .dx-scheduler-all-day-appointment.dx-state-hover,
@@ -23446,9 +23771,11 @@ input.dx-hidden {
 .dx-rtl
   .dx-scheduler-work-space-month
   .dx-scheduler-appointment.dx-state-hover.dx-resizable {
-  -webkit-box-shadow: inset -5px 0 0 0 rgba(var(--colors-primary), 0.3),
+  -webkit-box-shadow:
+    inset -5px 0 0 0 rgba(var(--colors-primary), 0.3),
     inset 2px 0 0 0 rgba(var(--colors-primary), 0.3);
-  box-shadow: inset -5px 0 0 0 rgba(var(--colors-primary), 0.3),
+  box-shadow:
+    inset -5px 0 0 0 rgba(var(--colors-primary), 0.3),
     inset 2px 0 0 0 rgba(var(--colors-primary), 0.3);
 }
 .dx-scheduler-fixed-appointments
@@ -23458,10 +23785,12 @@ input.dx-hidden {
 .dx-scheduler-work-space-month
   .dx-draggable-dragging
   .dx-scheduler-appointment {
-  -webkit-box-shadow: inset -2px 0 0 0 rgba(var(--colors-primary), 0.3),
+  -webkit-box-shadow:
+    inset -2px 0 0 0 rgba(var(--colors-primary), 0.3),
     inset 2px 0 0 0 rgba(var(--colors-primary), 0.3),
     7px 7px 15px 0 rgba(50, 50, 50, 0.2);
-  box-shadow: inset -2px 0 0 0 rgba(var(--colors-primary), 0.3),
+  box-shadow:
+    inset -2px 0 0 0 rgba(var(--colors-primary), 0.3),
     inset 2px 0 0 0 rgba(var(--colors-primary), 0.3),
     7px 7px 15px 0 rgba(50, 50, 50, 0.2);
 }
@@ -23699,7 +24028,9 @@ input.dx-hidden {
   border-right: none;
   height: 75px;
 }
-.dx-scheduler-work-space-day.dx-scheduler-work-space-count:not(.dx-scheduler-work-space-vertical-grouped)
+.dx-scheduler-work-space-day.dx-scheduler-work-space-count:not(
+    .dx-scheduler-work-space-vertical-grouped
+  )
   .dx-scheduler-header-panel {
   margin-top: 10px;
 }
@@ -25274,7 +25605,9 @@ input.dx-hidden {
   background-color: rgba(51, 51, 51, 0.03);
 }
 .dx-htmleditor.dx-htmleditor-filled.dx-state-hover,
-.dx-htmleditor.dx-htmleditor-filled.dx-state-hover.dx-invalid.dx-state-readonly:not(.dx-state-focused) {
+.dx-htmleditor.dx-htmleditor-filled.dx-state-hover.dx-invalid.dx-state-readonly:not(
+    .dx-state-focused
+  ) {
   background-color: rgba(var(--colors-primary), 0.07);
 }
 .dx-htmleditor.dx-htmleditor-filled.dx-state-active,
@@ -25332,171 +25665,277 @@ input.dx-hidden {
   background-color: transparent;
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-outlined,
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-outlined,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-text {
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-text {
   background-color: rgba(var(--colors-primary), 0.17);
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-outlined.dx-state-hover,
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-outlined.dx-state-hover,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-text.dx-state-hover {
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-text.dx-state-hover {
   background-color: rgba(var(--colors-primary), 0.11);
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-outlined.dx-state-focused,
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-outlined.dx-state-focused,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-text.dx-state-focused {
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-text.dx-state-focused {
   background-color: rgba(var(--colors-primary), 0.14);
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-outlined.dx-button-success,
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-outlined.dx-button-success,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-text.dx-button-success {
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-text.dx-button-success {
   background-color: rgba(40, 167, 69, 0.3);
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-outlined.dx-button-success.dx-state-focused,
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-outlined.dx-button-success.dx-state-focused,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-outlined.dx-button-success.dx-state-hover,
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-outlined.dx-button-success.dx-state-hover,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-text.dx-button-success.dx-state-focused,
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-text.dx-button-success.dx-state-focused,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-text.dx-button-success.dx-state-hover {
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-text.dx-button-success.dx-state-hover {
   background-color: rgba(40, 167, 69, 0.2);
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-outlined.dx-button-default,
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-outlined.dx-button-default,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-text.dx-button-default {
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-text.dx-button-default {
   background-color: rgba(var(--colors-primary), 0.3);
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-outlined.dx-button-default.dx-state-focused,
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-outlined.dx-button-default.dx-state-focused,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-outlined.dx-button-default.dx-state-hover,
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-outlined.dx-button-default.dx-state-hover,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-text.dx-button-default.dx-state-focused,
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-text.dx-button-default.dx-state-focused,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-text.dx-button-default.dx-state-hover {
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-text.dx-button-default.dx-state-hover {
   background-color: rgba(var(--colors-primary), 0.2);
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-outlined.dx-button-danger,
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-outlined.dx-button-danger,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-text.dx-button-danger {
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-text.dx-button-danger {
   background-color: rgba(220, 53, 69, 0.3);
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-outlined.dx-button-danger.dx-state-focused,
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-outlined.dx-button-danger.dx-state-focused,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-outlined.dx-button-danger.dx-state-hover,
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-outlined.dx-button-danger.dx-state-hover,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-text.dx-button-danger.dx-state-focused,
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-text.dx-button-danger.dx-state-focused,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-text.dx-button-danger.dx-state-hover {
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-text.dx-button-danger.dx-state-hover {
   background-color: rgba(220, 53, 69, 0.2);
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-outlined.dx-button-normal,
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-outlined.dx-button-normal,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-outlined.dx-button-normal
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-outlined.dx-button-normal
   .dx-icon,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-text.dx-button-normal,
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-text.dx-button-normal,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-text.dx-button-normal
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-text.dx-button-normal
   .dx-icon {
   color: #333;
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-outlined.dx-button-success,
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-outlined.dx-button-success,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-outlined.dx-button-success
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-outlined.dx-button-success
   .dx-icon,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-text.dx-button-success,
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-text.dx-button-success,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-text.dx-button-success
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-text.dx-button-success
   .dx-icon {
   color: rgba(40, 167, 69, 1);
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-outlined.dx-button-default,
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-outlined.dx-button-default,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-outlined.dx-button-default
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-outlined.dx-button-default
   .dx-icon,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-text.dx-button-default,
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-text.dx-button-default,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-text.dx-button-default
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-text.dx-button-default
   .dx-icon {
   color: theme("colors.primary");
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-outlined.dx-button-danger,
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-outlined.dx-button-danger,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-outlined.dx-button-danger
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-outlined.dx-button-danger
   .dx-icon,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-text.dx-button-danger,
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-text.dx-button-danger,
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-text.dx-button-danger
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-text.dx-button-danger
   .dx-icon {
   color: rgba(220, 53, 69, 1);
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-contained {
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-contained {
   background-color: #fff;
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-contained.dx-state-hover
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-contained.dx-state-hover
   .dx-icon:before {
   @apply tw-text-white;
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-contained.dx-state-hover {
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-contained.dx-state-hover {
   /* background-color: #f5f5f5; */
   @apply tw-bg-primary-light tw-text-white;
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-contained.dx-state-focused {
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-contained.dx-state-focused {
   background-color: #ebebeb;
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-contained.dx-button-success {
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-contained.dx-button-success {
   background-color: rgba(40, 167, 69, 1);
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-contained.dx-button-success.dx-state-hover {
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-contained.dx-button-success.dx-state-hover {
   background-color: #46a046;
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-contained.dx-button-success.dx-state-focused {
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-contained.dx-button-success.dx-state-focused {
   background-color: #419641;
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-contained.dx-button-default {
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-contained.dx-button-default {
   background-color: theme("colors.primary");
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-contained.dx-button-default.dx-state-hover {
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-contained.dx-button-default.dx-state-hover {
   background-color: #296293;
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-contained.dx-button-default.dx-state-focused {
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-contained.dx-button-default.dx-state-focused {
   background-color: #265a87;
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-contained.dx-button-danger {
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-contained.dx-button-danger {
   background-color: rgba(220, 53, 69, 1);
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-contained.dx-button-danger.dx-state-hover {
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-contained.dx-button-danger.dx-state-hover {
   background-color: #ce312c;
 }
 .dx-htmleditor-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-mode-contained.dx-button-danger.dx-state-focused {
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-mode-contained.dx-button-danger.dx-state-focused {
   background-color: #c12e2a;
 }
 .dx-device-mobile .dx-htmleditor-toolbar .dx-htmleditor-toolbar-separator,
@@ -25536,9 +25975,15 @@ input.dx-hidden {
   > .dx-overlay-content
   > .dx-popup-content
   .dx-tab:first-child {
-  -webkit-box-shadow: inset 0 1px #ddd, inset -1px 0 #ddd, inset 0 0 #ddd,
+  -webkit-box-shadow:
+    inset 0 1px #ddd,
+    inset -1px 0 #ddd,
+    inset 0 0 #ddd,
     inset 0 0 #ddd;
-  box-shadow: inset 0 1px #ddd, inset -1px 0 #ddd, inset 0 0 #ddd,
+  box-shadow:
+    inset 0 1px #ddd,
+    inset -1px 0 #ddd,
+    inset 0 0 #ddd,
     inset 0 0 #ddd;
 }
 .dx-htmleditor-add-image-popup
@@ -25546,20 +25991,30 @@ input.dx-hidden {
   > .dx-popup-content
   .dx-tabpanel.dx-state-focused
   .dx-tab.dx-tab-selected:first-child {
-  -webkit-box-shadow: inset 0 1px theme("colors.primary"),
-    inset -1px 0 theme("colors.primary"), inset 0 0 theme("colors.primary");
-  box-shadow: inset 0 1px theme("colors.primary"),
-    inset -1px 0 theme("colors.primary"), inset 0 0 theme("colors.primary");
+  -webkit-box-shadow:
+    inset 0 1px theme("colors.primary"),
+    inset -1px 0 theme("colors.primary"),
+    inset 0 0 theme("colors.primary");
+  box-shadow:
+    inset 0 1px theme("colors.primary"),
+    inset -1px 0 theme("colors.primary"),
+    inset 0 0 theme("colors.primary");
 }
 .dx-htmleditor-add-image-popup
   > .dx-overlay-content
   > .dx-popup-content
   .dx-tabpanel.dx-state-focused
   .dx-tab:first-child {
-  -webkit-box-shadow: inset 0 1px #ddd, inset 0 0 #ddd,
-    inset 0 -1px theme("colors.primary"), inset 0 0 #ddd;
-  box-shadow: inset 0 1px #ddd, inset 0 0 #ddd,
-    inset 0 -1px theme("colors.primary"), inset 0 0 #ddd;
+  -webkit-box-shadow:
+    inset 0 1px #ddd,
+    inset 0 0 #ddd,
+    inset 0 -1px theme("colors.primary"),
+    inset 0 0 #ddd;
+  box-shadow:
+    inset 0 1px #ddd,
+    inset 0 0 #ddd,
+    inset 0 -1px theme("colors.primary"),
+    inset 0 0 #ddd;
 }
 .dx-htmleditor-add-image-popup
   > .dx-overlay-content
@@ -26561,7 +27016,9 @@ input.dx-hidden {
 }
 .dx-filemanager
   .dx-filemanager-thumbnails
-  .dx-filemanager-thumbnails-item.dx-state-hover:not(.dx-state-focused):not(.dx-item-selected) {
+  .dx-filemanager-thumbnails-item.dx-state-hover:not(.dx-state-focused):not(
+    .dx-item-selected
+  ) {
   background: rgba(var(--colors-primary), 0.14);
 }
 .dx-filemanager
@@ -27447,15 +27904,21 @@ input.dx-hidden {
   background-color: #e6e6e6;
 }
 .dx-diagram-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-success {
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-success {
   background-color: #449d44;
 }
 .dx-diagram-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-default {
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-default {
   background-color: #285f8f;
 }
 .dx-diagram-toolbar
-  .dx-format-active:not(.dx-color-format):not(.dx-background-format).dx-button-danger {
+  .dx-format-active:not(.dx-color-format):not(
+    .dx-background-format
+  ).dx-button-danger {
   background-color: #c9302c;
 }
 .dx-diagram-toolbar .dx-dropdowneditor.dx-editor-filled,
@@ -28216,9 +28679,11 @@ input.dx-hidden {
 }
 .dx-sortable-dragging > * {
   border-color: rgba(var(--colors-primary), 0.5);
-  -webkit-box-shadow: 0 1px 3px rgba(var(--colors-primary), 0.1),
+  -webkit-box-shadow:
+    0 1px 3px rgba(var(--colors-primary), 0.1),
     0 6px 8px rgba(var(--colors-primary), 0.2);
-  box-shadow: 0 1px 3px rgba(var(--colors-primary), 0.1),
+  box-shadow:
+    0 1px 3px rgba(var(--colors-primary), 0.1),
     0 6px 8px rgba(var(--colors-primary), 0.2);
 }
 .dx-deferrendering .dx-deferrendering-loadindicator-container {
