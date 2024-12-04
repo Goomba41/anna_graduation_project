@@ -5,10 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 
+using AutoMapper;
+using DevExtreme;
 using DevExtreme.AspNet.Data;
 
 using backend.Models;
-using DevExtreme;
+using backend.DTOs;
 
 namespace backend.Controllers
 {
@@ -17,17 +19,20 @@ namespace backend.Controllers
     [Authorize]
     public class UsersController : ControllerBase
     {
+        private readonly IMapper _mapper;
+
         private readonly AnnaGraduationProjectContext _context;
 
         private readonly ILogger<AboutController> _logger;
 
         private readonly IHttpContextAccessor _http;
 
-        public UsersController(ILogger<AboutController> logger, AnnaGraduationProjectContext context, IHttpContextAccessor httpContextAccessor)
+        public UsersController(IMapper mapper, ILogger<AboutController> logger, AnnaGraduationProjectContext context, IHttpContextAccessor httpContextAccessor)
         {
             _logger = logger;
             _context = context;
             _http = httpContextAccessor;
+            _mapper = mapper;
         }
 
         // GET: api/Users
@@ -55,18 +60,8 @@ namespace backend.Controllers
                     .ThenBy(t => t.Patronymic);
 
                 var queryResult = queryModel
-                .Select(s => new
-                {
-                    s.Id,
-                    s.Sysadmin,
-                    FullName = String.Format("{0} {1} {2}", s.LastName, s.FirstName, s.Patronymic),
-                    s.FirstName,
-                    s.LastName,
-                    s.Patronymic,
-                    s.Login,
-                    s.Phone,
-                    s.Email,
-                }).ToList();
+                .Select(user => _mapper.Map<UserResponseDTO>(user))
+                .ToList();
 
                 responseObject.result = 0;
                 responseObject.rowsQueried = queryModel.Count();
@@ -84,18 +79,18 @@ namespace backend.Controllers
         }
 
         // GET: api/Users/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
-        {
-            var user = await _context.Users.FindAsync(id);
+        // [HttpGet("{id}")]
+        // public async Task<ActionResult<User>> GetUser(int id)
+        // {
+        //     var user = await _context.Users.FindAsync(id);
 
-            if (user == null)
-            {
-                return NotFound();
-            }
+        //     if (user == null)
+        //     {
+        //         return NotFound();
+        //     }
 
-            return user;
-        }
+        //     return user;
+        // }
 
         // PUT: api/Users/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -153,18 +148,7 @@ namespace backend.Controllers
                 {
                     result = 0,
                     updatedId = user.Id,
-                    data = new
-                    {
-                        user.Id,
-                        user.Sysadmin,
-                        FullName = String.Format("{0} {1} {2}", user.LastName, user.FirstName, user.Patronymic),
-                        user.FirstName,
-                        user.LastName,
-                        user.Patronymic,
-                        user.Login,
-                        user.Phone,
-                        user.Email,
-                    }
+                    data = _mapper.Map<UserResponseDTO>(user)
                 });
             }
             else
@@ -208,18 +192,7 @@ namespace backend.Controllers
             {
                 result = 0,
                 createdId = user.Id,
-                data = new
-                {
-                    user.Id,
-                    user.Sysadmin,
-                    FullName = String.Format("{0} {1} {2}", user.LastName, user.FirstName, user.Patronymic),
-                    user.FirstName,
-                    user.LastName,
-                    user.Patronymic,
-                    user.Login,
-                    user.Phone,
-                    user.Email,
-                }
+                data = _mapper.Map<UserResponseDTO>(user)
             });
         }
 
