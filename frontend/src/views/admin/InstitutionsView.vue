@@ -34,10 +34,7 @@
 
         <div class="middle-part">
           <span class="search p-input-icon-left">
-            <font-awesome-icon
-              :icon="['fas', 'fa-magnifying-glass']"
-              :class="['p-button-icon']"
-            ></font-awesome-icon>
+            <MagnifyingGlass class="p-button-icon" />
             <InputText
               ref="searchInput"
               v-model="searchString"
@@ -100,7 +97,7 @@
       <DxDataGrid
         ref="dataGridUsers"
         column-resizing-mode="widget"
-        key-expr="Id"
+        key-expr="id"
         width="100%"
         :data-source="users"
         :allow-column-resizing="true"
@@ -109,7 +106,7 @@
         @content-ready="totalRowsCount()"
         @context-menu-preparing="addMenuItems($event)"
         @option-changed="filterEvent($event)"
-        @row-dbl-click="makeActionOnItem($event.data.Id)"
+        @row-dbl-click="makeActionOnItem($event.data.id)"
       >
         <DxColumn
           v-for="(column, index) in dataGridColumnsUsers"
@@ -131,38 +128,35 @@
         />
 
         <template #phone="{ data }">
-          <font-awesome-icon
-            v-if="data.value"
-            :icon="['fas', 'fa-square-phone']"
-            :class="['p-button-icon tw-text-primary tw-mr-2']"
-          ></font-awesome-icon>
-          <!-- <span
-            class="phone-monotyped"
-            :title="data.value"
-            >{{
-              data.value
-            }}</span> -->
-          <span class="phone-monotyped" :title="phoneParse(data.value)">{{
-            phoneParse(data.value)
-          }}</span>
+          <div class="tw-flex tw-flex-row tw-items-center">
+            <PhoneTwotone
+              v-if="data.value"
+              class="p-button-icon tw-text-primary tw-mr-2"
+            />
+            <span class="phone-monotyped" :title="phoneParse(data.value)">{{
+              phoneParse(data.value)
+            }}</span>
+          </div>
         </template>
 
         <template #fio="{ data }">
-          <font-awesome-icon
-            v-if="data.data.Sysadmin"
-            :icon="['fas', 'fa-user-gear']"
-            :class="['p-button-icon tw-text-primary tw-mr-2']"
-          ></font-awesome-icon>
-          <span>{{ data.value }}</span>
+          <div class="tw-flex tw-flex-row tw-items-center">
+            <PrivelegedUser
+              v-if="data.data.sysadmin"
+              class="p-button-icon tw-text-primary tw-mr-2"
+            />
+            <span>{{ data.value }}</span>
+          </div>
         </template>
 
         <template #email="{ data }">
-          <font-awesome-icon
-            v-if="data.value"
-            :icon="['fas', 'fa-square-envelope']"
-            :class="['p-button-icon tw-text-primary tw-mr-2']"
-          ></font-awesome-icon>
-          <span>{{ data.value }}</span>
+          <div class="tw-flex tw-flex-row tw-items-center">
+            <EmailTwotone
+              v-if="data.value"
+              class="p-button-icon tw-text-primary tw-mr-2"
+            />
+            <span>{{ data.value }}</span>
+          </div>
         </template>
 
         <DxFilterRow :visible="true" />
@@ -226,16 +220,23 @@ import DxDataGrid, {
   DxScrolling,
   DxColumn,
 } from "devextreme-vue/data-grid";
+import type { DxFilterBuilderTypes } from "devextreme-vue/filter-builder";
+import type { DxDataGridTypes } from "devextreme-vue/data-grid";
+import type { DxContextMenuTypes } from "devextreme-vue/context-menu";
 
 import { useLoadingStore } from "@/stores/loading.store";
 import { useUsersStore } from "@/stores/users.store";
-// import { useMunicipalitiesStore } from '@/stores/municipalities.store'
+// import { useAuthStore } from "@/stores/auth.store";
 
 import type { TUsers, TUser } from "@/typings/user.types";
 
 import FilterReset from "@/components/icons/FilterReset.vue";
 import FilterTwotone from "@/components/icons/FilterTwotone.vue";
 import PlusUserTwotone from "@/components/icons/PlusUserTwotone.vue";
+import EmailTwotone from "@/components/icons/EmailTwotone.vue";
+import MagnifyingGlass from "@/components/icons/MagnifyingGlass.vue";
+import PrivelegedUser from "@/components/icons/PrivelegedUser.vue";
+import PhoneTwotone from "@/components/icons/PhoneTwotone.vue";
 
 import toast from "@/utils/toast";
 import useEmitter from "@/utils/emitter";
@@ -246,8 +247,7 @@ import FilterPopup from "@/components/FilterPopup.vue";
 
 const loadingStore = useLoadingStore();
 const usersStore = useUsersStore();
-// const municipalitiesStore = useMunicipalitiesStore()
-// const router = useRouter();
+// const authStore = useAuthStore();
 
 const { bus, emit } = useEmitter();
 
@@ -255,7 +255,7 @@ const dataGridUsers = ref(DxDataGrid);
 
 const dataGridColumnsUsers = [
   {
-    dataField: "Id",
+    dataField: "id",
     position: -1,
     type: "number",
     caption: "Идентификатор",
@@ -267,7 +267,7 @@ const dataGridColumnsUsers = [
     cellTemplate: "",
   },
   {
-    dataField: "Fio",
+    dataField: "fullName",
     position: 0,
     type: "string",
     caption: "ФИО",
@@ -279,7 +279,7 @@ const dataGridColumnsUsers = [
     cellTemplate: "fio",
   },
   {
-    dataField: "Name",
+    dataField: "login",
     position: 1,
     type: "string",
     caption: "Логин",
@@ -289,27 +289,7 @@ const dataGridColumnsUsers = [
     minWidth: 200,
   },
   {
-    dataField: "Dol",
-    position: 2,
-    type: "string",
-    caption: "Должность",
-    visible: true,
-    allowGrouping: false,
-    groupIndex: 0,
-    minWidth: 200,
-  },
-  {
-    dataField: "Unit",
-    position: 3,
-    type: "string",
-    caption: "Подразделение",
-    visible: true,
-    allowGrouping: false,
-    groupIndex: 0,
-    minWidth: 200,
-  },
-  {
-    dataField: "Telephone",
+    dataField: "phone",
     position: 4,
     type: "string",
     caption: "Телефон",
@@ -320,7 +300,7 @@ const dataGridColumnsUsers = [
     cellTemplate: "phone",
   },
   {
-    dataField: "Email",
+    dataField: "email",
     position: 5,
     type: "string",
     caption: "Email",
@@ -330,16 +310,6 @@ const dataGridColumnsUsers = [
     minWidth: 200,
     cellTemplate: "email",
   },
-  // {
-  //   dataField: 'Group.Name',
-  //   position: 6,
-  //   type: 'string',
-  //   caption: 'Группа',
-  //   visible: true,
-  //   allowGrouping: false,
-  //   groupIndex: 0,
-  //   minWidth: 200,
-  // },
 ];
 
 const tableRowsTotal: Ref<number> = ref(0);
@@ -360,13 +330,16 @@ let rowForAction: TUser | undefined = undefined;
 
 const users: Ref<TUsers> = ref([]);
 
-const filteringColumns: unknown[] = dataGridColumnsUsers
+const filteringColumns: Array<DxFilterBuilderTypes.Field> = dataGridColumnsUsers
   .filter((column) => column.visible)
-  .map((column) => ({
-    caption: column.caption,
-    dataType: column.type,
-    dataField: column.dataField,
-  }));
+  .map(
+    (column) =>
+      ({
+        caption: column.caption,
+        dataType: column.type,
+        dataField: column.dataField,
+      }) as DxFilterBuilderTypes.Field,
+  );
 
 // По вызову удаления из контекстного меню вызывается тостер-подтверждение.
 // В тостере на каждую кнопку привязан вызов эмиттера с передачей результата нажатия.
@@ -375,9 +348,9 @@ const filteringColumns: unknown[] = dataGridColumnsUsers
 // Есть вариант EventBus через mitt
 watch(
   () => bus.value.get("deletionConfirmation"),
-  (value?: unknown[]) => {
+  (value) => {
     // Деструктурим параметры (потому что value это Proxy)
-    const [confirm] = value ?? [];
+    const [confirm] = (value as unknown[]) ?? [];
 
     // Если подтверждено, вызовем удаление на сервере
     if (confirm) {
@@ -413,39 +386,22 @@ function searchInTable() {
  * по клику ПКМ на строке
  * @param {event} [e] - глобальное событие клика по строке
  **/
-function addMenuItems(e) {
+function addMenuItems(e: DxDataGridTypes.ContextMenuPreparingEvent) {
   // Если это строка контента и тип данных
-  if (e.target === "content" && e.rowIndex >= 0 && e.row.rowType === "data") {
+  if (e.target === "content" && e.rowIndex >= 0 && e.row?.rowType === "data") {
     e.items = e.items || []; // e.items изначально скорее всего undefined
 
     rowForAction = e.row.data;
 
-    const falsy: boolean = false;
-
     // Сформируем корневые пункты контекстного меню
-    const contextItems: unknown[] = [
-      {
-        text: "Права доступа к подсистемам",
-        // text: rowForAction.IsPublic ? "Просмотр" : "Редактировать",
-        icon: `fa-solid ${falsy ? "fa-eye" : "fa-unlock-keyhole"}`,
-        onItemClick: () => {
-          if (rowForAction?.Id) {
-            getUserRights(rowForAction.Id);
-          } else {
-            toast(
-              "Ошибка!",
-              "Не удалось получить Id пользователя для запроса прав доступа",
-              "error",
-            );
-          }
-        },
-      },
+    const contextItems: (DxContextMenuTypes.Item & {
+      onItemClick: () => void;
+    })[] = [
       {
         text: "Редактировать",
         // text: rowForAction.IsPublic ? "Просмотр" : "Редактировать",
-        icon: `fa-solid ${falsy ? "fa-eye" : "fa-pen"}`,
         onItemClick: () => {
-          makeActionOnItem(rowForAction?.Id);
+          makeActionOnItem(rowForAction?.id);
         },
       },
       {
@@ -454,13 +410,13 @@ function addMenuItems(e) {
         // и удаление должно быть ВСЕГДА последним. Единственная проблема: если строка
         // не предусматривает действие удаления.
         text: "Удалить",
-        icon: "fa-solid fa-times",
         onItemClick: () => {
           emit("openDeletionConfirmation", [
             true,
-            `Вы действительно хотите удалить запись «${rowForAction?.Name}»?`,
+            `Вы действительно хотите удалить запись «${rowForAction?.login}»?`,
           ]);
         },
+        // TODO: отключен если админ и выбрал сам себя или последнего админа или не админ выбрал сам себя
       },
     ];
 
@@ -480,7 +436,7 @@ function makeActionOnItem(id?: number | null) {
       userData.value = undefined;
       resolve();
     } else {
-      userData.value = users.value.find((user) => user.Id === id);
+      userData.value = users.value.find((user) => user.id === id);
 
       if (userData.value) {
         resolve();
@@ -499,36 +455,25 @@ function makeActionOnItem(id?: number | null) {
     });
 }
 
-async function getUserRights(id: number) {
-  await usersStore.readRights(id).then(() => {
-    emit("openAdminUserRightsForm");
-  });
-}
-
 function addUserToList(response: { createdId: number; form: TUser }) {
   users.value.push(response.form);
 }
 
 function updateUserInList(response: { updatedId: number; form: TUser }) {
-  users.value = users.value.filter((u) => response.updatedId !== u.Id);
+  users.value = users.value.filter((u) => response.updatedId !== u.id);
   users.value.push(response.form);
 }
 
 async function deleteItem() {
-  if (rowForAction && rowForAction.Id) {
-    await usersStore.delete(rowForAction.Id).then((deletedId) => {
-      // * Нужен таймаут, потому что скрывается таблица во время запроса
-      // * и не успевает открыться на момент исполнения кода, поэтому
-      // * index строки всегда -1
-      // setTimeout(() => {
-      //   // Удалим строку по её индексу вместо полного обновления данных
-      //   const index = dataGridUsers.value.instance.getRowIndexByKey(rowForAction!.Id || deletedId)
-      //   console.log(index)
-      //   dataGridUsers.value.instance.deleteRow(index)
-      // }, 100)
-
+  if (rowForAction?.id) {
+    await usersStore.delete(rowForAction.id).then((deletedId) => {
+      toast(
+        "Успех!",
+        `Пользователь «${rowForAction?.fullName}» удалён`,
+        "success",
+      );
       users.value = users.value.filter(
-        (user) => user.Id !== (rowForAction!.Id || deletedId),
+        (user) => user.id !== (rowForAction?.id || deletedId),
       );
     });
   } else {
@@ -539,11 +484,11 @@ async function deleteItem() {
 // При вводе в поля фильтра в столбцах таблицы
 // триггерим событие, которое присваивает переменной составленные фильтры, которая
 // затем передается в окно фильтра для отображения
-function filterEvent(event) {
+function filterEvent(event: DxDataGridTypes.OptionChangedEvent) {
   if (event.name === "filterValue") {
     initialFilters.value = event.value;
 
-    if (event.value && event.value.length) {
+    if (event.value?.length) {
       tableFiltered.value = true;
     } else {
       tableFiltered.value = false;
@@ -552,7 +497,7 @@ function filterEvent(event) {
 }
 
 // Функция, вызываемая в случае применения фильтров из окна фильтра
-function applyFilters(event) {
+function applyFilters(event: (string | string[])[]) {
   dataGridUsers.value.instance.option("filterValue", event);
 }
 
@@ -564,13 +509,7 @@ function resetFilters() {
 onMounted(async () => {
   users.value = (await usersStore.read()) || [];
 
-  // * В старой версии был запрос:
-  // * id between 33202 and 33250 or id in (33401,334104,33407,33410,33413,33404)
-  // * Так что можно сказать, что это жёстко зашито
-  // * Плюс немного переделан запрос: смотрим не по id а по id родителя
-  // municipalitiesStore.readGlobal(undefined, { node: [33200, 33400, 33550] })
-
-  usersStore.activity("write", 2, "Просмотр списка пользователей");
+  usersStore.activity("write", "Просмотр списка пользователей");
 
   useFocus(searchInput, { initialValue: true });
 });

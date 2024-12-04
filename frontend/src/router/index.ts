@@ -92,7 +92,7 @@ export const router = createRouter({
                     id: "b1343077-fe38-4b9e-9471-a7036912b6a9",
                     type: "router-link",
                     to: { name: "organizations" },
-                    text: "Организации",
+                    text: "Учреждения",
                     icon: "organizations",
                   },
                   {
@@ -145,11 +145,11 @@ export const router = createRouter({
             {
               path: "/admin/organizations",
               name: "organizations",
-              component: () => import("../views/admin/OrganizationsView.vue"),
+              component: () => import("../views/admin/InstitutionsView.vue"),
               meta: {
                 id: "1b0caf33-98ce-4f26-8f17-c7199f7a7d8f",
-                pageTitle: "Организации",
-                tabTitle: "Организации",
+                pageTitle: "Учреждения",
+                tabTitle: "Учреждения",
               },
             },
             {
