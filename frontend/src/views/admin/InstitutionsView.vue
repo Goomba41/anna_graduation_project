@@ -54,11 +54,7 @@
               :disabled="loadingStore.loadingState"
               @click="makeActionOnItem()"
             >
-              <PlusUserTwotone
-                height="1.25rem"
-                width="1.25rem"
-                stroke-width="2"
-              />
+              <HomePlus height="1.25rem" width="1.25rem" stroke-width="2" />
             </Button>
 
             <div
@@ -95,11 +91,11 @@
     </div>
     <div class="data-table tw-flex tw-flex-auto tw-h-1 tw-mb-4">
       <DxDataGrid
-        ref="dataGridUsers"
+        ref="dataGridInstitutions"
         column-resizing-mode="widget"
         key-expr="id"
         width="100%"
-        :data-source="users"
+        :data-source="institutions"
         :allow-column-resizing="true"
         :focused-row-enabled="true"
         :filter-sync-enabled="true"
@@ -109,7 +105,7 @@
         @row-dbl-click="makeActionOnItem($event.data.id)"
       >
         <DxColumn
-          v-for="(column, index) in dataGridColumnsUsers"
+          v-for="(column, index) in dataGridColumnsInstitutions"
           :key="index"
           fixed-position="left"
           :fixed="column.position <= 0"
@@ -125,39 +121,8 @@
           :format="column.format"
           :cell-template="column.cellTemplate"
           :sort-order="column?.sortOrder"
+          :sort-index="column?.sortIndex"
         />
-
-        <template #phone="{ data }">
-          <div class="tw-flex tw-flex-row tw-items-center">
-            <PhoneTwotone
-              v-if="data.value"
-              class="p-button-icon tw-text-primary tw-mr-2"
-            />
-            <span class="phone-monotyped" :title="phoneParse(data.value)">{{
-              phoneParse(data.value)
-            }}</span>
-          </div>
-        </template>
-
-        <template #fio="{ data }">
-          <div class="tw-flex tw-flex-row tw-items-center">
-            <PrivelegedUser
-              v-if="data.data.sysadmin"
-              class="p-button-icon tw-text-primary tw-mr-2"
-            />
-            <span>{{ data.value }}</span>
-          </div>
-        </template>
-
-        <template #email="{ data }">
-          <div class="tw-flex tw-flex-row tw-items-center">
-            <EmailTwotone
-              v-if="data.value"
-              class="p-button-icon tw-text-primary tw-mr-2"
-            />
-            <span>{{ data.value }}</span>
-          </div>
-        </template>
 
         <DxFilterRow :visible="true" />
         <DxEditing :confirm-delete="false" />
@@ -195,12 +160,12 @@
     />
   </template>
 
-  <UserPopup
-    :user="userData"
+  <!-- <InstitutionPopup
+    :institution="institutionData"
     :disabled="disabledForm"
-    @created="addUserToList"
-    @updated="updateUserInList"
-  />
+    @created="addInstitutionToList"
+    @updated="updateInstitutionInList"
+  /> -->
 </template>
 
 <script lang="ts" setup>
@@ -225,35 +190,33 @@ import type { DxDataGridTypes } from "devextreme-vue/data-grid";
 import type { DxContextMenuTypes } from "devextreme-vue/context-menu";
 
 import { useLoadingStore } from "@/stores/loading.store";
+import { useInstitutionsStore } from "@/stores/institutions.store";
 import { useUsersStore } from "@/stores/users.store";
 // import { useAuthStore } from "@/stores/auth.store";
 
-import type { TUsers, TUser } from "@/typings/user.types";
+import type { TInstitutions, TInstitution } from "@/typings/institution.types";
 
 import FilterReset from "@/components/icons/FilterReset.vue";
 import FilterTwotone from "@/components/icons/FilterTwotone.vue";
-import PlusUserTwotone from "@/components/icons/PlusUserTwotone.vue";
-import EmailTwotone from "@/components/icons/EmailTwotone.vue";
+import HomePlus from "@/components/icons/HomePlus.vue";
 import MagnifyingGlass from "@/components/icons/MagnifyingGlass.vue";
-import PrivelegedUser from "@/components/icons/PrivelegedUser.vue";
-import PhoneTwotone from "@/components/icons/PhoneTwotone.vue";
 
 import toast from "@/utils/toast";
 import useEmitter from "@/utils/emitter";
-import phoneParse from "@/utils/phone-formatter";
 
-import UserPopup from "@/components/forms/admin/UserForm.vue";
+// import InstitutionPopup from "@/components/forms/admin/InstitutionForm.vue";
 import FilterPopup from "@/components/FilterPopup.vue";
 
 const loadingStore = useLoadingStore();
+const institutionsStore = useInstitutionsStore();
 const usersStore = useUsersStore();
 // const authStore = useAuthStore();
 
 const { bus, emit } = useEmitter();
 
-const dataGridUsers = ref(DxDataGrid);
+const dataGridInstitutions = ref(DxDataGrid);
 
-const dataGridColumnsUsers = [
+const dataGridColumnsInstitutions = [
   {
     dataField: "id",
     position: -1,
@@ -264,51 +227,74 @@ const dataGridColumnsUsers = [
     groupIndex: 0,
     width: 50,
     format: "",
-    cellTemplate: "",
   },
   {
-    dataField: "fullName",
+    dataField: "name",
     position: 0,
     type: "string",
-    caption: "ФИО",
+    caption: "Наименование",
     visible: true,
     allowGrouping: false,
     groupIndex: 0,
     minWidth: 200,
+    sortIndex: 1,
     sortOrder: "asc",
-    cellTemplate: "fio",
   },
   {
-    dataField: "login",
+    dataField: "address",
     position: 1,
     type: "string",
-    caption: "Логин",
+    caption: "Адрес",
     visible: true,
     allowGrouping: false,
     groupIndex: 0,
     minWidth: 200,
   },
   {
-    dataField: "phone",
+    dataField: "contact",
     position: 4,
     type: "string",
-    caption: "Телефон",
+    caption: "Контакт",
     visible: true,
     allowGrouping: false,
     groupIndex: 0,
     minWidth: 200,
-    cellTemplate: "phone",
   },
   {
-    dataField: "email",
+    dataField: "subject",
     position: 5,
     type: "string",
-    caption: "Email",
+    caption: "Субъект",
     visible: true,
     allowGrouping: false,
     groupIndex: 0,
     minWidth: 200,
-    cellTemplate: "email",
+    sortIndex: 2,
+    sortOrder: "asc",
+  },
+  {
+    dataField: "district",
+    position: 6,
+    type: "string",
+    caption: "Район",
+    visible: true,
+    allowGrouping: false,
+    groupIndex: 0,
+    minWidth: 200,
+    sortIndex: 3,
+    sortOrder: "asc",
+  },
+  {
+    dataField: "locality",
+    position: 5,
+    type: "string",
+    caption: "Нас. пункт",
+    visible: true,
+    allowGrouping: false,
+    groupIndex: 0,
+    minWidth: 200,
+    sortIndex: 4,
+    sortOrder: "asc",
   },
 ];
 
@@ -324,22 +310,23 @@ const tableFiltered: Ref<boolean> = ref(false);
 
 const disabledForm: Ref<boolean> = ref(false);
 
-const userData: Ref<undefined | TUser> = ref(undefined);
+const institutionData: Ref<undefined | TInstitution> = ref(undefined);
 
-let rowForAction: TUser | undefined = undefined;
+let rowForAction: TInstitution | undefined = undefined;
 
-const users: Ref<TUsers> = ref([]);
+const institutions: Ref<TInstitutions> = ref([]);
 
-const filteringColumns: Array<DxFilterBuilderTypes.Field> = dataGridColumnsUsers
-  .filter((column) => column.visible)
-  .map(
-    (column) =>
-      ({
-        caption: column.caption,
-        dataType: column.type,
-        dataField: column.dataField,
-      }) as DxFilterBuilderTypes.Field,
-  );
+const filteringColumns: Array<DxFilterBuilderTypes.Field> =
+  dataGridColumnsInstitutions
+    .filter((column) => column.visible)
+    .map(
+      (column) =>
+        ({
+          caption: column.caption,
+          dataType: column.type,
+          dataField: column.dataField,
+        }) as DxFilterBuilderTypes.Field,
+    );
 
 // По вызову удаления из контекстного меню вызывается тостер-подтверждение.
 // В тостере на каждую кнопку привязан вызов эмиттера с передачей результата нажатия.
@@ -364,7 +351,7 @@ watch(
  * Она используется для получения общего количества строк в таблице.
  **/
 function totalRowsCount() {
-  tableRowsTotal.value = dataGridUsers.value.instance.totalCount() || 0;
+  tableRowsTotal.value = dataGridInstitutions.value.instance.totalCount() || 0;
 }
 
 const debouncedSearch = useDebounceFn(() => {
@@ -378,7 +365,10 @@ const debouncedSearch = useDebounceFn(() => {
 function searchInTable() {
   // Devextreme не имеет отдельного event на поиск, только на фильтр, поэтому
   // приходится ухищряться и вручную менять опцию у поисковой панели datagrid
-  dataGridUsers.value.instance.option("searchPanel.text", searchString.value);
+  dataGridInstitutions.value.instance.option(
+    "searchPanel.text",
+    searchString.value,
+  );
 }
 
 /**
@@ -413,7 +403,7 @@ function addMenuItems(e: DxDataGridTypes.ContextMenuPreparingEvent) {
         onItemClick: () => {
           emit("openDeletionConfirmation", [
             true,
-            `Вы действительно хотите удалить запись «${rowForAction?.login}»?`,
+            `Вы действительно хотите удалить запись «${rowForAction?.name}»?`,
           ]);
         },
         // TODO: отключен если админ и выбрал сам себя или последнего админа или не админ выбрал сам себя
@@ -433,12 +423,14 @@ function makeActionOnItem(id?: number | null) {
     disabledForm.value = false;
 
     if (!id) {
-      userData.value = undefined;
+      institutionData.value = undefined;
       resolve();
     } else {
-      userData.value = users.value.find((user) => user.id === id);
+      institutionData.value = institutions.value.find(
+        (institution) => institution.id === id,
+      );
 
-      if (userData.value) {
+      if (institutionData.value) {
         resolve();
       } else {
         reject();
@@ -448,32 +440,36 @@ function makeActionOnItem(id?: number | null) {
 
   promise
     .then(() => {
-      emit("openAdminUserForm");
+      emit("openAdminInstitutionForm");
     })
     .catch(() => {
       toast("Ошибка!", "Не удалось найти объект с данными в списке", "error");
     });
 }
 
-function addUserToList(response: { createdId: number; form: TUser }) {
-  users.value.push(response.form);
-}
+// function addInstitutionToList(response: {
+//   createdId: number;
+//   form: TInstitution;
+// }) {
+//   institutions.value.push(response.form);
+// }
 
-function updateUserInList(response: { updatedId: number; form: TUser }) {
-  users.value = users.value.filter((u) => response.updatedId !== u.id);
-  users.value.push(response.form);
-}
+// function updateInstitutionInList(response: {
+//   updatedId: number;
+//   form: TInstitution;
+// }) {
+//   institutions.value = institutions.value.filter(
+//     (u) => response.updatedId !== u.id,
+//   );
+//   institutions.value.push(response.form);
+// }
 
 async function deleteItem() {
   if (rowForAction?.id) {
-    await usersStore.delete(rowForAction.id).then((deletedId) => {
-      toast(
-        "Успех!",
-        `Пользователь «${rowForAction?.fullName}» удалён`,
-        "success",
-      );
-      users.value = users.value.filter(
-        (user) => user.id !== (rowForAction?.id || deletedId),
+    await institutionsStore.delete(rowForAction.id).then((deletedId) => {
+      toast("Успех!", `Учреждение «${rowForAction?.name}» удалёно`, "success");
+      institutions.value = institutions.value.filter(
+        (institution) => institution.id !== (rowForAction?.id || deletedId),
       );
     });
   } else {
@@ -498,18 +494,18 @@ function filterEvent(event: DxDataGridTypes.OptionChangedEvent) {
 
 // Функция, вызываемая в случае применения фильтров из окна фильтра
 function applyFilters(event: (string | string[])[]) {
-  dataGridUsers.value.instance.option("filterValue", event);
+  dataGridInstitutions.value.instance.option("filterValue", event);
 }
 
 // Функция, для сброса значения фильтров
 function resetFilters() {
-  dataGridUsers.value.instance.option("filterValue", []);
+  dataGridInstitutions.value.instance.option("filterValue", []);
 }
 
 onMounted(async () => {
-  users.value = (await usersStore.read()) || [];
+  institutions.value = (await institutionsStore.read()) || [];
 
-  usersStore.activity("write", "Просмотр списка пользователей");
+  usersStore.activity("write", "Просмотр списка учреждений");
 
   useFocus(searchInput, { initialValue: true });
 });
