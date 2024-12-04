@@ -54,6 +54,33 @@ public partial class AnnaGraduationProjectContext : DbContext
                 .HasConstraintName("FK_EmployeeErrorLog");
         });
 
+        modelBuilder.Entity<Institution>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("institutions_pk");
+
+            entity.ToTable("institutions");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Deleted)
+                .HasComment("Удален (не выводить)")
+                .HasColumnName("deleted");
+            entity.Property(e => e.Name)
+                .HasColumnType("character varying")
+                .HasColumnName("name");
+            entity.Property(e => e.Address)
+                .HasColumnType("character varying")
+                .HasColumnName("address");
+            entity.Property(e => e.Contact)
+                .HasColumnType("character varying")
+                .HasColumnName("contact");
+            entity.Property(e => e.Subject)
+                .HasColumnName("subject");
+            entity.Property(e => e.District)
+                .HasColumnName("district");
+            entity.Property(e => e.Locality)
+                .HasColumnName("locality");
+        });
+
         modelBuilder.Entity<User>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("users_pk");
