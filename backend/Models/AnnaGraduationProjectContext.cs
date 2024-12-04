@@ -21,6 +21,8 @@ public partial class AnnaGraduationProjectContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    public virtual DbSet<Institution> Institutions { get; set; }
+
     public virtual DbSet<UsersActivity> UsersActivities { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
