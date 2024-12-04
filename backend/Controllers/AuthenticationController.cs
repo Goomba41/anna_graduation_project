@@ -1,6 +1,5 @@
 using System.Text;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
@@ -35,7 +34,7 @@ namespace backend.Controllers
                 return NotFound();
             }
 
-            if (User.Password != GetPasswordHash(form.Password))
+            if (User.Password != Utils.GetPasswordHash(form.Password))
             {
                 return BadRequest("Invalid credentials");
             }
@@ -77,16 +76,5 @@ namespace backend.Controllers
 
             return Ok(authResponse);
         }
-
-        private string GetPasswordHash(string password, string salt = "7Q}.3pOWl9pR=FmGVig]")
-        {
-            string hash = string.Empty;
-            foreach (byte b in MD5.HashData(Encoding.Default.GetBytes(password + salt)))
-            {
-                hash += b.ToString("X2");
-            }
-            return hash;
-        }
-
     }
 }
