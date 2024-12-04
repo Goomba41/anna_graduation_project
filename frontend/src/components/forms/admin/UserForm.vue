@@ -385,7 +385,7 @@
             </div>
           </div>
 
-          {{ SurnameMeta }} <br /><br />
+          <!-- {{ SurnameMeta }} <br /><br />
           {{ NameMeta }} <br /><br />
           {{ PatronymicMeta }} <br /><br />
           {{ LoginMeta }} <br /><br />
@@ -394,7 +394,7 @@
           {{ PhoneMeta }} <br /><br />
           {{ EmailMeta }} <br /><br />
           {{ meta }} <br /><br />
-          {{ errors }}
+          {{ errors }} -->
         </div>
       </form>
     </ScrollPanel>
