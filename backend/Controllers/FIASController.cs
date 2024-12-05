@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
+using backend.Models;
+
 namespace backend.Controllers
 {
     [Route("api/[controller]")]
@@ -31,7 +33,7 @@ namespace backend.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                var addresses = await response.Content.ReadAsStringAsync();
+                List<FIASObject>? addresses = JsonConvert.DeserializeObject<FIASObjectWrapper>(await response.Content.ReadAsStringAsync())?.Addresses;
                 return new JsonResult(new
                 {
                     result = 0,
@@ -59,7 +61,7 @@ namespace backend.Controllers
 
             if (response.IsSuccessStatusCode)
             {
-                var addresses = await response.Content.ReadAsStringAsync();
+                List<FIASObject>? addresses = JsonConvert.DeserializeObject<FIASObjectWrapper>(await response.Content.ReadAsStringAsync())?.Addresses;
                 return new JsonResult(new
                 {
                     result = 0,
@@ -78,22 +80,16 @@ namespace backend.Controllers
             client.DefaultRequestHeaders.Add("Master-Token", masterToken);
             HttpResponseMessage response = await client.PostAsJsonAsync(URL, new
             {
-                address_levels = new[] { 2, 5, 6 },
+                address_levels = new[] { 2, 5, 6, 4 },
                 address_type = 2,
                 path = String.Format("{0}.{1}", subjectId, disctrictId)
             });
 
-            Console.WriteLine(JsonConvert.SerializeObject(new
-            {
-                address_levels = new[] { 2, 5, 6 },
-                address_type = 2,
-                path = String.Format("{0}.{1}", subjectId, disctrictId)
-            }).ToString());
             // return Ok(response);
 
             if (response.IsSuccessStatusCode)
             {
-                var addresses = await response.Content.ReadAsStringAsync();
+                List<FIASObject>? addresses = JsonConvert.DeserializeObject<FIASObjectWrapper>(await response.Content.ReadAsStringAsync())?.Addresses;
                 return new JsonResult(new
                 {
                     result = 0,
