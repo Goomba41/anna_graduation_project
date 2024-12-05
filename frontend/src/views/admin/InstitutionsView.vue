@@ -119,10 +119,10 @@
           :min-width="column.minWidth"
           :width="column.width"
           :format="column.format"
-          :cell-template="column.cellTemplate"
           :sort-order="column?.sortOrder"
           :sort-index="column?.sortIndex"
         />
+        <!-- :cell-template="column.cellTemplate" -->
 
         <DxFilterRow :visible="true" />
         <DxEditing :confirm-delete="false" />
@@ -195,7 +195,7 @@ import { useUsersStore } from "@/stores/users.store";
 import { useOptionsStore } from "@/stores/options.store";
 
 import type { TInstitutions, TInstitution } from "@/typings/institution.types";
-import type { TSubjects } from "@/typings/fias-object.types";
+import type { TFIASObjects } from "@/typings/fias-object.types";
 
 import FilterReset from "@/components/icons/FilterReset.vue";
 import FilterTwotone from "@/components/icons/FilterTwotone.vue";
@@ -503,15 +503,13 @@ function resetFilters() {
   dataGridInstitutions.value.instance.option("filterValue", []);
 }
 
-const options: {
-  [key: string]: TSubjects;
-} = {};
+let subjects: TFIASObjects = [];
 
 onMounted(async () => {
   institutions.value = (await institutionsStore.read()) || [];
 
-  options.subjects = (await optionsStore.readSubjects()) || [];
-  // options.districts = (await optionsStore.readDistricts()) || [];
+  subjects = (await optionsStore.read("subjects")) || [];
+  optionsStore.subjects = subjects;
 
   usersStore.activity("write", "Просмотр списка учреждений");
 
