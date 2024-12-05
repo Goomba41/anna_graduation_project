@@ -39,7 +39,8 @@ namespace backend.Mappers
             )
             .ForMember(
                 dest => dest.FullName,
-                opt => opt.MapFrom(src => $"{(src.region_code < 10 ? 0 : "")}{src.region_code} • {src.full_name}")
+                // opt => opt.MapFrom(src => $"{(src.region_code < 10 ? 0 : "")}{src.region_code} • {src.full_name}")
+                opt => opt.MapFrom(src => GenerateFullName(src))
             )
             .ForMember(
                 dest => dest.RegionCode,
@@ -54,6 +55,26 @@ namespace backend.Mappers
                 opt => opt.MapFrom(src => src.path)
             )
             .ReverseMap();
+        }
+
+        public string GenerateFullName(FIASObject src)
+        {
+            if (src.object_level_id == 1)
+                return $"{(src.region_code < 10 ? 0 : "")}{src.region_code} • {src.full_name}";
+
+            if ((new[] { 2, 3, 4, 5, 6 }).Contains(src.object_level_id))
+            {
+                FIASHierarchyObject? hierarchyObject = src.hierarchy.FirstOrDefault(ho =>
+                  ho.object_id == src.object_id && ho.object_level_id == src.object_level_id
+                );
+
+                if (hierarchyObject != null)
+                    return hierarchyObject.full_name;
+
+                return src.full_name;
+            }
+
+            return src.full_name;
         }
     }
 }

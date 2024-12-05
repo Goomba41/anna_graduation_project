@@ -43,7 +43,7 @@ namespace backend.Controllers
                 return new JsonResult(new
                 {
                     result = 0,
-                    subjects = _mapper.Map<List<FIASObject>, List<FIASObjectDTO>>(
+                    addresses = _mapper.Map<List<FIASObject>, List<FIASObjectDTO>>(
                       addresses ?? new List<FIASObject>()
                     ).OrderBy(a => a.RegionCode)
                 });
@@ -73,7 +73,9 @@ namespace backend.Controllers
                 return new JsonResult(new
                 {
                     result = 0,
-                    addresses
+                    addresses = _mapper.Map<List<FIASObject>, List<FIASObjectDTO>>(
+                      addresses ?? new List<FIASObject>()
+                    ).OrderBy(a => a.FullName)
                 });
             }
 
@@ -81,7 +83,7 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        [Route("Subjects/{subjectId}/Districts/{disctrictId}/Locality")]
+        [Route("Subjects/{subjectId}/Districts/{disctrictId}/Localities")]
         public async Task<ActionResult> GetLocalities([FromRoute] int subjectId, int disctrictId)
         {
             HttpClient client = new HttpClient();
@@ -101,7 +103,9 @@ namespace backend.Controllers
                 return new JsonResult(new
                 {
                     result = 0,
-                    addresses
+                    addresses = _mapper.Map<List<FIASObject>, List<FIASObjectDTO>>(
+                      addresses ?? new List<FIASObject>()
+                    ).OrderBy(a => a.FullName)
                 });
             }
 
