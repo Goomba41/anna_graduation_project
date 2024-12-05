@@ -1,7 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
+using AutoMapper;
+
 using backend.Models;
+using backend.DTOs;
 
 namespace backend.Controllers
 {
@@ -10,15 +13,18 @@ namespace backend.Controllers
     // [Authorize]
     public class FIASController : ControllerBase
     {
+        private readonly IMapper _mapper;
+
         public IConfiguration _configuration;
 
         private const string URL = "https://fias-public-service.nalog.ru/api/spas/v2.0/GetAddressItems";
 
         private string masterToken = "0c45e0bb-5169-442d-97e5-711419292e69";
 
-        public FIASController(IConfiguration config)
+        public FIASController(IConfiguration config, IMapper mapper)
         {
             _configuration = config;
+            _mapper = mapper;
         }
 
         [HttpGet("Subjects")]
@@ -37,7 +43,9 @@ namespace backend.Controllers
                 return new JsonResult(new
                 {
                     result = 0,
-                    addresses
+                    subjects = _mapper.Map<List<FIASObject>, List<FIASObjectDTO>>(
+                      addresses ?? new List<FIASObject>()
+                    ).OrderBy(a => a.RegionCode)
                 });
             }
 

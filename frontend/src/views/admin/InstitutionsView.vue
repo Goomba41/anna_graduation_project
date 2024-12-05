@@ -192,9 +192,10 @@ import type { DxContextMenuTypes } from "devextreme-vue/context-menu";
 import { useLoadingStore } from "@/stores/loading.store";
 import { useInstitutionsStore } from "@/stores/institutions.store";
 import { useUsersStore } from "@/stores/users.store";
-// import { useAuthStore } from "@/stores/auth.store";
+import { useOptionsStore } from "@/stores/options.store";
 
 import type { TInstitutions, TInstitution } from "@/typings/institution.types";
+import type { TSubjects } from "@/typings/fias-object.types";
 
 import FilterReset from "@/components/icons/FilterReset.vue";
 import FilterTwotone from "@/components/icons/FilterTwotone.vue";
@@ -210,7 +211,7 @@ import FilterPopup from "@/components/FilterPopup.vue";
 const loadingStore = useLoadingStore();
 const institutionsStore = useInstitutionsStore();
 const usersStore = useUsersStore();
-// const authStore = useAuthStore();
+const optionsStore = useOptionsStore();
 
 const { bus, emit } = useEmitter();
 
@@ -502,8 +503,15 @@ function resetFilters() {
   dataGridInstitutions.value.instance.option("filterValue", []);
 }
 
+const options: {
+  [key: string]: TSubjects;
+} = {};
+
 onMounted(async () => {
   institutions.value = (await institutionsStore.read()) || [];
+
+  options.subjects = (await optionsStore.readSubjects()) || [];
+  // options.districts = (await optionsStore.readDistricts()) || [];
 
   usersStore.activity("write", "Просмотр списка учреждений");
 
