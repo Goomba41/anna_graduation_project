@@ -160,12 +160,12 @@
     />
   </template>
 
-  <!-- <InstitutionPopup
+  <InstitutionPopup
     :institution="institutionData"
     :disabled="disabledForm"
     @created="addInstitutionToList"
     @updated="updateInstitutionInList"
-  /> -->
+  />
 </template>
 
 <script lang="ts" setup>
@@ -205,8 +205,8 @@ import MagnifyingGlass from "@/components/icons/MagnifyingGlass.vue";
 import toast from "@/utils/toast";
 import useEmitter from "@/utils/emitter";
 
-// import InstitutionPopup from "@/components/forms/admin/InstitutionForm.vue";
 import FilterPopup from "@/components/FilterPopup.vue";
+import InstitutionPopup from "@/components/forms/admin/InstitutionForm.vue";
 
 const loadingStore = useLoadingStore();
 const institutionsStore = useInstitutionsStore();
@@ -384,6 +384,8 @@ function addMenuItems(e: DxDataGridTypes.ContextMenuPreparingEvent) {
 
     rowForAction = e.row.data;
 
+    console.log(rowForAction);
+
     // Сформируем корневые пункты контекстного меню
     const contextItems: (DxContextMenuTypes.Item & {
       onItemClick: () => void;
@@ -448,22 +450,22 @@ function makeActionOnItem(id?: number | null) {
     });
 }
 
-// function addInstitutionToList(response: {
-//   createdId: number;
-//   form: TInstitution;
-// }) {
-//   institutions.value.push(response.form);
-// }
+function addInstitutionToList(response: {
+  createdId: number;
+  form: TInstitution;
+}) {
+  institutions.value.push(response.form);
+}
 
-// function updateInstitutionInList(response: {
-//   updatedId: number;
-//   form: TInstitution;
-// }) {
-//   institutions.value = institutions.value.filter(
-//     (u) => response.updatedId !== u.id,
-//   );
-//   institutions.value.push(response.form);
-// }
+function updateInstitutionInList(response: {
+  updatedId: number;
+  form: TInstitution;
+}) {
+  institutions.value = institutions.value.filter(
+    (u) => response.updatedId !== u.id,
+  );
+  institutions.value.push(response.form);
+}
 
 async function deleteItem() {
   if (rowForAction?.id) {
