@@ -262,7 +262,7 @@ const dataGridColumnsInstitutions = [
     minWidth: 200,
   },
   {
-    dataField: "subject",
+    dataField: "subjectString",
     position: 5,
     type: "string",
     caption: "Субъект",
@@ -274,7 +274,7 @@ const dataGridColumnsInstitutions = [
     sortOrder: "asc",
   },
   {
-    dataField: "district",
+    dataField: "districtString",
     position: 6,
     type: "string",
     caption: "Район",
@@ -286,7 +286,7 @@ const dataGridColumnsInstitutions = [
     sortOrder: "asc",
   },
   {
-    dataField: "locality",
+    dataField: "localityString",
     position: 5,
     type: "string",
     caption: "Нас. пункт",
@@ -468,7 +468,7 @@ function makeActionOnItem(id?: number | null) {
 async function deleteItem() {
   if (rowForAction?.id) {
     await institutionsStore.delete(rowForAction.id).then((deletedId) => {
-      toast("Успех!", `Учреждение «${rowForAction?.name}» удалёно`, "success");
+      toast("Успех!", `Учреждение «${rowForAction?.name}» удалено`, "success");
       institutions.value = institutions.value.filter(
         (institution) => institution.id !== (rowForAction?.id || deletedId),
       );

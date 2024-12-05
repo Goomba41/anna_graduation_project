@@ -16,6 +16,9 @@ export const ZInstitution = z.object({
   subject: z.number().positive(),
   district: z.number().positive(),
   locality: z.number().positive(),
+  subjectString: z.string(),
+  districtString: z.string(),
+  localityString: z.string(),
 });
 
 export const ZInstitutions = z.array(ZInstitution);

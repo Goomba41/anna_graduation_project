@@ -9,5 +9,8 @@ namespace backend.DTOs
         public int Subject { get; set; }
         public int District { get; set; }
         public int Locality { get; set; }
+        public string SubjectString { get; set; } = "";
+        public string DistrictString { get; set; } = "";
+        public string LocalityString { get; set; } = "";
     }
 }

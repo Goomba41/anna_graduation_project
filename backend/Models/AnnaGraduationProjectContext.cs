@@ -77,10 +77,19 @@ public partial class AnnaGraduationProjectContext : DbContext
                 .HasColumnName("contact");
             entity.Property(e => e.Subject)
                 .HasColumnName("subject");
+            entity.Property(e => e.SubjectString)
+                .HasColumnType("character varying")
+                .HasColumnName("subject_string");
             entity.Property(e => e.District)
                 .HasColumnName("district");
+            entity.Property(e => e.DistrictString)
+                .HasColumnType("character varying")
+                .HasColumnName("district_string");
             entity.Property(e => e.Locality)
                 .HasColumnName("locality");
+            entity.Property(e => e.LocalityString)
+                .HasColumnType("character varying")
+                .HasColumnName("locality_string");
         });
 
         modelBuilder.Entity<User>(entity =>

@@ -12,9 +12,15 @@ public partial class Institution
 
     public int Subject { get; set; }
 
+    public string SubjectString { get; set; } = "";
+
     public int District { get; set; }
 
+    public string DistrictString { get; set; } = "";
+
     public int Locality { get; set; }
+
+    public string LocalityString { get; set; } = "";
 
     /// <summary>
     /// Удален (не выводить)
