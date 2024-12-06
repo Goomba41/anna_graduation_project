@@ -25,6 +25,12 @@ public partial class AnnaGraduationProjectContext : DbContext
 
     public virtual DbSet<UsersActivity> UsersActivities { get; set; }
 
+    public virtual DbSet<DepartureType> DepartureTypes { get; set; }
+
+    public virtual DbSet<DocumentType> DocumentTypes { get; set; }
+
+    public virtual DbSet<Project> Projects { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseNpgsql(_configuration.GetSection("DatabaseConnectionString").Value);
 
@@ -146,6 +152,51 @@ public partial class AnnaGraduationProjectContext : DbContext
             entity.HasOne(d => d.User).WithMany(p => p.UsersActivities)
                 .HasForeignKey(d => d.Userid)
                 .HasConstraintName("users_activity_fk_1");
+        });
+
+        modelBuilder.Entity<DepartureType>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("departure_types_pk");
+
+            entity.ToTable("departure_type");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Deleted)
+                .HasComment("Удален (не выводить)")
+                .HasColumnName("deleted");
+            entity.Property(e => e.Name)
+                .HasColumnType("character varying")
+                .HasColumnName("name");
+        });
+
+        modelBuilder.Entity<DocumentType>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("document_types_pk");
+
+            entity.ToTable("document_type");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Deleted)
+                .HasComment("Удален (не выводить)")
+                .HasColumnName("deleted");
+            entity.Property(e => e.Name)
+                .HasColumnType("character varying")
+                .HasColumnName("name");
+        });
+
+        modelBuilder.Entity<Project>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("projects_pk");
+
+            entity.ToTable("project");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Deleted)
+                .HasComment("Удален (не выводить)")
+                .HasColumnName("deleted");
+            entity.Property(e => e.Name)
+                .HasColumnType("character varying")
+                .HasColumnName("name");
         });
 
         OnModelCreatingPartial(modelBuilder);
