@@ -381,9 +381,9 @@
           <!-- {{ SubjectMeta }} <br /><br />
           {{ ContactMeta }} <br /><br />
           {{ AddressMeta }} <br /><br />
-          {{ NameMeta }} <br /><br />-->
+          {{ NameMeta }} <br /><br />
           {{ meta }} <br /><br />
-          {{ errors }}
+          {{ errors }}-->
         </div>
       </form>
     </ScrollPanel>
@@ -515,6 +515,7 @@ const { bus } = useEmitter();
 // ? Если нужно будет запросить справочники
 // const options: Ref<{ [key: string]: unknown[] }> = ref({})
 
+// @ts-expect-error почему-то сломан zod
 const validationSchema = computed(() => toTypedSchema(ZInstitution));
 
 const {
@@ -549,42 +550,42 @@ const emitEvent = defineEmits<{
 async function onSuccess(institution: TInstitution) {
   const parsed = ZInstitution.safeParse(institution);
   if (parsed.success) {
-    // let query:
-    //   | Promise<
-    //       | { createdId: number; form: TInstitution }
-    //       | { updatedId: number; form: TInstitution }
-    //     >
-    //   | undefined;
-    // if (mode.value === "create") {
-    //   query = institutionsStore.create(parsed.data);
-    // } else if (mode.value === "update") {
-    //   query = institutionsStore.update(parsed.data);
-    // }
+    let query:
+      | Promise<
+          | { createdId: number; form: TInstitution }
+          | { updatedId: number; form: TInstitution }
+        >
+      | undefined;
+    if (mode.value === "create") {
+      query = institutionsStore.create(parsed.data);
+    } else if (mode.value === "update") {
+      query = institutionsStore.update(parsed.data);
+    }
 
-    // await query?.then(async (response) => {
-    //   let message = "Пользователь создан";
+    await query?.then(async (response) => {
+      let message = "Пользователь создан";
 
-    //   if ("updatedId" in response) {
-    //     message = "Пользователь обновлён";
-    //     emitEvent("updated", response);
-    //     usersStore.activity(
-    //       "write",
-    //       `Изменение учреждения ${response.updatedId}`,
-    //     );
-    //   } else if ("createdId" in response) {
-    //     emitEvent("created", response);
-    //     usersStore.activity(
-    //       "write",
-    //       `Добавление учреждения ${response.createdId}`,
-    //     );
-    //   }
+      if ("updatedId" in response) {
+        message = "Пользователь обновлён";
+        emitEvent("updated", response);
+        usersStore.activity(
+          "write",
+          `Изменение учреждения ${response.updatedId}`,
+        );
+      } else if ("createdId" in response) {
+        emitEvent("created", response);
+        usersStore.activity(
+          "write",
+          `Добавление учреждения ${response.createdId}`,
+        );
+      }
 
-    //   toast("Успех", message, "success");
-    //   closeModal();
-    // });
-    console.log(parsed.data);
-    toast("Успех", `Учреждение «${parsed.data.name}» создано`, "success");
-    closeModal();
+      toast("Успех", message, "success");
+      closeModal();
+    });
+    // console.log(parsed.data);
+    // toast("Успех", `Учреждение «${parsed.data.name}» создано`, "success");
+    // closeModal();
   } else {
     toast("Ошибка!", "Ошибка приведения к типу 'Institution'", "error");
   }
