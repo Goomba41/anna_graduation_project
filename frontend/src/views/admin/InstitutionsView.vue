@@ -385,8 +385,6 @@ function addMenuItems(e: DxDataGridTypes.ContextMenuPreparingEvent) {
 
     rowForAction = e.row.data;
 
-    console.log(rowForAction);
-
     // Сформируем корневые пункты контекстного меню
     const contextItems: (DxContextMenuTypes.Item & {
       onItemClick: () => void;

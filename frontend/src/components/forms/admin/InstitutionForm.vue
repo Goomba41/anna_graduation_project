@@ -88,6 +88,8 @@
                 id="Subject"
                 v-model="Subject"
                 class="tw-flex tw-flex-auto tw-w-4"
+                :loading="subjectsIsLoading"
+                :disabled="subjectsIsLoading"
                 :class="[
                   (SubjectMeta.dirty || SubjectMeta.touched) &&
                   !SubjectMeta.valid &&
@@ -102,7 +104,9 @@
                 "
                 option-value="objectId"
                 option-label="fullName"
-                placeholder="Выберите субъект РФ"
+                :placeholder="
+                  subjectsIsLoading ? 'Идёт загрузка...' : 'Выберите субъект РФ'
+                "
                 @change="
                   setFieldTouched('subject', true);
                   setFieldValue(
@@ -110,6 +114,7 @@
                     getFIASObjectName(Subject, 'subject'),
                     false,
                   );
+                  getFIASObjects('districts', Subject);
                 "
               >
               </Dropdown>
@@ -127,6 +132,146 @@
               >
                 <ExclamationTriangle class="tw-mr-2" />
                 {{ errors.subject }}
+              </span>
+            </div>
+          </div>
+
+          <div class="field tw-flex tw-flex-col tw-w-full tw-mb-4">
+            <div class="tw-flex tw-flex-row tw-items-center">
+              <label
+                for="District"
+                title="Район"
+                class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-text-ellipsis tw-whitespace-nowrap"
+              >
+                <span
+                  v-if="DistrictMeta.required"
+                  class="asterisk tw-text-danger"
+                  >*</span
+                >
+                Район
+              </label>
+              <Dropdown
+                id="District"
+                v-model="District"
+                :disabled="!Subject || districtsIsLoading"
+                class="tw-flex tw-flex-auto tw-w-4"
+                :class="[
+                  (DistrictMeta.dirty || DistrictMeta.touched) &&
+                  !DistrictMeta.valid &&
+                  DistrictMeta.validated
+                    ? 'invalid'
+                    : '',
+                ]"
+                :filter="districtsOptions.length > 20"
+                :options="districtsOptions"
+                :virtual-scroller-options="
+                  districtsOptions.length > 50 ? { itemSize: 35 } : undefined
+                "
+                option-value="objectId"
+                option-label="fullName"
+                :loading="districtsIsLoading"
+                :placeholder="
+                  districtsIsLoading
+                    ? 'Идёт загрузка...'
+                    : 'Выберите район субъекта'
+                "
+                @change="
+                  setFieldTouched('district', true);
+                  setFieldValue(
+                    'districtString',
+                    getFIASObjectName(District, 'district'),
+                    false,
+                  );
+                  getFIASObjects('localities', Subject, District);
+                "
+              >
+              </Dropdown>
+            </div>
+            <div
+              v-if="
+                (DistrictMeta.dirty || DistrictMeta.touched) &&
+                !DistrictMeta.valid &&
+                DistrictMeta.validated
+              "
+              class="tw-mt-2"
+            >
+              <span
+                class="tw-justify-end tw-font-medium tw-text-danger tw-text-xs tw-flex tw-flex-row tw-items-center tw-mb-2 last:tw-mb-0"
+              >
+                <ExclamationTriangle class="tw-mr-2" />
+                {{ errors.district }}
+              </span>
+            </div>
+          </div>
+
+          <div class="field tw-flex tw-flex-col tw-w-full tw-mb-4">
+            <div class="tw-flex tw-flex-row tw-items-center">
+              <label
+                for="Locality"
+                title="Населённый пункт"
+                class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-text-ellipsis tw-whitespace-nowrap"
+              >
+                <span
+                  v-if="LocalityMeta.required"
+                  class="asterisk tw-text-danger"
+                  >*</span
+                >
+                Населённый пункт
+              </label>
+              <Dropdown
+                id="Locality"
+                v-model="Locality"
+                :disabled="
+                  !District ||
+                  !Subject ||
+                  districtsIsLoading ||
+                  localitiesIsLoading
+                "
+                class="tw-flex tw-flex-auto tw-w-4"
+                :class="[
+                  (LocalityMeta.dirty || LocalityMeta.touched) &&
+                  !LocalityMeta.valid &&
+                  LocalityMeta.validated
+                    ? 'invalid'
+                    : '',
+                ]"
+                :filter="localitiesOptions.length > 20"
+                :options="localitiesOptions"
+                :virtual-scroller-options="
+                  localitiesOptions.length > 50 ? { itemSize: 35 } : undefined
+                "
+                option-value="objectId"
+                option-label="fullName"
+                :loading="localitiesIsLoading || districtsIsLoading"
+                :placeholder="
+                  localitiesIsLoading && District
+                    ? 'Идёт загрузка...'
+                    : 'Выберите нас. пункт района'
+                "
+                @change="
+                  setFieldTouched('locality', true);
+                  setFieldValue(
+                    'localityString',
+                    getFIASObjectName(Locality, 'locality'),
+                    false,
+                  );
+                "
+              >
+              </Dropdown>
+            </div>
+            <div
+              v-if="
+                (LocalityMeta.dirty || LocalityMeta.touched) &&
+                !LocalityMeta.valid &&
+                LocalityMeta.validated
+              "
+              class="tw-mt-2"
+            >
+              <span
+                class="tw-justify-end tw-font-medium tw-text-danger tw-text-xs tw-flex tw-flex-row tw-items-center tw-mb-2 last:tw-mb-0"
+              >
+                <ExclamationTriangle class="tw-mr-2" />
+                {{ errors.locality }}
               </span>
             </div>
           </div>
@@ -236,9 +381,9 @@
           <!-- {{ SubjectMeta }} <br /><br />
           {{ ContactMeta }} <br /><br />
           {{ AddressMeta }} <br /><br />
-          {{ NameMeta }} <br /><br />
+          {{ NameMeta }} <br /><br />-->
           {{ meta }} <br /><br />
-          {{ errors }} -->
+          {{ errors }}
         </div>
       </form>
     </ScrollPanel>
@@ -262,12 +407,12 @@
         </Button>
         <Button
           v-if="mode !== 'read'"
+          :disabled="!(meta.dirty && meta.valid)"
           icon-pos="left"
           class="success"
           type="submit"
           form="formUser"
         >
-          <!-- :disabled="!(meta.dirty && meta.valid)" -->
           <FloppyDisk class="p-button-icon p-button-icon-left" />
           <div class="p-button-label">
             {{ mode === "create" ? "Создать" : "Сохранить" }}
@@ -538,10 +683,18 @@ const closeModal = () => {
 };
 
 const subjectsOptions: Ref<TFIASObjects> = ref([]);
+const districtsOptions: Ref<TFIASObjects> = ref([]);
+const localitiesOptions: Ref<TFIASObjects> = ref([]);
+
+const subjectsIsLoading: Ref<boolean> = ref(false);
+const districtsIsLoading: Ref<boolean> = ref(false);
+const localitiesIsLoading: Ref<boolean> = ref(false);
 
 async function showDialog() {
   if (!props.subjects && !optionsStore.subjects) {
+    subjectsIsLoading.value = true;
     subjectsOptions.value = (await optionsStore.read("subjects")) || [];
+    subjectsIsLoading.value = false;
     optionsStore.subjects = subjectsOptions.value;
   } else if (
     (props.subjects && !optionsStore.subjects) ||
@@ -551,22 +704,65 @@ async function showDialog() {
   } else if (!props.subjects && optionsStore.subjects) {
     subjectsOptions.value = optionsStore.subjects;
   }
+
+  if (props.institution?.subject) {
+    districtsIsLoading.value = true;
+    districtsOptions.value =
+      (await optionsStore.read("districts", props.institution.subject)) || [];
+    districtsIsLoading.value = false;
+  }
+  if (props.institution?.district) {
+    localitiesIsLoading.value = true;
+    localitiesOptions.value =
+      (await optionsStore.read(
+        "localities",
+        props.institution.subject,
+        props.institution.district,
+      )) || [];
+    localitiesIsLoading.value = false;
+  }
 }
 
 function getFIASObjectName(
   id: number,
   type: "subject" | "district" | "locality",
 ): string {
-  let name = "";
+  let object: TFIASObjects = [];
 
-  if (type === "subject")
-    name =
-      subjectsOptions.value.find((s) => s.objectId === id)?.fullName ||
-      "Не удалось определить имя";
-  // if (type === 'district')
-  // if (type === 'locality')
+  if (type === "subject") object = subjectsOptions.value;
+  if (type === "district") object = districtsOptions.value;
+  if (type === "locality") object = localitiesOptions.value;
 
-  return name;
+  return (
+    object.find((s) => s.objectId === id)?.fullName ||
+    "Не удалось определить имя"
+  );
+}
+
+async function getFIASObjects(
+  type: "districts" | "localities",
+  subjectId?: number,
+  districtId?: number,
+) {
+  localitiesOptions.value = [];
+  setFieldValue("locality", null, false);
+  setFieldValue("localityString", null, false);
+
+  if (type === "districts" && subjectId) {
+    districtsIsLoading.value = true;
+    districtsOptions.value =
+      (await optionsStore.read("districts", subjectId)) || [];
+    districtsIsLoading.value = false;
+    setFieldValue("district", null, false);
+    setFieldValue("districtString", null, false);
+  }
+
+  if (type === "localities" && subjectId && districtId) {
+    localitiesIsLoading.value = true;
+    localitiesOptions.value =
+      (await optionsStore.read("localities", subjectId, districtId)) || [];
+    localitiesIsLoading.value = false;
+  }
 }
 </script>
 
