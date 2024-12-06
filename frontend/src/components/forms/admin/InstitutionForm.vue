@@ -8,6 +8,7 @@
     }"
     :modal="true"
     style="left: 514px; top: 126px"
+    @show="showDialog"
   >
     <ScrollPanel class="tw-w-full">
       <form
@@ -23,140 +24,40 @@
           <div class="field tw-flex tw-flex-col tw-w-full tw-mb-4">
             <div class="tw-flex tw-flex-row tw-items-center">
               <label
-                for="Фамилия"
-                title="Фамилия, имя, отчество"
-                class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-text-ellipsis tw-whitespace-nowrap"
-              >
-                <span
-                  v-if="SurnameMeta.required"
-                  class="asterisk tw-text-danger"
-                  >*</span
-                >
-                ФИО
-              </label>
-
-              <div class="p-inputgroup">
-                <InputText
-                  id="Фамилия"
-                  ref="firstFormField"
-                  v-model.trim="Surname"
-                  autocomplete="none"
-                  :title="Surname"
-                  input-id="Surname"
-                  class="tw-flex tw-flex-auto tw-flex-col"
-                  :class="[
-                    (SurnameMeta.dirty || SurnameMeta.touched) &&
-                    !SurnameMeta.valid &&
-                    SurnameMeta.validated
-                      ? 'invalid'
-                      : '',
-                  ]"
-                  placeholder="*Фамилия (3-100 символов)"
-                  @input="setFieldTouched('Fam', true)"
-                />
-                <InputText
-                  id="Name"
-                  v-model.trim="Name"
-                  autocomplete="none"
-                  :title="Name"
-                  input-id="Name"
-                  class="tw-flex tw-flex-auto tw-flex-col"
-                  :class="[
-                    (NameMeta.dirty || NameMeta.touched) &&
-                    !NameMeta.valid &&
-                    NameMeta.validated
-                      ? 'invalid'
-                      : '',
-                  ]"
-                  placeholder="*Имя (3-100 символов)"
-                  @input="setFieldTouched('Nam', true)"
-                />
-                <InputText
-                  v-model.trim="Patronymic"
-                  autocomplete="none"
-                  :title="Patronymic"
-                  input-id="Patronymic"
-                  class="tw-flex tw-flex-auto tw-flex-col"
-                  :class="[
-                    (PatronymicMeta.dirty || PatronymicMeta.touched) &&
-                    !PatronymicMeta.valid &&
-                    PatronymicMeta.validated
-                      ? 'invalid'
-                      : '',
-                  ]"
-                  placeholder="Отчество (3-100 символов)"
-                  @input="setFieldTouched('Ot', true)"
-                />
-              </div>
-            </div>
-
-            <div
-              v-if="
-                ((SurnameMeta.dirty || SurnameMeta.touched) &&
-                  !SurnameMeta.valid &&
-                  SurnameMeta.validated) ||
-                ((NameMeta.dirty || NameMeta.touched) &&
-                  !NameMeta.valid &&
-                  NameMeta.validated) ||
-                ((PatronymicMeta.dirty || PatronymicMeta.touched) &&
-                  !PatronymicMeta.valid &&
-                  PatronymicMeta.validated)
-              "
-              class="tw-mt-2"
-            >
-              <span
-                v-for="error of Object.keys(errors)
-                  .map((s) =>
-                    ['lastName', 'firstName', 'patronymic'].includes(s)
-                      ? s
-                      : undefined,
-                  )
-                  .filter((s) => s !== undefined)"
-                :key="error"
-                class="tw-font-medium tw-text-danger tw-text-xs tw-flex tw-flex-row tw-items-center tw-mb-2 last:tw-mb-0"
-              >
-                <ExclamationTriangle class="tw-mr-2" />
-                {{ errors[error] }}
-              </span>
-            </div>
-          </div>
-
-          <div class="field tw-flex tw-flex-col tw-w-full tw-mb-4">
-            <div class="tw-flex tw-flex-row tw-items-center">
-              <label
-                for="Login"
-                title="Логин"
+                for="Name"
+                title="Наименование"
                 class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-overflow-x-hidden tw-text-ellipsis tw-whitespace-nowrap"
               >
-                <span v-if="LoginMeta.required" class="asterisk tw-text-danger"
+                <span v-if="NameMeta.required" class="asterisk tw-text-danger"
                   >*</span
                 >
-                Логин
+                Наименование
               </label>
 
               <InputText
-                id="Login"
-                v-model.trim="Login"
-                :title="Login"
-                input-id="Login"
+                id="Name"
+                ref="firstFormField"
+                v-model.trim="Name"
+                :title="Name"
+                input-id="Name"
                 class="tw-flex tw-flex-auto tw-flex-col"
                 :class="[
-                  (LoginMeta.dirty || LoginMeta.touched) &&
-                  !LoginMeta.valid &&
-                  LoginMeta.validated
+                  (NameMeta.dirty || NameMeta.touched) &&
+                  !NameMeta.valid &&
+                  NameMeta.validated
                     ? 'invalid'
                     : '',
                 ]"
-                placeholder="3-110 символов"
+                placeholder="1-300 символов"
                 @input="setFieldTouched('Name', true)"
               />
             </div>
 
             <div
               v-if="
-                (LoginMeta.dirty || LoginMeta.touched) &&
-                !LoginMeta.valid &&
-                LoginMeta.validated
+                (NameMeta.dirty || NameMeta.touched) &&
+                !NameMeta.valid &&
+                NameMeta.validated
               "
               class="tw-mt-2"
             >
@@ -164,7 +65,7 @@
                 class="tw-font-medium tw-text-danger tw-text-xs tw-flex tw-flex-row tw-items-center tw-mb-2 last:tw-mb-0"
               >
                 <ExclamationTriangle class="tw-mr-2" />
-                {{ errors.login }}
+                {{ errors.name }}
               </span>
             </div>
           </div>
@@ -172,67 +73,102 @@
           <div class="field tw-flex tw-flex-col tw-w-full tw-mb-4">
             <div class="tw-flex tw-flex-row tw-items-center">
               <label
-                for="Password"
-                title="Пароль"
+                for="Subject"
+                title="Субъект"
                 class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-text-ellipsis tw-whitespace-nowrap"
               >
                 <span
-                  v-if="PasswordMeta.required"
+                  v-if="SubjectMeta.required"
                   class="asterisk tw-text-danger"
                   >*</span
                 >
-                Пароль
+                Субъект
+              </label>
+              <Dropdown
+                id="Subject"
+                v-model="Subject"
+                class="tw-flex tw-flex-auto tw-w-4"
+                :class="[
+                  (SubjectMeta.dirty || SubjectMeta.touched) &&
+                  !SubjectMeta.valid &&
+                  SubjectMeta.validated
+                    ? 'invalid'
+                    : '',
+                ]"
+                :filter="subjectsOptions.length > 20"
+                :options="subjectsOptions"
+                :virtual-scroller-options="
+                  subjectsOptions.length > 50 ? { itemSize: 35 } : undefined
+                "
+                option-value="objectId"
+                option-label="fullName"
+                placeholder="Выберите субъект РФ"
+                @change="
+                  setFieldTouched('subject', true);
+                  setFieldValue(
+                    'subjectString',
+                    getFIASObjectName(Subject, 'subject'),
+                    false,
+                  );
+                "
+              >
+              </Dropdown>
+            </div>
+            <div
+              v-if="
+                (SubjectMeta.dirty || SubjectMeta.touched) &&
+                !SubjectMeta.valid &&
+                SubjectMeta.validated
+              "
+              class="tw-mt-2"
+            >
+              <span
+                class="tw-justify-end tw-font-medium tw-text-danger tw-text-xs tw-flex tw-flex-row tw-items-center tw-mb-2 last:tw-mb-0"
+              >
+                <ExclamationTriangle class="tw-mr-2" />
+                {{ errors.subject }}
+              </span>
+            </div>
+          </div>
+
+          <div class="field tw-flex tw-flex-col tw-w-full tw-mb-4">
+            <div class="tw-flex tw-flex-row tw-items-center">
+              <label
+                for="Address"
+                title="Адрес"
+                class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-overflow-x-hidden tw-text-ellipsis tw-whitespace-nowrap"
+              >
+                <span
+                  v-if="AddressMeta.required"
+                  class="asterisk tw-text-danger"
+                  >*</span
+                >
+                Адрес
               </label>
 
-              <div class="tw-flex tw-flex-col tw-w-full">
-                <div class="p-inputgroup">
-                  <InputText
-                    id="Password"
-                    v-model.trim="Password"
-                    :title="Password"
-                    input-id="Password"
-                    class="tw-flex tw-flex-auto tw-flex-col"
-                    :class="[
-                      (PasswordMeta.dirty || PasswordMeta.touched) &&
-                      !PasswordMeta.valid &&
-                      PasswordMeta.validated
-                        ? 'invalid'
-                        : '',
-                    ]"
-                    placeholder="от 6 символов"
-                    @input="setFieldTouched('Userpassword', true)"
-                  />
-
-                  <Button icon-pos="left" class="tw-mr-2" @click="getPassword">
-                    <ArrowsRotate class="p-button-icon" />
-                  </Button>
-                </div>
-                <small
-                  v-if="mode !== 'create'"
-                  id="password-help"
-                  class="tw-flex tw-items-center tw-text-xs tw-text-slate-400 tw-mt-2"
-                >
-                  <LightbulbTwotone
-                    class="p-button-icon tw-mr-2 tw-h-5 tw-w-5 tw-text-amber-500"
-                  />
-                  При заполнении пароль будет перезаписан!</small
-                >
-                <small
-                  v-if="Password && weak(Password)"
-                  id="password-warning"
-                  class="tw-text-warning tw-text-xs tw-mt-2"
-                >
-                  <ExclamationTriangle class="p-button-icon tw-mr-2" />
-                  Слабый пароль! Используйте его на свой страх и риск!</small
-                >
-              </div>
+              <InputText
+                id="Address"
+                v-model.trim="Address"
+                :title="Address"
+                input-id="Address"
+                class="tw-flex tw-flex-auto tw-flex-col"
+                :class="[
+                  (AddressMeta.dirty || AddressMeta.touched) &&
+                  !AddressMeta.valid &&
+                  AddressMeta.validated
+                    ? 'invalid'
+                    : '',
+                ]"
+                placeholder="1-300 символов"
+                @input="setFieldTouched('Address', true)"
+              />
             </div>
 
             <div
               v-if="
-                (PasswordMeta.dirty || PasswordMeta.touched) &&
-                !PasswordMeta.valid &&
-                PasswordMeta.validated
+                (AddressMeta.dirty || AddressMeta.touched) &&
+                !AddressMeta.valid &&
+                AddressMeta.validated
               "
               class="tw-mt-2"
             >
@@ -240,124 +176,67 @@
                 class="tw-font-medium tw-text-danger tw-text-xs tw-flex tw-flex-row tw-items-center tw-mb-2 last:tw-mb-0"
               >
                 <ExclamationTriangle class="tw-mr-2" />
-                {{ errors.password }}
+                {{ errors.address }}
               </span>
             </div>
           </div>
 
-          <div class="row tw-flex tw-flex-row tw-w-full tw-mb-5">
-            <div class="field tw-flex tw-flex-col tw-w-full">
-              <div class="tw-flex tw-flex-row tw-items-center">
-                <label
-                  for="Phone"
-                  title="Телефон"
-                  class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-overflow-x-hidden tw-text-ellipsis tw-whitespace-nowrap"
-                >
-                  <span
-                    v-if="PhoneMeta.required"
-                    class="asterisk tw-text-danger"
-                    >*</span
-                  >
-                  Телефон
-                </label>
-
-                <InputMask
-                  id="Phone"
-                  v-model.trim="Phone"
-                  autocomplete="none"
-                  input-id="Phone"
-                  class="tw-flex tw-flex-auto tw-flex-col"
-                  :class="[
-                    (PhoneMeta.dirty || PhoneMeta.touched) &&
-                    !PhoneMeta.valid &&
-                    PhoneMeta.validated
-                      ? 'invalid'
-                      : '',
-                  ]"
-                  placeholder="+7 (ххх) ххх-хх-хх доб. хххх"
-                  mask="+7 (999) 999-99-99? доб. 9999"
-                  :unmask="true"
-                  :auto-clear="true"
-                  @keydown="setFieldTouched('Telephone', true)"
-                />
-              </div>
-
-              <div
-                v-if="
-                  (PhoneMeta.dirty || PhoneMeta.touched) &&
-                  !PhoneMeta.valid &&
-                  PhoneMeta.validated
-                "
-                class="tw-mt-2"
+          <div class="field tw-flex tw-flex-col tw-w-full tw-mb-4">
+            <div class="tw-flex tw-flex-row tw-items-center">
+              <label
+                for="Contact"
+                title="Контакт"
+                class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-overflow-x-hidden tw-text-ellipsis tw-whitespace-nowrap"
               >
                 <span
-                  class="tw-font-medium tw-text-danger tw-text-xs tw-flex tw-flex-row tw-items-center tw-mb-2 last:tw-mb-0"
+                  v-if="ContactMeta.required"
+                  class="asterisk tw-text-danger"
+                  >*</span
                 >
-                  <ExclamationTriangle class="tw-mr-2" />
-                  {{ errors.phone }}
-                </span>
-              </div>
+                Контакт
+              </label>
+
+              <Textarea
+                id="Contact"
+                v-model.trim="Contact"
+                rows="5"
+                cols="30"
+                :title="Contact"
+                input-id="Contact"
+                class="tw-flex tw-flex-auto tw-flex-col"
+                :class="[
+                  (ContactMeta.dirty || ContactMeta.touched) &&
+                  !ContactMeta.valid &&
+                  ContactMeta.validated
+                    ? 'invalid'
+                    : '',
+                ]"
+                placeholder="1-500 символов"
+                @input="setFieldTouched('Contact', true)"
+              />
             </div>
 
-            <div class="field tw-flex tw-flex-col tw-w-full tw-ml-4">
-              <div class="tw-flex tw-flex-row tw-items-center">
-                <label
-                  for="Email"
-                  title="Эл. почта"
-                  class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-overflow-x-hidden tw-text-ellipsis tw-whitespace-nowrap"
-                >
-                  <span
-                    v-if="EmailMeta.required"
-                    class="asterisk tw-text-danger"
-                    >*</span
-                  >
-                  Эл. почта
-                </label>
-
-                <InputText
-                  id="Email"
-                  v-model.trim="Email"
-                  autocomplete="none"
-                  input-id="Email"
-                  class="tw-flex tw-flex-auto tw-flex-col"
-                  :class="[
-                    (EmailMeta.dirty || EmailMeta.touched) &&
-                    !EmailMeta.valid &&
-                    EmailMeta.validated
-                      ? 'invalid'
-                      : '',
-                  ]"
-                  placeholder="example@example.ru"
-                  @input="setFieldTouched('Email', true)"
-                />
-              </div>
-
-              <div
-                v-if="
-                  (EmailMeta.dirty || EmailMeta.touched) &&
-                  !EmailMeta.valid &&
-                  EmailMeta.validated
-                "
-                class="tw-mt-2"
+            <div
+              v-if="
+                (ContactMeta.dirty || ContactMeta.touched) &&
+                !ContactMeta.valid &&
+                ContactMeta.validated
+              "
+              class="tw-mt-2"
+            >
+              <span
+                class="tw-font-medium tw-text-danger tw-text-xs tw-flex tw-flex-row tw-items-center tw-mb-2 last:tw-mb-0"
               >
-                <span
-                  class="tw-font-medium tw-text-danger tw-text-xs tw-flex tw-flex-row tw-items-center tw-mb-2 last:tw-mb-0"
-                >
-                  <ExclamationTriangle class="tw-mr-2" />
-                  {{ errors.email }}
-                </span>
-              </div>
+                <ExclamationTriangle class="tw-mr-2" />
+                {{ errors.contact }}
+              </span>
             </div>
           </div>
 
-          <!-- {{ SurnameMeta }} <br /><br />
+          <!-- {{ SubjectMeta }} <br /><br />
+          {{ ContactMeta }} <br /><br />
+          {{ AddressMeta }} <br /><br />
           {{ NameMeta }} <br /><br />
-          {{ PatronymicMeta }} <br /><br />
-          {{ LoginMeta }} <br /><br />
-          {{ PasswordMeta }} <br /><br />
-          {{ SysadminMeta }} <br /><br />
-          {{ PhoneMeta }} <br /><br />
-          {{ EmailMeta }} <br /><br />
           {{ meta }} <br /><br />
           {{ errors }} -->
         </div>
@@ -385,10 +264,10 @@
           v-if="mode !== 'read'"
           icon-pos="left"
           class="success"
-          :disabled="!(meta.dirty && meta.valid)"
           type="submit"
           form="formUser"
         >
+          <!-- :disabled="!(meta.dirty && meta.valid)" -->
           <FloppyDisk class="p-button-icon p-button-icon-left" />
           <div class="p-button-label">
             {{ mode === "create" ? "Создать" : "Сохранить" }}
@@ -404,8 +283,9 @@ import { ref, watch, type Ref, type PropType, computed } from "vue";
 
 import Button from "primevue/button";
 import Dialog from "primevue/dialog";
+import Dropdown from "primevue/dropdown";
+import Textarea from "primevue/textarea";
 import InputText from "primevue/inputtext";
-import InputMask from "primevue/inputmask";
 import ScrollPanel from "primevue/scrollpanel";
 
 import { useFocus } from "@vueuse/core";
@@ -415,21 +295,20 @@ import { toTypedSchema } from "@vee-validate/zod";
 import toast from "@/utils/toast";
 import typeError from "@/utils/type-parse-error";
 import useEmitter from "@/utils/emitter";
-import transliterate from "@/utils/transliterate";
-import generate, { strengthCheck as weak } from "@/utils/password-generator";
 
 import { useUsersStore } from "@/stores/users.store";
 import { useInstitutionsStore } from "@/stores/institutions.store";
+import { useOptionsStore } from "@/stores/options.store";
 
 import type { TInstitution } from "@/typings/institution.types";
 import { ZInstitution } from "@/typings/institution.types";
+import type { TFIASObjects } from "@/typings/fias-object.types";
+import { ZFIASObjects } from "@/typings/fias-object.types";
 
 import FloppyDisk from "@/components/icons/FloppyDisk.vue";
 import TimesCircle from "@/components/icons/TimesCircle.vue";
 import EraserTwotone from "@/components/icons/EraserTwotone.vue";
 import ExclamationTriangle from "@/components/icons/ExclamationTriangle.vue";
-import LightbulbTwotone from "@/components/icons/LightbulbTwotone.vue";
-import ArrowsRotate from "@/components/icons/ArrowsRotate.vue";
 
 const props = defineProps({
   institution: {
@@ -443,6 +322,23 @@ const props = defineProps({
           typeError(parsed.error, "warn");
           // throw new TypeError(
           //   "Invalid prop: custom validator check failed for prop 'institution'"
+          // );
+        }
+      }
+      return true;
+    },
+  },
+  subjects: {
+    type: Object as PropType<TFIASObjects>,
+    default: () => undefined,
+    validator(value) {
+      if (value !== undefined) {
+        const parsed = ZFIASObjects.safeParse(value);
+        if (parsed.success === false) {
+          console.warn(parsed);
+          typeError(parsed.error, "warn");
+          // throw new TypeError(
+          //   "Invalid prop: custom validator check failed for prop 'fias_object'"
           // );
         }
       }
@@ -464,6 +360,7 @@ const mode: Ref<string> = ref(
 );
 
 const usersStore = useUsersStore();
+const optionsStore = useOptionsStore();
 const institutionsStore = useInstitutionsStore();
 
 const firstFormField = ref();
@@ -489,31 +386,15 @@ const {
 const onSubmit = handleSubmit(onSuccess, onInvalid);
 
 // 👇 Поля формы
-const { value: Surname, meta: SurnameMeta } = useField<string>("lastName");
-const { value: Name, meta: NameMeta } = useField<string>("firstName");
-const { value: Patronymic, meta: PatronymicMeta } = useField<
-  string | undefined
->("patronymic", undefined, {
-  initialValue: undefined,
-});
-const { value: Password, meta: PasswordMeta } = useField<string>("password", {
-  initialValue: null,
-});
-const { value: Login, meta: LoginMeta } = useField<string>("login");
-const { value: Email, meta: EmailMeta } = useField<string | undefined>(
-  "email",
-  undefined,
-  {
-    initialValue: undefined,
-  },
-);
-const { value: Phone, meta: PhoneMeta } = useField<string | undefined>(
-  "phone",
-  undefined,
-  {
-    initialValue: undefined,
-  },
-);
+const { value: Name, meta: NameMeta } = useField<string>("name");
+const { value: Address, meta: AddressMeta } = useField<string>("address");
+const { value: Contact, meta: ContactMeta } = useField<string>("contact");
+const { value: Subject, meta: SubjectMeta } = useField<number>("subject");
+// const { value: SubjectString } = useField<number>("subjectString");
+const { value: District, meta: DistrictMeta } = useField<number>("district");
+// const { value: DistrictString } = useField<number>("districtString");
+const { value: Locality, meta: LocalityMeta } = useField<number>("locality");
+// const { value: LocalityString } = useField<number>("localityString");
 
 const emitEvent = defineEmits<{
   created: [response: { createdId: number; form: TInstitution }];
@@ -523,42 +404,42 @@ const emitEvent = defineEmits<{
 async function onSuccess(institution: TInstitution) {
   const parsed = ZInstitution.safeParse(institution);
   if (parsed.success) {
-    let query:
-      | Promise<
-          | { createdId: number; form: TInstitution }
-          | { updatedId: number; form: TInstitution }
-        >
-      | undefined;
-    if (mode.value === "create") {
-      query = institutionsStore.create(parsed.data);
-    } else if (mode.value === "update") {
-      query = institutionsStore.update(parsed.data);
-    }
+    // let query:
+    //   | Promise<
+    //       | { createdId: number; form: TInstitution }
+    //       | { updatedId: number; form: TInstitution }
+    //     >
+    //   | undefined;
+    // if (mode.value === "create") {
+    //   query = institutionsStore.create(parsed.data);
+    // } else if (mode.value === "update") {
+    //   query = institutionsStore.update(parsed.data);
+    // }
 
-    await query?.then(async (response) => {
-      let message = "Пользователь создан";
+    // await query?.then(async (response) => {
+    //   let message = "Пользователь создан";
 
-      if ("updatedId" in response) {
-        message = "Пользователь обновлён";
-        emitEvent("updated", response);
-        usersStore.activity(
-          "write",
-          `Изменение учреждения ${response.updatedId}`,
-        );
-      } else if ("createdId" in response) {
-        emitEvent("created", response);
-        usersStore.activity(
-          "write",
-          `Добавление учреждения ${response.createdId}`,
-        );
-      }
+    //   if ("updatedId" in response) {
+    //     message = "Пользователь обновлён";
+    //     emitEvent("updated", response);
+    //     usersStore.activity(
+    //       "write",
+    //       `Изменение учреждения ${response.updatedId}`,
+    //     );
+    //   } else if ("createdId" in response) {
+    //     emitEvent("created", response);
+    //     usersStore.activity(
+    //       "write",
+    //       `Добавление учреждения ${response.createdId}`,
+    //     );
+    //   }
 
-      toast("Успех", message, "success");
-      closeModal();
-    });
-    // console.log(parsed.data);
-    // toast("Успех", `Пользователь «${parsed.data.fullName}» создан`, "success");
-    // closeModal();
+    //   toast("Успех", message, "success");
+    //   closeModal();
+    // });
+    console.log(parsed.data);
+    toast("Успех", `Учреждение «${parsed.data.name}» создано`, "success");
+    closeModal();
   } else {
     toast("Ошибка!", "Ошибка приведения к типу 'Institution'", "error");
   }
@@ -613,27 +494,21 @@ watch(
     }
 
     useFocus(firstFormField, { initialValue: true });
-
-    if (mode.value === "create") getPassword();
   },
 );
 
-watch([Surname, Name, Patronymic], ([Surname, Name, Patronymic]) => {
-  if (mode.value === "create") {
-    const stringToTransliterate = `${Surname ?? ""}${Name ? Name.charAt(0) : ""}${Patronymic ? Patronymic.charAt(0) : ""}`;
+// TODO: на изменение идентификаторов ФИАС менять текста в форме
+// watch([Surname, Name, Patronymic], ([Surname, Name, Patronymic]) => {
+//   if (mode.value === "create") {
+//     const stringToTransliterate = `${Surname ?? ""}${Name ? Name.charAt(0) : ""}${Patronymic ? Patronymic.charAt(0) : ""}`;
 
-    const transliterated = transliterate(stringToTransliterate);
-    if (transliterated) {
-      setFieldValue("login", transliterated);
-      setFieldTouched("login", true);
-    }
-  }
-});
-
-function getPassword() {
-  setFieldValue("password", generate());
-  setFieldTouched("password", true);
-}
+//     const transliterated = transliterate(stringToTransliterate);
+//     if (transliterated) {
+//       setFieldValue("login", transliterated);
+//       setFieldTouched("login", true);
+//     }
+//   }
+// });
 
 // Сброс формы
 function resetData(form?: TInstitution) {
@@ -643,25 +518,65 @@ function resetData(form?: TInstitution) {
     resetForm({
       values: {
         id: undefined,
-        fullName: undefined,
-        lastName: null,
-        firstName: null,
-        patronymic: undefined,
-        login: null,
-        email: undefined,
-        phone: undefined,
-        sysadmin: false,
+        name: null,
+        address: null,
+        contact: null,
+        subject: null,
+        district: null,
+        locality: null,
+        subjectString: null,
+        districtString: null,
+        localityString: null,
       },
     });
   }
-
-  if (mode.value === "create") setFieldValue("password", generate());
 }
 
 const closeModal = () => {
   resetData();
   visible.value = false;
 };
+
+const subjectsOptions: Ref<TFIASObjects> = ref([]);
+
+async function showDialog() {
+  if (!props.subjects && !optionsStore.subjects) {
+    subjectsOptions.value = (await optionsStore.read("subjects")) || [];
+    optionsStore.subjects = subjectsOptions.value;
+  } else if (
+    (props.subjects && !optionsStore.subjects) ||
+    (props.subjects && optionsStore.subjects)
+  ) {
+    subjectsOptions.value = props.subjects;
+  } else if (!props.subjects && optionsStore.subjects) {
+    subjectsOptions.value = optionsStore.subjects;
+  }
+}
+
+function getFIASObjectName(
+  id: number,
+  type: "subject" | "district" | "locality",
+): string {
+  let name = "";
+
+  if (type === "subject")
+    name =
+      subjectsOptions.value.find((s) => s.objectId === id)?.fullName ||
+      "Не удалось определить имя";
+  // if (type === 'district')
+  // if (type === 'locality')
+
+  return name;
+}
 </script>
 
-<style lang="css" scoped></style>
+<style lang="css" scoped>
+.p-inputtext.invalid,
+:deep(.p-calendar.invalid) .p-inputtext,
+.p-inputtext.invalid:enabled:focus,
+:deep(.p-calendar.invalid) .p-inputtext:enabled:focus {
+  outline: 0 none;
+  box-shadow: 0 0 0 0.2rem theme("colors.danger-light");
+  border-color: theme("colors.danger");
+}
+</style>

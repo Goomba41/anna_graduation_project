@@ -162,6 +162,7 @@
 
   <InstitutionPopup
     :institution="institutionData"
+    :subjects="subjects"
     :disabled="disabledForm"
     @created="addInstitutionToList"
     @updated="updateInstitutionInList"
@@ -505,12 +506,12 @@ function resetFilters() {
   dataGridInstitutions.value.instance.option("filterValue", []);
 }
 
-let subjects: TFIASObjects = [];
+let subjects: TFIASObjects | undefined;
 
 onMounted(async () => {
   institutions.value = (await institutionsStore.read()) || [];
 
-  subjects = (await optionsStore.read("subjects")) || [];
+  subjects = await optionsStore.read("subjects");
   optionsStore.subjects = subjects;
 
   usersStore.activity("write", "Просмотр списка учреждений");

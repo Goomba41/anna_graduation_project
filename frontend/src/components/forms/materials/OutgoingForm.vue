@@ -4,7 +4,11 @@
     :header="formHeader"
     :style="{
       width: '50vw',
-      height: ['create', 'update', 'copy'].includes(mode) ? (folder ? '30vh' : '80vh') : '80vh',
+      height: ['create', 'update', 'copy'].includes(mode)
+        ? folder
+          ? '30vh'
+          : '80vh'
+        : '80vh',
     }"
     :modal="true"
   >
@@ -28,8 +32,12 @@
                 :title="folder ? 'Имя каталога' : 'Заголовок'"
                 class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-overflow-x-hidden tw-text-ellipsis tw-whitespace-nowrap"
               >
-                <span v-if="TemplatenameMeta.required" class="asterisk tw-text-danger">*</span>
-                {{ folder ? 'Имя каталога' : 'Заголовок шаблона' }}
+                <span
+                  v-if="TemplatenameMeta.required"
+                  class="asterisk tw-text-danger"
+                  >*</span
+                >
+                {{ folder ? "Имя каталога" : "Заголовок шаблона" }}
               </label>
               <InputText
                 ref="firstFormField"
@@ -152,7 +160,11 @@
                 <span
                   v-for="error of Object.keys(errors)
                     .map((s) =>
-                      ['DocumentName', 'DocumentNumber', 'DocumentDate'].includes(s)
+                      [
+                        'DocumentName',
+                        'DocumentNumber',
+                        'DocumentDate',
+                      ].includes(s)
                         ? s
                         : undefined,
                     )
@@ -178,7 +190,11 @@
                   title="Тип"
                   class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-text-ellipsis tw-whitespace-nowrap"
                 >
-                  <span v-if="TemplateTypeMeta.required" class="asterisk tw-text-danger">*</span>
+                  <span
+                    v-if="TemplateTypeMeta.required"
+                    class="asterisk tw-text-danger"
+                    >*</span
+                  >
                   Тип
                 </label>
                 <Dropdown
@@ -195,7 +211,9 @@
                   :filter="options.templatestatus?.length > 20"
                   :options="options.templatestatus"
                   :virtual-scroller-options="
-                    options.templatestatus?.length > 50 ? { itemSize: 35 } : undefined
+                    options.templatestatus?.length > 50
+                      ? { itemSize: 35 }
+                      : undefined
                   "
                   option-value="Id"
                   option-label="Name"
@@ -233,7 +251,11 @@
                   title="Исполнитель"
                   class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-text-ellipsis tw-whitespace-nowrap"
                 >
-                  <span v-if="ResponsibleMeta.required" class="asterisk tw-text-danger">*</span>
+                  <span
+                    v-if="ResponsibleMeta.required"
+                    class="asterisk tw-text-danger"
+                    >*</span
+                  >
                   Исполнитель
                 </label>
 
@@ -261,7 +283,10 @@
                     @change="setFieldTouched('TemplateResponsibleId', true)"
                   >
                     <template #value="slotProps">
-                      <div v-if="slotProps.value" class="flex align-items-center">
+                      <div
+                        v-if="slotProps.value"
+                        class="flex align-items-center"
+                      >
                         <div class="tw-overflow-x-hidden tw-text-ellipsis">
                           {{
                             fioParse(
@@ -318,7 +343,11 @@
                     title="Добавить нового исполнителя в систему"
                     @click="emit('openAdminUserForm')"
                   >
-                    <PlusUserTwotone height="1.25rem" width="1.25rem" stroke-width="2" />
+                    <PlusUserTwotone
+                      height="1.25rem"
+                      width="1.25rem"
+                      stroke-width="2"
+                    />
                   </Button>
                 </div>
               </div>
@@ -351,7 +380,11 @@
                   title="Инициатор"
                   class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-text-ellipsis tw-whitespace-nowrap"
                 >
-                  <span v-if="InitiatorMeta.required" class="asterisk tw-text-danger">*</span>
+                  <span
+                    v-if="InitiatorMeta.required"
+                    class="asterisk tw-text-danger"
+                    >*</span
+                  >
                   Инициатор
                 </label>
                 <Dropdown
@@ -369,7 +402,9 @@
                   :options="options.templateinitiator"
                   :show-clear="!InitiatorMeta.required"
                   :virtual-scroller-options="
-                    options.templateinitiator?.length > 50 ? { itemSize: 35 } : undefined
+                    options.templateinitiator?.length > 50
+                      ? { itemSize: 35 }
+                      : undefined
                   "
                   option-value="Id"
                   option-label="Name"
@@ -457,7 +492,11 @@
                   title="Категория"
                   class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-text-ellipsis tw-whitespace-nowrap"
                 >
-                  <span v-if="CategoryMeta.required" class="asterisk tw-text-danger">*</span>
+                  <span
+                    v-if="CategoryMeta.required"
+                    class="asterisk tw-text-danger"
+                    >*</span
+                  >
                   Категория
                 </label>
                 <Dropdown
@@ -475,7 +514,9 @@
                   :options="options.templatecategory"
                   :show-clear="!CategoryMeta.required"
                   :virtual-scroller-options="
-                    options.templatecategory?.length > 50 ? { itemSize: 35 } : undefined
+                    options.templatecategory?.length > 50
+                      ? { itemSize: 35 }
+                      : undefined
                   "
                   option-value="Id"
                   option-label="Name"
@@ -563,7 +604,11 @@
                   title="Срок сдачи отчёта"
                   class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-text-ellipsis tw-whitespace-nowrap"
                 >
-                  <span v-if="ReportingDateMeta.required" class="asterisk tw-text-danger">*</span>
+                  <span
+                    v-if="ReportingDateMeta.required"
+                    class="asterisk tw-text-danger"
+                    >*</span
+                  >
                   Срок сдачи отчёта
                 </label>
 
@@ -614,7 +659,11 @@
                   title="Дата публикации шаблона"
                   class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-text-ellipsis tw-whitespace-nowrap"
                 >
-                  <span v-if="PublicationDateMeta.required" class="asterisk tw-text-danger">*</span>
+                  <span
+                    v-if="PublicationDateMeta.required"
+                    class="asterisk tw-text-danger"
+                    >*</span
+                  >
                   Дата публикации шаблона
                 </label>
 
@@ -625,7 +674,8 @@
                   placeholder="Дата (дд.мм.гггг)"
                   date-format="dd.mm.yy"
                   :class="[
-                    (PublicationDateMeta.dirty || PublicationDateMeta.touched) &&
+                    (PublicationDateMeta.dirty ||
+                      PublicationDateMeta.touched) &&
                     !PublicationDateMeta.valid &&
                     PublicationDateMeta.validated
                       ? 'invalid'
@@ -679,16 +729,30 @@
                       :filter="options.periodTypes?.length > 20"
                       :options="options.periodTypes"
                       :virtual-scroller-options="
-                        options.periodTypes?.length > 50 ? { itemSize: 35 } : undefined
+                        options.periodTypes?.length > 50
+                          ? { itemSize: 35 }
+                          : undefined
                       "
-                      :class="[errors[`ReportingSchedule[${index}].PeriodTypeId`] ? 'invalid' : '']"
+                      :class="[
+                        errors[`ReportingSchedule[${index}].PeriodTypeId`]
+                          ? 'invalid'
+                          : '',
+                      ]"
                       option-value="Id"
                       option-label="Name"
                       placeholder="Выберите период"
                       filter-by="Name"
-                      @change="clearPeriodDates(index, (item.value as TScheduleItem).PeriodTypeId)"
+                      @change="
+                        clearPeriodDates(
+                          index,
+                          (item.value as TScheduleItem).PeriodTypeId,
+                        )
+                      "
                     ></Dropdown>
-                    <div v-if="errors[`ReportingSchedule[${index}].PeriodTypeId`]" class="tw-mt-2">
+                    <div
+                      v-if="errors[`ReportingSchedule[${index}].PeriodTypeId`]"
+                      class="tw-mt-2"
+                    >
                       <span
                         class="tw-justify-end tw-font-medium tw-text-danger tw-text-xs tw-flex tw-flex-row tw-items-center tw-mb-2 last:tw-mb-0"
                       >
@@ -711,7 +775,11 @@
                       :max-date-count="item.value.PeriodTypeId === 7 ? null : 1"
                       placeholder="По датам"
                       class="tw-w-96"
-                      :class="[errors[`ReportingSchedule[${index}].Dates`] ? 'invalid' : '']"
+                      :class="[
+                        errors[`ReportingSchedule[${index}].Dates`]
+                          ? 'invalid'
+                          : '',
+                      ]"
                       :manual-input="false"
                       :title="
                         item.value['Dates']
@@ -723,7 +791,10 @@
                       :disabled-days="[0, 6]"
                       @date-select="setFieldTouched('ReportingSchedule', true)"
                     />
-                    <div v-if="errors[`ReportingSchedule[${index}].Dates`]" class="tw-mt-2">
+                    <div
+                      v-if="errors[`ReportingSchedule[${index}].Dates`]"
+                      class="tw-mt-2"
+                    >
                       <span
                         class="tw-justify-end tw-font-medium tw-text-danger tw-text-xs tw-flex tw-flex-row tw-items-center tw-mb-2 last:tw-mb-0"
                       >
@@ -806,7 +877,9 @@
                   <div
                     v-for="(item, index) in selectedRecipients
                       .filter((i) => i.CatalogueValue === groupId)
-                      .sort((a, b) => (a.Label as string).localeCompare(b.Label))"
+                      .sort((a, b) =>
+                        (a.Label as string).localeCompare(b.Label),
+                      )"
                     :key="index"
                     class="group-item tw-flex tw-flex-row tw-mb-2 last:tw-mb-0 tw-items-center"
                   >
@@ -814,7 +887,8 @@
                     <Calendar
                       v-if="getRecipientForm(item.CatalogueValue, item.Value)"
                       v-model.trim="
-                        getRecipientForm(item.CatalogueValue, item.Value).Period as Date[]
+                        getRecipientForm(item.CatalogueValue, item.Value)
+                          .Period as Date[]
                       "
                       :input-id="`Period-${index}`"
                       placeholder="Выберите период"
@@ -841,7 +915,11 @@
                 title="Инструкция по заполнению"
                 class="tw-max-w-[50%] tw-mr-4 tw-mb-4 tw-font-bold tw-text-base tw-text-ellipsis tw-whitespace-nowrap tw-self-start"
               >
-                <span v-if="InstructionsMeta.required" class="asterisk tw-text-danger">*</span>
+                <span
+                  v-if="InstructionsMeta.required"
+                  class="asterisk tw-text-danger"
+                  >*</span
+                >
                 Инструкция по заполнению
               </label>
               <Textarea
@@ -883,20 +961,29 @@
 
             <div class="tw-flex tw-flex-row tw-w-full">
               <div class="tw-flex tw-flex-col tw-w-1/2">
-                <template v-if="props.template && props.template.Attachments.length">
+                <template
+                  v-if="props.template && props.template.Attachments.length"
+                >
                   <div class="tw-text-gray-500 tw-font-semibold tw-mb-2">
                     Прикреплённые инструкции
                   </div>
 
                   <div
-                    v-for="(attachment, index) of Attachments.filter((a) => a.AttachmentType === 1)"
+                    v-for="(attachment, index) of Attachments.filter(
+                      (a) => a.AttachmentType === 1,
+                    )"
                     :key="index"
                     :title="attachment.Name"
                     class="attachment-file tw-text-gray-400 tw-font-semibold tw-whitespace-nowrap tw-overflow-x-hidden tw-text-ellipsis tw-flex tw-flex-row tw-items-center"
                   >
                     <div
                       class="tw-max-w-64 tw-w-64 tw-overflow-x-hidden tw-text-ellipsis hover:tw-cursor-pointer"
-                      @click="downloadAttachment(attachment.Id, attachment.WrTemplateId)"
+                      @click="
+                        downloadAttachment(
+                          attachment.Id,
+                          attachment.WrTemplateId,
+                        )
+                      "
                     >
                       {{ index + 1 }}. {{ attachment.Name }}
                     </div>
@@ -919,9 +1006,15 @@
                 <div
                   v-if="instructionsFiles?.length"
                   class="instructions-files tw-flex tw-flex-col tw-mb-4"
-                  :class="[props.template && props.template.Attachments.length ? 'tw-mt-4' : '']"
+                  :class="[
+                    props.template && props.template.Attachments.length
+                      ? 'tw-mt-4'
+                      : '',
+                  ]"
                 >
-                  <div class="tw-text-gray-500 tw-font-semibold tw-mb-2">К загрузке</div>
+                  <div class="tw-text-gray-500 tw-font-semibold tw-mb-2">
+                    К загрузке
+                  </div>
                   <div
                     v-for="(instruction, index) of instructionsFiles"
                     :key="index"
@@ -933,7 +1026,11 @@
                 </div>
                 <div
                   class="tw-flex tw-flex-row"
-                  :class="[props.template && !!!instructionsFiles?.length ? 'tw-mt-4' : '']"
+                  :class="[
+                    props.template && !!!instructionsFiles?.length
+                      ? 'tw-mt-4'
+                      : '',
+                  ]"
                 >
                   <Button
                     icon-pos="left"
@@ -941,7 +1038,10 @@
                     @click="instructionsClicked()"
                   >
                     <font-awesome-icon
-                      :icon="['fas', `${mode === 'create' ? 'fa-check' : 'fa-floppy-disk'}`]"
+                      :icon="[
+                        'fas',
+                        `${mode === 'create' ? 'fa-check' : 'fa-floppy-disk'}`,
+                      ]"
                       :class="['p-button-icon p-button-icon-left']"
                     ></font-awesome-icon>
                     Файл инструкции
@@ -953,7 +1053,10 @@
                     @click="instructionsReset()"
                   >
                     <font-awesome-icon
-                      :icon="['fas', `${mode === 'create' ? 'fa-check' : 'fa-floppy-disk'}`]"
+                      :icon="[
+                        'fas',
+                        `${mode === 'create' ? 'fa-check' : 'fa-floppy-disk'}`,
+                      ]"
                       :class="['p-button-icon p-button-icon-left']"
                     ></font-awesome-icon>
                     Отменить выбор
@@ -961,20 +1064,29 @@
                 </div>
               </div>
               <div class="tw-flex tw-flex-col tw-w-1/2 tw-ml-4">
-                <template v-if="props.template && props.template.Attachments.length">
+                <template
+                  v-if="props.template && props.template.Attachments.length"
+                >
                   <div class="tw-text-gray-500 tw-font-semibold tw-mb-2">
                     Прикреплённые вложения
                   </div>
 
                   <div
-                    v-for="(attachment, index) of Attachments.filter((a) => a.AttachmentType === 0)"
+                    v-for="(attachment, index) of Attachments.filter(
+                      (a) => a.AttachmentType === 0,
+                    )"
                     :key="index"
                     :title="attachment.Name"
                     class="attachment-file tw-text-gray-400 tw-font-semibold tw-whitespace-nowrap tw-overflow-x-hidden tw-text-ellipsis tw-flex tw-flex-row tw-items-center"
                   >
                     <div
                       class="tw-max-w-64 tw-w-64 tw-overflow-x-hidden tw-text-ellipsis hover:tw-cursor-pointer"
-                      @click="downloadAttachment(attachment.Id, attachment.WrTemplateId)"
+                      @click="
+                        downloadAttachment(
+                          attachment.Id,
+                          attachment.WrTemplateId,
+                        )
+                      "
                     >
                       {{ index + 1 }}. {{ attachment.Name }}
                     </div>
@@ -996,10 +1108,16 @@
 
                 <div
                   v-if="attachmentsFiles?.length"
-                  :class="[props.template && props.template.Attachments.length ? 'tw-mt-4' : '']"
+                  :class="[
+                    props.template && props.template.Attachments.length
+                      ? 'tw-mt-4'
+                      : '',
+                  ]"
                   class="attachments-files tw-flex tw-flex-col tw-mb-4"
                 >
-                  <div class="tw-text-gray-500 tw-font-semibold tw-mb-2">К загрузке</div>
+                  <div class="tw-text-gray-500 tw-font-semibold tw-mb-2">
+                    К загрузке
+                  </div>
                   <div
                     v-for="(attachment, index) of attachmentsFiles"
                     :key="index"
@@ -1011,7 +1129,11 @@
                 </div>
                 <div
                   class="tw-flex tw-flex-row"
-                  :class="[props.template && !!!attachmentsFiles?.length ? 'tw-mt-4' : '']"
+                  :class="[
+                    props.template && !!!attachmentsFiles?.length
+                      ? 'tw-mt-4'
+                      : '',
+                  ]"
                 >
                   <Button
                     icon-pos="left"
@@ -1019,7 +1141,10 @@
                     @click="attachmentsClicked()"
                   >
                     <font-awesome-icon
-                      :icon="['fas', `${mode === 'create' ? 'fa-check' : 'fa-floppy-disk'}`]"
+                      :icon="[
+                        'fas',
+                        `${mode === 'create' ? 'fa-check' : 'fa-floppy-disk'}`,
+                      ]"
                       :class="['p-button-icon p-button-icon-left']"
                     ></font-awesome-icon>
                     Файлы вложений
@@ -1031,7 +1156,10 @@
                     @click="attachmentsReset()"
                   >
                     <font-awesome-icon
-                      :icon="['fas', `${mode === 'create' ? 'fa-check' : 'fa-floppy-disk'}`]"
+                      :icon="[
+                        'fas',
+                        `${mode === 'create' ? 'fa-check' : 'fa-floppy-disk'}`,
+                      ]"
                       :class="['p-button-icon p-button-icon-left']"
                     ></font-awesome-icon>
                     Отменить выбор
@@ -1106,11 +1234,14 @@
           :disabled="!(meta.dirty && meta.touched && meta.valid)"
         >
           <font-awesome-icon
-            :icon="['fas', `${mode === 'create' ? 'fa-check' : 'fa-floppy-disk'}`]"
+            :icon="[
+              'fas',
+              `${mode === 'create' ? 'fa-check' : 'fa-floppy-disk'}`,
+            ]"
             :class="['p-button-icon p-button-icon-left']"
           ></font-awesome-icon>
           <div class="p-button-label">
-            {{ mode === 'create' ? 'Создать' : 'Сохранить' }}
+            {{ mode === "create" ? "Создать" : "Сохранить" }}
           </div>
         </Button>
       </div>
@@ -1121,44 +1252,44 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, type Ref, type PropType, toRaw } from 'vue'
+import { ref, watch, type Ref, type PropType, toRaw } from "vue";
 
-import { useField, useFieldArray, useForm } from 'vee-validate'
-import { toTypedSchema } from '@vee-validate/zod'
+import { useField, useFieldArray, useForm } from "vee-validate";
+import { toTypedSchema } from "@vee-validate/zod";
 
-import { useFocus } from '@vueuse/core'
-import { useFileDialog } from '@vueuse/core'
+import { useFocus } from "@vueuse/core";
+import { useFileDialog } from "@vueuse/core";
 
-import { DateTime as luxon } from 'luxon'
+import { DateTime as luxon } from "luxon";
 
-import Button from 'primevue/button'
-import Dialog from 'primevue/dialog'
-import Calendar from 'primevue/calendar'
-import Dropdown from 'primevue/dropdown'
-import Textarea from 'primevue/textarea'
-import InputText from 'primevue/inputtext'
-import MultiSelect, { MultiSelectChangeEvent } from 'primevue/multiselect'
-import ScrollPanel from 'primevue/scrollpanel'
+import Button from "primevue/button";
+import Dialog from "primevue/dialog";
+import Calendar from "primevue/calendar";
+import Dropdown from "primevue/dropdown";
+import Textarea from "primevue/textarea";
+import InputText from "primevue/inputtext";
+import MultiSelect, { MultiSelectChangeEvent } from "primevue/multiselect";
+import ScrollPanel from "primevue/scrollpanel";
 
-import FormPreloader from '@/components/FormPreloader.vue'
-import UserPopup from '@/components/forms/admin/UserForm.vue'
+import FormPreloader from "@/components/FormPreloader.vue";
+import UserPopup from "@/components/forms/admin/UserForm.vue";
 
-import ScheduleAddIcon from '@/components/icons/ScheduleAdd.vue'
-import ScheduleRemoveIcon from '@/components/icons/ScheduleRemove.vue'
-import PlusUserTwotone from '@/components/icons/PlusUserTwotone.vue'
-import DeleteDocumentTwotone from '@/components/icons/DeleteDocumentTwotone.vue'
-import FileUploadTwotoneLoop from '@/components/icons/FileUploadTwotoneLoop.vue'
+import ScheduleAddIcon from "@/components/icons/ScheduleAdd.vue";
+import ScheduleRemoveIcon from "@/components/icons/ScheduleRemove.vue";
+import PlusUserTwotone from "@/components/icons/PlusUserTwotone.vue";
+import DeleteDocumentTwotone from "@/components/icons/DeleteDocumentTwotone.vue";
+import FileUploadTwotoneLoop from "@/components/icons/FileUploadTwotoneLoop.vue";
 
-import toast from '@/utils/toast'
-import fioParse from '@/utils/fio-formatter'
-import useEmitter from '@/utils/emitter'
+import toast from "@/utils/toast";
+import fioParse from "@/utils/fio-formatter";
+import useEmitter from "@/utils/emitter";
 
-import { TUserBase, TUser } from '@/typings/user.types'
+import { TUserBase, TUser } from "@/typings/user.types";
 
-import { useUsersStore } from '@/stores/users.store'
-import { useLoadingStore } from '@/stores/loading.store'
-import { useCalendarStore } from '@/stores/calendar.store'
-import { useDropdownsOptionsStore } from '@/stores/dropdowns-options.store'
+import { useUsersStore } from "@/stores/users.store";
+import { useLoadingStore } from "@/stores/loading.store";
+import { useCalendarStore } from "@/stores/calendar.store";
+import { useDropdownsOptionsStore } from "@/stores/dropdowns-options.store";
 
 import {
   TAttachments,
@@ -1168,31 +1299,31 @@ import {
   ZAttachment,
   ZBaseTemplate,
   ZTemplate,
-} from '@/typings/template.types'
+} from "@/typings/template.types";
 import {
   Recipients as ZRecipients,
   TRecipient as TORecipient,
   TRecipients,
   TRecipientsGroup,
-} from '@/typings/options.types'
+} from "@/typings/options.types";
 
-const visible: Ref<boolean> = ref(false)
+const visible: Ref<boolean> = ref(false);
 
-let formHeader: Ref<string> = ref('...')
+let formHeader: Ref<string> = ref("...");
 
-let mode: Ref<'read' | 'create' | 'copy' | 'update'> = ref('create')
+let mode: Ref<"read" | "create" | "copy" | "update"> = ref("create");
 
 const options: Ref<{ [key: string]: unknown[] }> = ref({
   periodTypes: [
-    { Id: 1, Name: 'Ежедневно', ByDates: false },
-    { Id: 2, Name: 'Еженедельно', ByDates: false },
-    { Id: 3, Name: 'Ежемесячно (по числам)', ByDates: true },
-    { Id: 4, Name: 'Ежегодно', ByDates: false },
-    { Id: 5, Name: 'Полугодовой', ByDates: false },
-    { Id: 6, Name: 'Квартальный', ByDates: false },
-    { Id: 7, Name: 'Разовый', ByDates: false },
+    { Id: 1, Name: "Ежедневно", ByDates: false },
+    { Id: 2, Name: "Еженедельно", ByDates: false },
+    { Id: 3, Name: "Ежемесячно (по числам)", ByDates: true },
+    { Id: 4, Name: "Ежегодно", ByDates: false },
+    { Id: 5, Name: "Полугодовой", ByDates: false },
+    { Id: 6, Name: "Квартальный", ByDates: false },
+    { Id: 7, Name: "Разовый", ByDates: false },
   ],
-})
+});
 // const templatesStore = useTemplatesStore()
 
 const props = defineProps({
@@ -1216,294 +1347,338 @@ const props = defineProps({
     type: Boolean,
     default: () => false,
   },
-})
+});
 
-const validationSchema = toTypedSchema(props.folder ? ZBaseTemplate : ZTemplate)
+const validationSchema = toTypedSchema(
+  props.folder ? ZBaseTemplate : ZTemplate,
+);
 
-const { /* values, */ handleSubmit, errors, resetForm, meta, setFieldTouched, setFieldValue } =
-  useForm({
-    validationSchema,
-    // initialValues: {
-    //   startDate: luxon.now().startOf('month').toISO(),
-    //   endDate: luxon.now().endOf('month').toISO(),
-    // },
-  })
+const {
+  /* values, */ handleSubmit,
+  errors,
+  resetForm,
+  meta,
+  setFieldTouched,
+  setFieldValue,
+} = useForm({
+  validationSchema,
+  // initialValues: {
+  //   startDate: luxon.now().startOf('month').toISO(),
+  //   endDate: luxon.now().endOf('month').toISO(),
+  // },
+});
 
-const onSubmit = handleSubmit(onSuccess, onInvalid)
+const onSubmit = handleSubmit(onSuccess, onInvalid);
 
 // 👇 Поля формы
-const { value: Templatename, meta: TemplatenameMeta } = useField<string>('Templatename')
+const { value: Templatename, meta: TemplatenameMeta } =
+  useField<string>("Templatename");
 const { value: DocumentName, meta: DocumentNameMeta } = useField<string>(
-  'DocumentName',
+  "DocumentName",
   undefined,
   { initialValue: null },
-)
+);
 const { value: DocumentNumber, meta: DocumentNumberMeta } = useField<string>(
-  'DocumentNumber',
+  "DocumentNumber",
   undefined,
   { initialValue: null },
-)
+);
 const { value: DocumentDate, meta: DocumentDateMeta } = useField<string>(
-  'DocumentDate',
+  "DocumentDate",
   undefined,
   { initialValue: null },
-)
-const { value: TemplateType, meta: TemplateTypeMeta } = useField<number>('TemplateTypeId')
-const { value: Responsible, meta: ResponsibleMeta } = useField<number>('ResponsibleId', undefined, {
-  initialValue: null,
-})
+);
+const { value: TemplateType, meta: TemplateTypeMeta } =
+  useField<number>("TemplateTypeId");
+const { value: Responsible, meta: ResponsibleMeta } = useField<number>(
+  "ResponsibleId",
+  undefined,
+  {
+    initialValue: null,
+  },
+);
 const { value: Initiator, meta: InitiatorMeta } = useField<number>(
-  'TemplateInitiatorId',
+  "TemplateInitiatorId",
   undefined,
   { initialValue: null },
-)
-const { value: Category, meta: CategoryMeta } = useField<number>('TemplateCategoryId', undefined, {
-  initialValue: null,
-})
+);
+const { value: Category, meta: CategoryMeta } = useField<number>(
+  "TemplateCategoryId",
+  undefined,
+  {
+    initialValue: null,
+  },
+);
 const { value: PublicationDate, meta: PublicationDateMeta } = useField<string>(
-  'PublicationDate',
+  "PublicationDate",
   undefined,
   {
     initialValue: null,
   },
-)
+);
 const { value: ReportingDate, meta: ReportingDateMeta } = useField<string>(
-  'ReportingDate',
+  "ReportingDate",
   undefined,
   {
     initialValue: null,
   },
-)
+);
 const { value: Instructions, meta: InstructionsMeta } = useField<string>(
-  'Instructions',
+  "Instructions",
   undefined,
   {
     initialValue: null,
   },
-)
+);
 
 const {
   value: Attachments,
   handleChange: AttachmentsChange,
   meta: AttachmentsMeta,
-} = useField<TAttachments>('Attachments', undefined, {
+} = useField<TAttachments>("Attachments", undefined, {
   initialValue: [],
-})
+});
 
 const {
   remove: ScheduleRemove,
   push: SchedulePush,
   fields: Schedule,
-} = useFieldArray<TScheduleItem>('ReportingSchedule')
+} = useFieldArray<TScheduleItem>("ReportingSchedule");
 
 const {
   remove: RecipientsRemove,
   push: RecipientsPush,
   fields: Recipients,
-} = useFieldArray<TRecipient>('Assignments')
+} = useFieldArray<TRecipient>("Assignments");
 // 👆 Поля формы
 
-const firstFormField = ref()
+const firstFormField = ref();
 
-const { bus, emit } = useEmitter()
+const { bus, emit } = useEmitter();
 
 watch(
-  () => bus.value.get('openMonitoringTemplateForm'),
+  () => bus.value.get("openMonitoringTemplateForm"),
   async () => {
     // Деструктурим параметры (потому что параметры пишутся в массив)
-    visible.value = true
+    visible.value = true;
 
-    const isNotEmpty = props.template // && Object.keys(props.template).length > 8
+    const isNotEmpty = props.template; // && Object.keys(props.template).length > 8
 
     mode.value = props.disabled
-      ? 'read'
+      ? "read"
       : isNotEmpty
         ? props.template.Modifydate
-          ? 'update'
-          : 'copy'
-        : 'create'
+          ? "update"
+          : "copy"
+        : "create";
 
     switch (mode.value) {
-      case 'read':
-        formHeader.value = `Просмотр ${props.folder ? 'каталога' : 'шаблона'}`
-        break
-      case 'copy':
-        formHeader.value = `Копирование ${props.folder ? 'каталога' : 'шаблона'} «${props.template.Templatename}»`
-        break
-      case 'create':
-        formHeader.value = `Новый ${props.folder ? 'каталог' : 'шаблон'}`
-        break
-      case 'update':
-        formHeader.value = `Редактирование ${props.folder ? 'каталога' : 'шаблона'} «${props.template.Templatename}»`
+      case "read":
+        formHeader.value = `Просмотр ${props.folder ? "каталога" : "шаблона"}`;
+        break;
+      case "copy":
+        formHeader.value = `Копирование ${props.folder ? "каталога" : "шаблона"} «${props.template.Templatename}»`;
+        break;
+      case "create":
+        formHeader.value = `Новый ${props.folder ? "каталог" : "шаблон"}`;
+        break;
+      case "update":
+        formHeader.value = `Редактирование ${props.folder ? "каталога" : "шаблона"} «${props.template.Templatename}»`;
     }
 
     // Заполним списки опций выпадающих списков
     const optionsToAsk = [
-      'users',
-      'templatecategory',
-      'orggroup',
-      'templateinitiator',
-      'templatestatus',
-      'assignments',
-    ]
+      "users",
+      "templatecategory",
+      "orggroup",
+      "templateinitiator",
+      "templatestatus",
+      "assignments",
+    ];
 
     await Promise.all(
       optionsToAsk.map(async (option) => {
-        options.value[option] = (await useDropdownsOptionsStore().read(option)) || []
+        options.value[option] =
+          (await useDropdownsOptionsStore().read(option)) || [];
       }),
-    )
+    );
 
     if (props.template) {
-      resetData(props.template)
+      resetData(props.template);
     } else {
-      resetData()
+      resetData();
     }
 
-    useFocus(firstFormField, { initialValue: true })
+    useFocus(firstFormField, { initialValue: true });
   },
-)
+);
 
 // 👇 Обработка отправки формы
 function addScheduleItem() {
-  SchedulePush({ PeriodTypeId: null, Dates: [] })
+  SchedulePush({ PeriodTypeId: null, Dates: [] });
 }
 
 function removeScheduleItem(index: number) {
-  ScheduleRemove(index)
+  ScheduleRemove(index);
 }
 
 const emitEvent = defineEmits<{
-  (e: 'action-result', value: { createdId?: string; updatedId?: string; form: TTemplate })
-  (e: 'close')
-}>()
+  (
+    e: "action-result",
+    value: { createdId?: string; updatedId?: string; form: TTemplate },
+  );
+  (e: "close");
+}>();
 
-const usersStore = useUsersStore()
-const calendarStore = useCalendarStore()
+const usersStore = useUsersStore();
+const calendarStore = useCalendarStore();
 
 async function onSuccess(values: TTemplate) {
-  const parsed = ZTemplate.safeParse(values)
+  const parsed = ZTemplate.safeParse(values);
 
   if (parsed.success) {
-    const { data } = parsed
-    let query
+    const { data } = parsed;
+    let query;
 
-    if (mode.value === 'create' || mode.value === 'copy') {
-      query = calendarStore.create(data)
-    } else if (mode.value === 'update') {
-      query = calendarStore.update(data.Id, data)
+    if (mode.value === "create" || mode.value === "copy") {
+      query = calendarStore.create(data);
+    } else if (mode.value === "update") {
+      query = calendarStore.update(data.Id, data);
     }
 
     await query
-      ?.then(async (response: { createdId?: string; updatedId?: string; form: TTemplate }) => {
-        emitEvent('action-result', response)
+      ?.then(
+        async (response: {
+          createdId?: string;
+          updatedId?: string;
+          form: TTemplate;
+        }) => {
+          emitEvent("action-result", response);
 
-        const templateId = response.createdId || response.updatedId || response.form.Id
+          const templateId =
+            response.createdId || response.updatedId || response.form.Id;
 
-        if (instructionsFiles.value && instructionsFiles.value.length >= 1) {
-          const instructionsFormData = new FormData()
+          if (instructionsFiles.value && instructionsFiles.value.length >= 1) {
+            const instructionsFormData = new FormData();
 
-          instructionsFormData.append('TemplateId', templateId)
-          instructionsFormData.append('AttachmentType', '1')
+            instructionsFormData.append("TemplateId", templateId);
+            instructionsFormData.append("AttachmentType", "1");
 
-          Array.from(instructionsFiles.value).forEach((file) => {
-            instructionsFormData.append('AttachedFiles[]', file)
-          })
+            Array.from(instructionsFiles.value).forEach((file) => {
+              instructionsFormData.append("AttachedFiles[]", file);
+            });
 
-          await calendarStore.upload(instructionsFormData, 'Загрузка файлов инструкций')
-        }
+            await calendarStore.upload(
+              instructionsFormData,
+              "Загрузка файлов инструкций",
+            );
+          }
 
-        if (attachmentsFiles.value && attachmentsFiles.value.length >= 1) {
-          const attachmentsFormData = new FormData()
+          if (attachmentsFiles.value && attachmentsFiles.value.length >= 1) {
+            const attachmentsFormData = new FormData();
 
-          attachmentsFormData.append('TemplateId', templateId)
-          attachmentsFormData.append('AttachmentType', '0')
+            attachmentsFormData.append("TemplateId", templateId);
+            attachmentsFormData.append("AttachmentType", "0");
 
-          Array.from(attachmentsFiles.value).forEach((file) => {
-            attachmentsFormData.append('AttachedFiles[]', file)
-          })
+            Array.from(attachmentsFiles.value).forEach((file) => {
+              attachmentsFormData.append("AttachedFiles[]", file);
+            });
 
-          await calendarStore.upload(attachmentsFormData, 'Загрузка вложений')
-        }
-        return response
-      })
-      .then((response: { createdId?: string; updatedId?: string; form: TTemplate }) => {
-        let message = 'Шаблон создан'
+            await calendarStore.upload(
+              attachmentsFormData,
+              "Загрузка вложений",
+            );
+          }
+          return response;
+        },
+      )
+      .then(
+        (response: {
+          createdId?: string;
+          updatedId?: string;
+          form: TTemplate;
+        }) => {
+          let message = "Шаблон создан";
 
-        if (!response.createdId && response.updatedId) message = 'Шаблон обновлён'
+          if (!response.createdId && response.updatedId)
+            message = "Шаблон обновлён";
 
-        usersStore.activity(
-          'write',
-          1,
-          `${message} ${response.createdId || response.updatedId} «${response.form.Templatename}»`,
-        )
+          usersStore.activity(
+            "write",
+            1,
+            `${message} ${response.createdId || response.updatedId} «${response.form.Templatename}»`,
+          );
 
-        toast('Успех', message, 'success')
-        closeModal()
-      })
+          toast("Успех", message, "success");
+          closeModal();
+        },
+      );
   } else {
-    toast('Ошибка!', "Ошибка приведения к типу 'TTemplate'", 'error')
+    toast("Ошибка!", "Ошибка приведения к типу 'TTemplate'", "error");
   }
 }
 
 function onInvalid({ values, errors, results }) {
-  console.log(values) // current form values
-  console.error(errors) // a map of field names and their first error message
-  console.warn(results) // a detailed map of field names and their validation results
+  console.log(values); // current form values
+  console.error(errors); // a map of field names and their first error message
+  console.warn(results); // a detailed map of field names and their validation results
 }
 
 // Сброс формы
 function resetData(form?: TTemplate) {
-  instructionsReset()
-  attachmentsReset()
+  instructionsReset();
+  attachmentsReset();
 
-  selectedRecipients.value = []
+  selectedRecipients.value = [];
 
   if (props.template)
     props.template.Assignments.forEach((assignment) => {
       options.value.assignments.forEach((group: TRecipientsGroup) => {
         const existedAssignment = group.Items.find(
-          (a) => a.CatalogueValue === assignment.ARType && a.Value === assignment.KeyId,
-        )
-        if (existedAssignment) selectedRecipients.value.push(existedAssignment)
-      })
-    })
+          (a) =>
+            a.CatalogueValue === assignment.ARType &&
+            a.Value === assignment.KeyId,
+        );
+        if (existedAssignment) selectedRecipients.value.push(existedAssignment);
+      });
+    });
 
   if (form) {
-    if (mode.value === 'copy') form.Templatename = `${form.Templatename} копия`
-    resetForm({ values: form })
+    if (mode.value === "copy") form.Templatename = `${form.Templatename} копия`;
+    resetForm({ values: form });
   } else {
     const formEmpty = ZTemplate.parse({
-      Templatename: 'Новый',
+      Templatename: "Новый",
       TemplateTypeId: 0,
       ReportingDate: luxon.now().toISO(),
       ReportingSchedule: [{ PeriodTypeId: 7, Dates: [new Date()] }],
       Assignments: [],
-    })
-    formEmpty.Templatename = null
-    formEmpty.TemplateTypeId = null
-    formEmpty.ReportingDate = null
-    formEmpty.ReportingSchedule[0].Dates = [luxon.now().toJSDate()]
+    });
+    formEmpty.Templatename = null;
+    formEmpty.TemplateTypeId = null;
+    formEmpty.ReportingDate = null;
+    formEmpty.ReportingSchedule[0].Dates = [luxon.now().toJSDate()];
 
-    formEmpty.DocumentName = null
-    formEmpty.DocumentNumber = null
-    formEmpty.DocumentDate = null
+    formEmpty.DocumentName = null;
+    formEmpty.DocumentNumber = null;
+    formEmpty.DocumentDate = null;
 
-    formEmpty.ResponsibleId = null
-    formEmpty.TemplateInitiatorId = null
-    formEmpty.TemplateCategoryId = null
-    formEmpty.PublicationDate = null
-    formEmpty.Instructions = null
-    formEmpty.Attachments = []
+    formEmpty.ResponsibleId = null;
+    formEmpty.TemplateInitiatorId = null;
+    formEmpty.TemplateCategoryId = null;
+    formEmpty.PublicationDate = null;
+    formEmpty.Instructions = null;
+    formEmpty.Attachments = [];
 
-    resetForm({ values: formEmpty })
+    resetForm({ values: formEmpty });
   }
 }
 
 const closeModal = () => {
-  resetData()
-  visible.value = false
-  emitEvent('close')
-}
+  resetData();
+  visible.value = false;
+  emitEvent("close");
+};
 
 // function setTouchToField(event: DropdownChangeEvent, fieldName: string) {
 //   setFieldTouched(fieldName, true)
@@ -1521,13 +1696,13 @@ const {
   multiple: true,
   // accept: 'image/*',
   // directory: true, // Выбор директорий вместо файлов
-})
+});
 
-instructionsChange(() => filesChange())
+instructionsChange(() => filesChange());
 
 function instructionsClicked() {
-  setFieldTouched('Attachments', true)
-  instructionsOpen()
+  setFieldTouched("Attachments", true);
+  instructionsOpen();
 }
 
 const {
@@ -1540,19 +1715,19 @@ const {
   multiple: true,
   // accept: 'image/*',
   // directory: true, // Выбор директорий вместо файлов
-})
+});
 
-attachmentsChange(() => filesChange())
+attachmentsChange(() => filesChange());
 
 function attachmentsClicked() {
-  setFieldTouched('Attachments', true)
-  attachmentsOpen()
+  setFieldTouched("Attachments", true);
+  attachmentsOpen();
 }
 
 function filesChange() {
-  const values = [attachmentsFiles.value, instructionsFiles.value]
+  const values = [attachmentsFiles.value, instructionsFiles.value];
 
-  const filesObjects: TAttachments = []
+  const filesObjects: TAttachments = [];
 
   values.forEach((files: FileList, index: number) => {
     if (files && files.length)
@@ -1560,14 +1735,14 @@ function filesChange() {
         const item = ZAttachment.parse({
           AttachmentType: index,
           Name: file.name,
-        })
+        });
 
-        filesObjects.push(item)
-      })
-  })
+        filesObjects.push(item);
+      });
+  });
 
-  AttachmentsChange(AttachmentsMeta.initialValue.concat(filesObjects))
-  setFieldTouched('Attachments', true)
+  AttachmentsChange(AttachmentsMeta.initialValue.concat(filesObjects));
+  setFieldTouched("Attachments", true);
 
   // if (filesObjects.length) {
   //   setFieldValue('Attachments', filesObjects)
@@ -1578,63 +1753,71 @@ function filesChange() {
 
 // Вспомогательные функции
 function addUserToList(response: { createdId: number; form: TUser }) {
-  options.value.users.push(response.form)
+  options.value.users.push(response.form);
 }
 
 function clearPeriodDates(row: number, periodId: number) {
-  setFieldTouched('ReportingSchedule', true)
+  setFieldTouched("ReportingSchedule", true);
 
-  if (![3, 7].includes(periodId)) Schedule.value[row].value['Dates'] = []
+  if (![3, 7].includes(periodId)) Schedule.value[row].value["Dates"] = [];
 
-  if (periodId === 3 && Schedule.value[row].value['Dates'].length > 1)
-    Schedule.value[row].value['Dates'] = [Schedule.value[row].value['Dates'][0]]
+  if (periodId === 3 && Schedule.value[row].value["Dates"].length > 1)
+    Schedule.value[row].value["Dates"] = [
+      Schedule.value[row].value["Dates"][0],
+    ];
 }
 
-const selectedRecipients: Ref<TRecipients> = ref([])
+const selectedRecipients: Ref<TRecipients> = ref([]);
 
 function updateRecipientsList(event: MultiSelectChangeEvent) {
-  const recipients = ZRecipients.parse(event.value)
+  const recipients = ZRecipients.parse(event.value);
 
   const recipientsToRemove = Recipients.value.filter(
     (x) =>
-      !recipients.find((r) => x.value.KeyId === r.Value && x.value.ARType === r.CatalogueValue),
-  )
+      !recipients.find(
+        (r) => x.value.KeyId === r.Value && x.value.ARType === r.CatalogueValue,
+      ),
+  );
 
   recipientsToRemove.forEach((rr) => {
-    RecipientsRemove(Recipients.value.indexOf(rr))
-  })
+    RecipientsRemove(Recipients.value.indexOf(rr));
+  });
 
   recipients.forEach((r) => {
     const existedRecipient = Recipients.value.find(
-      (fr) => fr.value.KeyId === r.Value && fr.value.ARType === r.CatalogueValue,
-    )
+      (fr) =>
+        fr.value.KeyId === r.Value && fr.value.ARType === r.CatalogueValue,
+    );
     if (!existedRecipient)
       RecipientsPush({
         ARType: r.CatalogueValue,
         KeyId: r.Value,
         Period: [new Date()],
-      })
-  })
+      });
+  });
 }
 
 function getGroupName(id: number) {
-  return (options.value.assignments as TORecipient[]).find((x) => x.Value === id)?.Label
+  return (options.value.assignments as TORecipient[]).find(
+    (x) => x.Value === id,
+  )?.Label;
 }
 
 function getRecipientForm(catalogue: number, item: number) {
-  return Recipients.value?.find((x) => x.value.ARType === catalogue && x.value.KeyId === item)
-    ?.value
+  return Recipients.value?.find(
+    (x) => x.value.ARType === catalogue && x.value.KeyId === item,
+  )?.value;
 }
 
 function removeAttachment(id: number) {
   setFieldValue(
-    'Attachments',
+    "Attachments",
     toRaw(Attachments.value).filter((a) => a.Id !== id),
-  )
+  );
 }
 
 function downloadAttachment(id: number, template: string) {
-  calendarStore.download(id, template)
+  calendarStore.download(id, template);
 }
 
 // function updateRecipientPeriod(event: Date, recipientId: number) {
@@ -1649,7 +1832,7 @@ function downloadAttachment(id: number, template: string) {
 .p-inputtext.invalid:enabled:focus,
 :deep(.p-calendar.invalid) .p-inputtext:enabled:focus {
   outline: 0 none;
-  box-shadow: 0 0 0 0.2rem theme('colors.danger-light');
-  border-color: theme('colors.danger');
+  box-shadow: 0 0 0 0.2rem theme("colors.danger-light");
+  border-color: theme("colors.danger");
 }
 </style>
