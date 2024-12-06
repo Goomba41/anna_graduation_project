@@ -10,4 +10,6 @@ public partial class DepartureType
     /// Удален (не выводить)
     /// </summary>
     public bool Deleted { get; set; }
+
+    public virtual ICollection<Material> Materials { get; set; } = new List<Material>();
 }

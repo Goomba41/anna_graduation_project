@@ -27,7 +27,5 @@ public partial class Institution
     /// </summary>
     public bool Deleted { get; set; }
 
-    // public virtual ICollection<ErrorLog> ErrorLogs { get; set; } = new List<ErrorLog>();
-
-    // public virtual ICollection<UsersActivity> UsersActivities { get; set; } = new List<UsersActivity>();
+    public virtual ICollection<Material> Materials { get; set; } = new List<Material>();
 }
