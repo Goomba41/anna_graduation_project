@@ -82,16 +82,6 @@ namespace backend.Controllers
 
             if (userFromContext != null)
             {
-
-                var existedId = _context.Institutions
-                    .FirstOrDefault(u => !u.Deleted && u.Id != institution.Id);
-
-                if (existedId != null)
-                {
-                    _logger.LogError($"Попытка создать существующее учреждение («{institution.Id}»)");
-                    return new JsonResult(new { result = -1, Error = $"Учреждение с идентификатором «{institution.Id}» существует" });
-                }
-
                 if (id != institution.Id)
                 {
                     return BadRequest();
