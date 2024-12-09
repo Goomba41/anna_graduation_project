@@ -23,6 +23,8 @@ public partial class AnnaGraduationProjectContext : DbContext
 
     public virtual DbSet<Institution> Institutions { get; set; }
 
+    public virtual DbSet<Material> Materials { get; set; }
+
     public virtual DbSet<UsersActivity> UsersActivities { get; set; }
 
     public virtual DbSet<DepartureType> DepartureTypes { get; set; }
@@ -197,6 +199,60 @@ public partial class AnnaGraduationProjectContext : DbContext
             entity.Property(e => e.Name)
                 .HasColumnType("character varying")
                 .HasColumnName("name");
+        });
+
+        modelBuilder.Entity<Material>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("materials_pk");
+
+            entity.ToTable("materials");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Deleted)
+                .HasComment("Удален (не выводить)")
+                .HasColumnName("deleted");
+            entity.Property(e => e.ActionDate)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("action_date");
+            entity.Property(e => e.Number)
+                .HasColumnType("character varying")
+                .HasColumnName("number");
+            entity.Property(e => e.AdditionalInfo)
+                .HasColumnType("character varying")
+                .HasColumnName("info");
+            entity.Property(e => e.Control)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("control_date");
+            entity.Property(e => e.Fact)
+                .HasColumnType("timestamp without time zone")
+                .HasColumnName("fact_date");
+            entity.Property(e => e.MaterialType)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => (MaterialType)Enum.Parse(typeof(MaterialType), v)
+                ).HasColumnName("material_type");
+
+            entity.Property(e => e.DepartureTypeId).HasColumnName("departure");
+            entity.Property(e => e.DocumentTypeId).HasColumnName("document_type");
+            entity.Property(e => e.ProjectId).HasColumnName("project");
+            entity.Property(e => e.InstitutionId).HasColumnName("institution");
+            entity.Property(e => e.CreatorId).HasColumnName("user");
+
+            entity.HasOne(d => d.DepartureType).WithMany(p => p.Materials)
+                .HasForeignKey(d => d.DepartureTypeId)
+                .HasConstraintName("departure_fk");
+            entity.HasOne(d => d.DocumentType).WithMany(p => p.Materials)
+                .HasForeignKey(d => d.DocumentTypeId)
+                .HasConstraintName("document_type_fk");
+            entity.HasOne(d => d.Project).WithMany(p => p.Materials)
+                .HasForeignKey(d => d.ProjectId)
+                .HasConstraintName("project_fk");
+            entity.HasOne(d => d.Institution).WithMany(p => p.Materials)
+                .HasForeignKey(d => d.InstitutionId)
+                .HasConstraintName("institutions_fk");
+            entity.HasOne(d => d.Creator).WithMany(p => p.Materials)
+                .HasForeignKey(d => d.CreatorId)
+                .HasConstraintName("users_fk");
         });
 
         OnModelCreatingPartial(modelBuilder);
