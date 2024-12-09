@@ -33,7 +33,7 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetMaterials()
+        public ActionResult GetMaterials([FromQuery] MaterialType? materialType)
         {
             try
             {
@@ -45,10 +45,10 @@ namespace backend.Controllers
                     .Where(t => !t.Deleted);
 
                 // Параметры из FromQuery
-                // if (node != null)
-                // {
-                //     queryModel = queryModel.Where(t => t.Node == node);
-                // }
+                if (materialType != null)
+                {
+                    queryModel = queryModel.Where(t => t.MaterialType == (int)materialType);
+                }
 
                 queryModel = queryModel
                     .OrderBy(t => t.Number);

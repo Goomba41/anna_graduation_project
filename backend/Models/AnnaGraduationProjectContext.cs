@@ -226,11 +226,7 @@ public partial class AnnaGraduationProjectContext : DbContext
             entity.Property(e => e.Fact)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("fact_date");
-            entity.Property(e => e.MaterialType)
-                .HasConversion(
-                    v => v.ToString(),
-                    v => (MaterialType)Enum.Parse(typeof(MaterialType), v)
-                ).HasColumnName("material_type");
+            entity.Property(e => e.MaterialType).HasColumnName("material_type");
 
             entity.Property(e => e.DepartureTypeId).HasColumnName("departure");
             entity.Property(e => e.DocumentTypeId).HasColumnName("document_type");

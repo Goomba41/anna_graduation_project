@@ -20,7 +20,7 @@ namespace backend.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     action_date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     number = table.Column<string>(type: "character varying", nullable: false),
-                    material_type = table.Column<string>(type: "text", nullable: false),
+                    material_type = table.Column<int>(type: "integer", nullable: false),
                     info = table.Column<string>(type: "character varying", nullable: true),
                     departure = table.Column<int>(type: "integer", nullable: true),
                     control_date = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),

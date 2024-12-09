@@ -14,7 +14,7 @@ public partial class Material
 
     public string Number { get; set; } = "";
 
-    public MaterialType MaterialType { get; set; } = MaterialType.Incoming;
+    public int MaterialType { get; set; } = 0;
 
     public string? AdditionalInfo { get; set; } = null!;
 

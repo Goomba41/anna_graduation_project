@@ -12,7 +12,7 @@ using backend.Models;
 namespace backend.Migrations
 {
     [DbContext(typeof(AnnaGraduationProjectContext))]
-    [Migration("20241209064709_AddMaterialsTable")]
+    [Migration("20241209115449_AddMaterialsTable")]
     partial class AddMaterialsTable
     {
         /// <inheritdoc />
@@ -224,9 +224,8 @@ namespace backend.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("institution");
 
-                    b.Property<string>("MaterialType")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("MaterialType")
+                        .HasColumnType("integer")
                         .HasColumnName("material_type");
 
                     b.Property<string>("Number")

@@ -221,9 +221,8 @@ namespace backend.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("institution");
 
-                    b.Property<string>("MaterialType")
-                        .IsRequired()
-                        .HasColumnType("text")
+                    b.Property<int>("MaterialType")
+                        .HasColumnType("integer")
                         .HasColumnName("material_type");
 
                     b.Property<string>("Number")
