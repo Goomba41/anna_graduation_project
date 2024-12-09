@@ -56,8 +56,13 @@ namespace backend.Controllers
                 // .ThenBy(t => t.Patronymic);
 
                 var queryResult = queryModel
-                .Select(material => _mapper.Map<MaterialResponseDTO>(material))
-                .ToList();
+                  .Include(m => m.DepartureType)
+                  .Include(m => m.DocumentType)
+                  .Include(m => m.Project)
+                  .Include(m => m.Creator)
+                  .Include(m => m.Institution)
+                  .Select(material => _mapper.Map<MaterialResponseDTO>(material))
+                  .ToList();
 
                 responseObject.result = 0;
                 responseObject.rowsQueried = queryModel.Count();
