@@ -212,7 +212,7 @@ public partial class AnnaGraduationProjectContext : DbContext
                 .HasComment("Удален (не выводить)")
                 .HasColumnName("deleted");
             entity.Property(e => e.ActionDate)
-                .HasColumnType("timestamp without time zone")
+                .HasColumnType("timestamp with time zone")
                 .HasColumnName("action_date");
             entity.Property(e => e.Number)
                 .HasColumnType("character varying")
@@ -221,10 +221,10 @@ public partial class AnnaGraduationProjectContext : DbContext
                 .HasColumnType("character varying")
                 .HasColumnName("info");
             entity.Property(e => e.Control)
-                .HasColumnType("timestamp without time zone")
+                .HasColumnType("timestamp with time zone")
                 .HasColumnName("control_date");
             entity.Property(e => e.Fact)
-                .HasColumnType("timestamp without time zone")
+                .HasColumnType("timestamp with time zone")
                 .HasColumnName("fact_date");
             entity.Property(e => e.MaterialType).HasColumnName("material_type");
 

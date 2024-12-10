@@ -23,31 +23,39 @@ export const ZMaterial = z.object({
     z
       .string({ message: "Обязательное поле" })
       .min(1, { message: "Обязательное поле" })
-      .datetime({ offset: true }),
+      .datetime({ offset: true })
+      .transform((value) => luxon.fromISO(value).toJSDate()),
     z
       .string({ message: "Обязательное поле" })
       .min(1, { message: "Обязательное поле" })
-      .date(),
-    z
       .date()
-      .transform((value) => luxon.fromJSDate(value).toFormat("yyyy-MM-dd")),
+      .transform((value) => luxon.fromISO(value).toJSDate()),
+    z.date().transform((value) => luxon.fromJSDate(value).toISO()),
   ]),
   control: z
     .union([
-      z.string().datetime({ offset: true }),
-      z.string().date(),
       z
+        .string()
+        .datetime({ offset: true })
+        .transform((value) => luxon.fromISO(value).toJSDate()),
+      z
+        .string()
         .date()
-        .transform((value) => luxon.fromJSDate(value).toFormat("yyyy-MM-dd")),
+        .transform((value) => luxon.fromISO(value).toJSDate()),
+      z.date().transform((value) => luxon.fromJSDate(value).toISO()),
     ])
     .nullish(),
   fact: z
     .union([
-      z.string().datetime({ offset: true }),
-      z.string().date(),
       z
+        .string()
+        .datetime({ offset: true })
+        .transform((value) => luxon.fromISO(value).toJSDate()),
+      z
+        .string()
         .date()
-        .transform((value) => luxon.fromJSDate(value).toFormat("yyyy-MM-dd")),
+        .transform((value) => luxon.fromISO(value).toJSDate()),
+      z.date().transform((value) => luxon.fromJSDate(value).toISO()),
     ])
     .nullish(),
   number: z
