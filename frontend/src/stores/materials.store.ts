@@ -6,8 +6,16 @@ import axios from "axios";
 import toast from "@/utils/toast";
 import queryString from "@/utils/query-string-transformer";
 
-import type { TMaterial, TMaterials } from "@/typings/material.types";
-import { ZMaterial, ZMaterials } from "@/typings/material.types";
+import type {
+  TMaterial,
+  TMaterialExtended,
+  TMaterialsExtended,
+} from "@/typings/material.types";
+import {
+  ZMaterial,
+  ZMaterialExtended,
+  ZMaterialsExtended,
+} from "@/typings/material.types";
 import { errorResult, successResult } from "@/typings/http.types";
 
 import callParseErrorToast from "@/utils/type-parse-error";
@@ -16,11 +24,11 @@ import callParseErrorToast from "@/utils/type-parse-error";
 async function read(
   id?: undefined,
   query?: { [key: string]: unknown },
-): Promise<TMaterials>;
+): Promise<TMaterialsExtended>;
 async function read(
   id: number,
   query?: { [key: string]: unknown },
-): Promise<TMaterial>;
+): Promise<TMaterialExtended>;
 async function read(id?: number, query?: { [key: string]: unknown }) {
   return await axios
     .get(
@@ -30,7 +38,7 @@ async function read(id?: number, query?: { [key: string]: unknown }) {
       const { data: responseData } = responseAXIOS;
 
       const result = successResult.extend({
-        data: id ? ZMaterial : ZMaterials,
+        data: id ? ZMaterialExtended : ZMaterialsExtended,
       });
 
       const error = errorResult.safeParse(responseData);

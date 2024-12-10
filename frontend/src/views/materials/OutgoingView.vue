@@ -191,12 +191,13 @@
     />
   </template>
 
-  <!-- <UserPopup
-    :user="materialData"
+  <MaterialForm
+    :material="materialData"
     :disabled="disabledForm"
+    :material-type="'outgoing'"
     @created="addMaterialToList"
     @updated="udpateMaterialInList"
-  /> -->
+  />
 </template>
 
 <script lang="ts" setup>
@@ -234,7 +235,7 @@ import MagnifyingGlass from "@/components/icons/MagnifyingGlass.vue";
 import toast from "@/utils/toast";
 import useEmitter from "@/utils/emitter";
 
-// import UserPopup from "@/components/forms/admin/UserForm.vue";
+import MaterialForm from "@/components/forms/materials/MaterialForm.vue";
 import FilterPopup from "@/components/FilterPopup.vue";
 
 const usersStore = useUsersStore();

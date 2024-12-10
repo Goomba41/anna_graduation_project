@@ -26,8 +26,10 @@
 }
 
 .p-dialog {
-  box-shadow: 0px 11px 15px -7px rgb(0 0 0 / 20%),
-    0px 24px 38px 3px rgb(0 0 0 / 14%), 0px 9px 46px 8px rgb(0 0 0 / 12%);
+  box-shadow:
+    0px 11px 15px -7px rgb(0 0 0 / 20%),
+    0px 24px 38px 3px rgb(0 0 0 / 14%),
+    0px 9px 46px 8px rgb(0 0 0 / 12%);
   @apply tw-border-0 tw-rounded-2xl;
 }
 
@@ -68,7 +70,10 @@
 }
 
 .p-dialog .p-dialog-header .p-dialog-header-icon {
-  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    box-shadow 0.2s;
   @apply tw-text-gray-400 tw-mr-2 tw-rounded-full tw-bg-transparent tw-border-0 tw-w-8 tw-h-8;
 }
 .p-dialog .p-dialog-header-icon {
@@ -113,7 +118,10 @@
   @apply tw-w-12 tw-h-7 tw-relative tw-inline-block;
 }
 .p-inputswitch .p-inputswitch-slider {
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s,
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s,
     box-shadow 0.2s !imporant;
   @apply tw-rounded-[30px] tw-bg-gray-400 tw-absolute tw-cursor-pointer tw-top-0 tw-left-0 tw-bottom-0 tw-right-0;
 }
@@ -141,7 +149,10 @@
   box-shadow: 0 0 0 0.2rem theme("colors.primary-light");
 }
 .p-inputswitch .p-inputswitch-slider {
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s,
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s,
     box-shadow 0.2s !important;
   @apply tw-rounded-[30px] tw-bg-gray-300;
 }
@@ -167,7 +178,10 @@
   background: #ffffff;
   border: 2px solid theme("colors.primary");
   border-radius: 50%;
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s,
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s,
     box-shadow 0.2s;
 }
 .p-slider .p-slider-handle:focus {
@@ -207,7 +221,8 @@
 }
 
 .p-button {
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+  box-shadow:
+    rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
     rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 
   @apply tw-transition-all tw-text-white tw-bg-primary tw-border-solid tw-border-primary tw-border tw-select-none tw-align-bottom tw-items-center tw-cursor-pointer tw-m-0 tw-inline-flex tw-rounded-2xl tw-h-14 tw-w-fit tw-text-base tw-py-2 tw-px-4 tw-relative tw-overflow-hidden tw-text-center tw-justify-center;
@@ -215,7 +230,8 @@
 }
 
 .p-button:hover {
-  box-shadow: rgba(0, 0, 0, 0.1) 2px 6px 4px -1px,
+  box-shadow:
+    rgba(0, 0, 0, 0.1) 2px 6px 4px -1px,
     rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
   transform: translateY(-0.25em) translateX(-0.25em);
 }
@@ -312,7 +328,10 @@
 
 .p-inputtext {
   @apply tw-text-base tw-bg-white tw-py-2 tw-px-7 tw-appearance-none tw-rounded-2xl tw-text-gray-800 tw-border-2 tw-border-gray-300;
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s,
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s,
     box-shadow 0.2s;
 }
 
@@ -330,7 +349,7 @@
 .p-inputtext.invalid,
 .p-calendar.invalid > .p-inputtext,
 .p-inputtext.invalid:enabled:focus,
-.p-calendar.invalid > .p-inputtext:enabled:focus, {
+.p-calendar.invalid > .p-inputtext:enabled:focus {
   @apply tw-outline-offset-0;
   outline: 0 none;
   box-shadow: 0 0 0 0.2rem theme("colors.danger-light");
@@ -356,7 +375,7 @@
 
 .p-input-icon-right > i:last-of-type,
 .p-input-icon-right > svg:last-of-type {
-  @apply tw-right-2 tw-text-gray-800;
+  @apply tw-right-3 tw-text-gray-800;
 }
 
 .p-input-icon-left > i,
@@ -364,7 +383,7 @@
 .p-input-icon-left > svg,
 .p-input-icon-right > svg {
   /* ! top: 54% под вопросом */
-  @apply tw-absolute tw-top-[54%] -tw-mt-2;
+  @apply tw-absolute tw-top-[45%];
 }
 
 .p-input-icon-left > .p-inputtext {
@@ -525,7 +544,10 @@
 }
 
 .p-toast .p-toast-message .p-toast-icon-close {
-  transition: background-color 0.2s, color 0.2s, box-shadow 0.2s !important;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    box-shadow 0.2s !important;
   @apply tw-w-8 tw-h-8 tw-rounded-full tw-bg-transparent;
 }
 .p-toast .p-toast-message .p-toast-message-content .p-toast-message-icon {
@@ -613,7 +635,10 @@
 
 .p-scrollpanel .p-scrollpanel-bar {
   @apply tw-bg-primary tw-border-0;
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s,
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s,
     box-shadow 0.2s !important;
 }
 
@@ -636,7 +661,9 @@
 .p-datepicker:not(.p-datepicker-inline) {
   background: #ffffff;
   border: 0 none;
-  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14),
+  box-shadow:
+    0 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0 4px 5px 0 rgba(0, 0, 0, 0.14),
     0 1px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
@@ -942,7 +969,9 @@
 
 .p-dropdown-panel,
 .p-multiselect-panel {
-  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14),
+  box-shadow:
+    0 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0 4px 5px 0 rgba(0, 0, 0, 0.14),
     0 1px 10px 0 rgba(0, 0, 0, 0.12);
   @apply tw-bg-white tw-text-black tw-border-0 tw-rounded-lg;
 }
@@ -1056,7 +1085,9 @@
   .p-editor-toolbar.ql-snow
   .ql-picker.ql-expanded
   .ql-picker-options {
-  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14),
+  box-shadow:
+    0 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0 4px 5px 0 rgba(0, 0, 0, 0.14),
     0 1px 10px 0 rgba(0, 0, 0, 0.12);
   @apply tw-bg-white tw-border-0 tw-rounded tw-py-2 tw-px-0;
 }
@@ -1159,7 +1190,9 @@
 }
 
 .p-tabview .p-tabview-nav-btn.p-link {
-  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+  box-shadow:
+    0 3px 1px -2px rgba(0, 0, 0, 0.2),
+    0 2px 2px 0 rgba(0, 0, 0, 0.14),
     0 1px 5px 0 rgba(0, 0, 0, 0.12);
   @apply tw-bg-transparent tw-rounded-none tw-w-9 tw-text-primary;
 }
@@ -1205,7 +1238,9 @@
 }
 
 .p-treeselect-panel {
-  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14),
+  box-shadow:
+    0 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0 4px 5px 0 rgba(0, 0, 0, 0.14),
     0 1px 10px 0 rgba(0, 0, 0, 0.12);
   @apply tw-rounded-lg tw-border-0 tw-bg-white tw-text-black;
 }
@@ -1500,7 +1535,9 @@
   @apply tw-font-semibold tw-bg-white tw-text-gray-400 tw-py-3 tw-px-4 tw-m-0;
 }
 
-.p-multiselect-panel.sticky-group-headers .p-multiselect-items .p-multiselect-item-group {
+.p-multiselect-panel.sticky-group-headers
+  .p-multiselect-items
+  .p-multiselect-item-group {
   @apply tw-sticky tw-top-0 tw-bg-white tw-z-10;
 }
 
@@ -1579,7 +1616,9 @@
 }
 
 .p-colorpicker-overlay-panel {
-  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14),
+  box-shadow:
+    0 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0 4px 5px 0 rgba(0, 0, 0, 0.14),
     0 1px 10px 0 rgba(0, 0, 0, 0.12);
   @apply tw-mt-2;
 }
@@ -1648,7 +1687,9 @@
 .p-tieredmenu.p-tieredmenu-overlay {
   background: #ffffff;
   border: 0 none;
-  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14),
+  box-shadow:
+    0 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0 4px 5px 0 rgba(0, 0, 0, 0.14),
     0 1px 10px 0 rgba(0, 0, 0, 0.12);
 }
 .p-tieredmenu .p-tieredmenu-root-list {
@@ -1658,7 +1699,9 @@
   padding: 0.25rem 0;
   background: #ffffff;
   border: 0 none;
-  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14),
+  box-shadow:
+    0 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0 4px 5px 0 rgba(0, 0, 0, 0.14),
     0 1px 10px 0 rgba(0, 0, 0, 0.12);
 }
 .p-tieredmenu .p-menuitem > .p-menuitem-content {
@@ -1965,10 +2008,13 @@
 .p-contextmenu {
   padding: 0.5rem 0;
   border: 0 none;
-  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
+  box-shadow:
+    0 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0 4px 5px 0 rgba(0, 0, 0, 0.14),
+    0 1px 10px 0 rgba(0, 0, 0, 0.12);
   min-width: 12.5rem;
   @apply tw-bg-gray-50 tw-text-gray-600 tw-rounded-lg
-  /* tw-border-2 tw-border-primary tw-border-solid */
+  /* tw-border-2 tw-border-primary tw-border-solid */;
 }
 .p-contextmenu .p-contextmenu-root-list {
   outline: 0 none;
@@ -1976,78 +2022,163 @@
 .p-contextmenu .p-submenu-list {
   padding: 0.5rem 0;
   border: 0 none;
-  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12);
-  @apply tw-bg-gray-50 tw-rounded-lg
+  box-shadow:
+    0 2px 4px -1px rgba(0, 0, 0, 0.2),
+    0 4px 5px 0 rgba(0, 0, 0, 0.14),
+    0 1px 10px 0 rgba(0, 0, 0, 0.12);
+  @apply tw-bg-gray-50 tw-rounded-lg;
 }
 .p-contextmenu .p-menuitem > .p-menuitem-content {
   transition: box-shadow 0.2s;
   border-radius: 0;
-  @apply tw-text-gray-600
+  @apply tw-text-gray-600;
 }
 .p-contextmenu .p-menuitem > .p-menuitem-content .p-menuitem-link {
   padding: 0.5rem 1rem;
   user-select: none;
-  @apply tw-text-gray-600
+  @apply tw-text-gray-600;
 }
 
-.p-contextmenu .p-menuitem.danger-action > .p-menuitem-content .p-menuitem-link .p-menuitem-text,
-.p-contextmenu .p-menuitem.danger-action > .p-menuitem-content .p-menuitem-link .p-menuitem-icon,
-.p-contextmenu .p-menuitem.danger-action > .p-menuitem-content .p-menuitem-link .p-submenu-icon {
-  @apply tw-text-red-600
+.p-contextmenu
+  .p-menuitem.danger-action
+  > .p-menuitem-content
+  .p-menuitem-link
+  .p-menuitem-text,
+.p-contextmenu
+  .p-menuitem.danger-action
+  > .p-menuitem-content
+  .p-menuitem-link
+  .p-menuitem-icon,
+.p-contextmenu
+  .p-menuitem.danger-action
+  > .p-menuitem-content
+  .p-menuitem-link
+  .p-submenu-icon {
+  @apply tw-text-red-600;
 }
 
-.p-contextmenu .p-menuitem.danger-action:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover {
-  @apply tw-bg-red-300
+.p-contextmenu
+  .p-menuitem.danger-action:not(.p-highlight):not(.p-disabled)
+  > .p-menuitem-content:hover {
+  @apply tw-bg-red-300;
 }
 
-.p-contextmenu .p-menuitem.danger-action:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover .p-menuitem-link .p-menuitem-text,
-.p-contextmenu .p-menuitem.danger-action:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover .p-menuitem-link .p-menuitem-icon, .p-contextmenu .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover .p-menuitem-link .p-submenu-icon {
-  @apply tw-text-red-600
+.p-contextmenu
+  .p-menuitem.danger-action:not(.p-highlight):not(.p-disabled)
+  > .p-menuitem-content:hover
+  .p-menuitem-link
+  .p-menuitem-text,
+.p-contextmenu
+  .p-menuitem.danger-action:not(.p-highlight):not(.p-disabled)
+  > .p-menuitem-content:hover
+  .p-menuitem-link
+  .p-menuitem-icon,
+.p-contextmenu
+  .p-menuitem:not(.p-highlight):not(.p-disabled)
+  > .p-menuitem-content:hover
+  .p-menuitem-link
+  .p-submenu-icon {
+  @apply tw-text-red-600;
 }
 
-.p-contextmenu .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-text {
-  @apply tw-text-gray-600
+.p-contextmenu
+  .p-menuitem
+  > .p-menuitem-content
+  .p-menuitem-link
+  .p-menuitem-text {
+  @apply tw-text-gray-600;
 }
 
-.p-contextmenu .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-icon {
+.p-contextmenu
+  .p-menuitem
+  > .p-menuitem-content
+  .p-menuitem-link
+  .p-menuitem-icon {
   margin-right: 0.5rem;
-  @apply tw-text-primary
+  @apply tw-text-primary;
 }
-.p-contextmenu .p-menuitem > .p-menuitem-content .p-menuitem-link .p-submenu-icon {
-  @apply tw-text-primary
+.p-contextmenu
+  .p-menuitem
+  > .p-menuitem-content
+  .p-menuitem-link
+  .p-submenu-icon {
+  @apply tw-text-primary;
 }
 .p-contextmenu .p-menuitem.p-highlight > .p-menuitem-content {
-  @apply tw-text-gray-600 tw-bg-gray-200
+  @apply tw-text-gray-600 tw-bg-gray-200;
 }
-.p-contextmenu .p-menuitem.p-highlight > .p-menuitem-content .p-menuitem-link .p-menuitem-text {
-  @apply tw-text-gray-600
+.p-contextmenu
+  .p-menuitem.p-highlight
+  > .p-menuitem-content
+  .p-menuitem-link
+  .p-menuitem-text {
+  @apply tw-text-gray-600;
 }
-.p-contextmenu .p-menuitem.p-highlight > .p-menuitem-content .p-menuitem-link .p-menuitem-icon, .p-contextmenu .p-menuitem.p-highlight > .p-menuitem-content .p-menuitem-link .p-submenu-icon {
-  @apply tw-text-primary
+.p-contextmenu
+  .p-menuitem.p-highlight
+  > .p-menuitem-content
+  .p-menuitem-link
+  .p-menuitem-icon,
+.p-contextmenu
+  .p-menuitem.p-highlight
+  > .p-menuitem-content
+  .p-menuitem-link
+  .p-submenu-icon {
+  @apply tw-text-primary;
 }
 .p-contextmenu .p-menuitem.p-highlight.p-focus > .p-menuitem-content {
   background: #e9ecef;
 }
-.p-contextmenu .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus > .p-menuitem-content {
+.p-contextmenu
+  .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus
+  > .p-menuitem-content {
   background: #dee2e6;
 
-  @apply tw-text-gray-600
+  @apply tw-text-gray-600;
 }
-.p-contextmenu .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus > .p-menuitem-content .p-menuitem-link .p-menuitem-text {
-  @apply tw-text-gray-600
+.p-contextmenu
+  .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus
+  > .p-menuitem-content
+  .p-menuitem-link
+  .p-menuitem-text {
+  @apply tw-text-gray-600;
 }
-.p-contextmenu .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus > .p-menuitem-content .p-menuitem-link .p-menuitem-icon, .p-contextmenu .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus > .p-menuitem-content .p-menuitem-link .p-submenu-icon {
-  @apply tw-text-gray-600
+.p-contextmenu
+  .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus
+  > .p-menuitem-content
+  .p-menuitem-link
+  .p-menuitem-icon,
+.p-contextmenu
+  .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus
+  > .p-menuitem-content
+  .p-menuitem-link
+  .p-submenu-icon {
+  @apply tw-text-gray-600;
 }
-.p-contextmenu .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover {
+.p-contextmenu
+  .p-menuitem:not(.p-highlight):not(.p-disabled)
+  > .p-menuitem-content:hover {
   background: #e9ecef;
-  @apply tw-text-gray-600
+  @apply tw-text-gray-600;
 }
-.p-contextmenu .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover .p-menuitem-link .p-menuitem-text {
-  @apply tw-text-gray-600
+.p-contextmenu
+  .p-menuitem:not(.p-highlight):not(.p-disabled)
+  > .p-menuitem-content:hover
+  .p-menuitem-link
+  .p-menuitem-text {
+  @apply tw-text-gray-600;
 }
-.p-contextmenu .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover .p-menuitem-link .p-menuitem-icon, .p-contextmenu .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover .p-menuitem-link .p-submenu-icon {
-  @apply tw-text-primary-light-hover
+.p-contextmenu
+  .p-menuitem:not(.p-highlight):not(.p-disabled)
+  > .p-menuitem-content:hover
+  .p-menuitem-link
+  .p-menuitem-icon,
+.p-contextmenu
+  .p-menuitem:not(.p-highlight):not(.p-disabled)
+  > .p-menuitem-content:hover
+  .p-menuitem-link
+  .p-submenu-icon {
+  @apply tw-text-primary-light-hover;
 }
 .p-contextmenu .p-menuitem-separator {
   border-top: 1px solid #dee2e6;
@@ -2089,7 +2220,9 @@
 }
 
 .p-overlaypanel-enter-active {
-  transition: transform 0.12s cubic-bezier(0, 0, 0.2, 1), opacity 0.12s cubic-bezier(0, 0, 0.2, 1);
+  transition:
+    transform 0.12s cubic-bezier(0, 0, 0.2, 1),
+    opacity 0.12s cubic-bezier(0, 0, 0.2, 1);
 }
 
 .p-overlaypanel-leave-active {
@@ -2136,9 +2269,11 @@
   color: #334155;
   border: 1px solid #e2e8f0;
   /* border-radius: 6px; */
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1);
 
-  @apply tw-rounded-2xl
+  @apply tw-rounded-2xl;
 }
 .p-overlaypanel .p-overlaypanel-content {
   padding: 0 1.125rem 1.125rem 1.125rem;
@@ -2148,7 +2283,12 @@
   color: #ffffff;
   width: 1.75rem;
   height: 1.75rem;
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s, outline-color 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s,
+    border-color 0.2s,
+    box-shadow 0.2s,
+    outline-color 0.2s;
   border-radius: 50%;
   position: absolute;
   top: -0.875rem;
@@ -2174,4 +2314,3 @@
 .p-overlaypanel.p-overlaypanel-flipped:before {
   border-top-color: #e2e8f0;
 }
-
