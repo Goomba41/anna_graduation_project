@@ -259,6 +259,250 @@
           <div class="field tw-flex tw-flex-col tw-w-full tw-mb-4">
             <div class="tw-flex tw-flex-row tw-items-center">
               <label
+                for="Departure"
+                title="Отправлен"
+                class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-text-ellipsis tw-whitespace-nowrap"
+              >
+                <span
+                  v-if="DepartureMeta.required"
+                  class="asterisk tw-text-danger"
+                  >*</span
+                >
+                Отправлен
+              </label>
+              <!-- :loading="subjectsIsLoading"
+                :disabled="subjectsIsLoading" -->
+              <!-- :placeholder="
+                  subjectsIsLoading ? 'Идёт загрузка...' : 'Выберите субъект РФ'
+                " -->
+              <Dropdown
+                id="Departure"
+                v-model="Departure"
+                class="tw-flex tw-flex-auto tw-w-4"
+                :class="[
+                  (DepartureMeta.dirty || DepartureMeta.touched) &&
+                  !DepartureMeta.valid &&
+                  DepartureMeta.validated
+                    ? 'invalid'
+                    : '',
+                ]"
+                :filter="options['departure-types']?.length > 20"
+                :options="options['departure-types'] || []"
+                :virtual-scroller-options="
+                  options['departure-types']?.length > 50
+                    ? { itemSize: 35 }
+                    : undefined
+                "
+                option-value="id"
+                option-label="name"
+                placeholder="Выберите тип отправления"
+                @change="setFieldTouched('Departure', true)"
+              >
+              </Dropdown>
+            </div>
+            <div
+              v-if="
+                (DepartureMeta.dirty || DepartureMeta.touched) &&
+                !DepartureMeta.valid &&
+                DepartureMeta.validated
+              "
+              class="tw-mt-2"
+            >
+              <span
+                class="tw-justify-end tw-font-medium tw-text-danger tw-text-xs tw-flex tw-flex-row tw-items-center tw-mb-2 last:tw-mb-0"
+              >
+                <ExclamationTriangle class="tw-mr-2" />
+                {{ errors.departureTypeId }}
+              </span>
+            </div>
+          </div>
+
+          <div class="field tw-flex tw-flex-col tw-w-full tw-mb-4">
+            <div class="tw-flex tw-flex-row tw-items-center">
+              <label
+                for="DocumentType"
+                title="Тип документа"
+                class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-text-ellipsis tw-whitespace-nowrap"
+              >
+                <span
+                  v-if="DocumentTypeMeta.required"
+                  class="asterisk tw-text-danger"
+                  >*</span
+                >
+                Тип документа
+              </label>
+              <!-- :loading="subjectsIsLoading"
+                :disabled="subjectsIsLoading" -->
+              <!-- :placeholder="
+                  subjectsIsLoading ? 'Идёт загрузка...' : 'Выберите субъект РФ'
+                " -->
+              <Dropdown
+                id="DocumentType"
+                v-model="DocumentType"
+                class="tw-flex tw-flex-auto tw-w-4"
+                :class="[
+                  (DocumentTypeMeta.dirty || DocumentTypeMeta.touched) &&
+                  !DocumentTypeMeta.valid &&
+                  DocumentTypeMeta.validated
+                    ? 'invalid'
+                    : '',
+                ]"
+                :filter="options['document-types']?.length > 20"
+                :options="options['document-types'] || []"
+                :virtual-scroller-options="
+                  options['document-types']?.length > 50
+                    ? { itemSize: 35 }
+                    : undefined
+                "
+                option-value="id"
+                option-label="name"
+                placeholder="Выберите тип документа"
+                @change="setFieldTouched('DocumentType', true)"
+              >
+              </Dropdown>
+            </div>
+            <div
+              v-if="
+                (DocumentTypeMeta.dirty || DocumentTypeMeta.touched) &&
+                !DocumentTypeMeta.valid &&
+                DocumentTypeMeta.validated
+              "
+              class="tw-mt-2"
+            >
+              <span
+                class="tw-justify-end tw-font-medium tw-text-danger tw-text-xs tw-flex tw-flex-row tw-items-center tw-mb-2 last:tw-mb-0"
+              >
+                <ExclamationTriangle class="tw-mr-2" />
+                {{ errors.documentTypeId }}
+              </span>
+            </div>
+          </div>
+
+          <div class="field tw-flex tw-flex-col tw-w-full tw-mb-4">
+            <div class="tw-flex tw-flex-row tw-items-center">
+              <label
+                for="Project"
+                title="Проект"
+                class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-text-ellipsis tw-whitespace-nowrap"
+              >
+                <span
+                  v-if="ProjectMeta.required"
+                  class="asterisk tw-text-danger"
+                  >*</span
+                >
+                Проект
+              </label>
+              <!-- :loading="subjectsIsLoading"
+                :disabled="subjectsIsLoading" -->
+              <!-- :placeholder="
+                  subjectsIsLoading ? 'Идёт загрузка...' : 'Выберите субъект РФ'
+                " -->
+              <Dropdown
+                id="Project"
+                v-model="Project"
+                class="tw-flex tw-flex-auto tw-w-4"
+                :class="[
+                  (ProjectMeta.dirty || ProjectMeta.touched) &&
+                  !ProjectMeta.valid &&
+                  ProjectMeta.validated
+                    ? 'invalid'
+                    : '',
+                ]"
+                :filter="options['projects']?.length > 20"
+                :options="options['projects'] || []"
+                :virtual-scroller-options="
+                  options['projects']?.length > 50
+                    ? { itemSize: 35 }
+                    : undefined
+                "
+                option-value="id"
+                option-label="name"
+                placeholder="Выберите проект"
+                @change="setFieldTouched('Project', true)"
+              >
+              </Dropdown>
+            </div>
+            <div
+              v-if="
+                (ProjectMeta.dirty || ProjectMeta.touched) &&
+                !ProjectMeta.valid &&
+                ProjectMeta.validated
+              "
+              class="tw-mt-2"
+            >
+              <span
+                class="tw-justify-end tw-font-medium tw-text-danger tw-text-xs tw-flex tw-flex-row tw-items-center tw-mb-2 last:tw-mb-0"
+              >
+                <ExclamationTriangle class="tw-mr-2" />
+                {{ errors.projectId }}
+              </span>
+            </div>
+          </div>
+
+          <div class="field tw-flex tw-flex-col tw-w-full tw-mb-4">
+            <div class="tw-flex tw-flex-row tw-items-center">
+              <label
+                for="Institution"
+                title="Учреждение"
+                class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-text-ellipsis tw-whitespace-nowrap"
+              >
+                <span
+                  v-if="InstitutionMeta.required"
+                  class="asterisk tw-text-danger"
+                  >*</span
+                >
+                Учреждение
+              </label>
+              <!-- :loading="subjectsIsLoading"
+                :disabled="subjectsIsLoading" -->
+              <!-- :placeholder="
+                  subjectsIsLoading ? 'Идёт загрузка...' : 'Выберите субъект РФ'
+                " -->
+              <Dropdown
+                id="Institution"
+                v-model="Institution"
+                class="tw-flex tw-flex-auto tw-w-4"
+                :class="[
+                  (InstitutionMeta.dirty || InstitutionMeta.touched) &&
+                  !InstitutionMeta.valid &&
+                  InstitutionMeta.validated
+                    ? 'invalid'
+                    : '',
+                ]"
+                :filter="options['institutions']?.length > 20"
+                :options="options['institutions'] || []"
+                :virtual-scroller-options="
+                  options['institutions']?.length > 50
+                    ? { itemSize: 35 }
+                    : undefined
+                "
+                option-value="id"
+                option-label="name"
+                placeholder="Выберите учреждение"
+                @change="setFieldTouched('Institution', true)"
+              >
+              </Dropdown>
+            </div>
+            <div
+              v-if="
+                (InstitutionMeta.dirty || InstitutionMeta.touched) &&
+                !InstitutionMeta.valid &&
+                InstitutionMeta.validated
+              "
+              class="tw-mt-2"
+            >
+              <span
+                class="tw-justify-end tw-font-medium tw-text-danger tw-text-xs tw-flex tw-flex-row tw-items-center tw-mb-2 last:tw-mb-0"
+              >
+                <ExclamationTriangle class="tw-mr-2" />
+                {{ errors.institutionId }}
+              </span>
+            </div>
+          </div>
+
+          <div class="field tw-flex tw-flex-col tw-w-full tw-mb-4">
+            <div class="tw-flex tw-flex-row tw-items-center">
+              <label
                 for="Info"
                 title="Информация"
                 class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-overflow-x-hidden tw-text-ellipsis tw-whitespace-nowrap"
@@ -306,71 +550,13 @@
             </div>
           </div>
 
-          <!-- <div class="field tw-flex tw-flex-col tw-w-full tw-mb-4">
-            <div class="tw-flex tw-flex-row tw-items-center">
-              <label
-                for="Subject"
-                title="Субъект"
-                class="tw-max-w-[50%] tw-mr-4 tw-font-bold tw-text-base tw-text-ellipsis tw-whitespace-nowrap"
-              >
-                <span
-                  v-if="SubjectMeta.required"
-                  class="asterisk tw-text-danger"
-                  >*</span
-                >
-                Субъект
-              </label>
-              <Dropdown
-                id="Subject"
-                v-model="Subject"
-                class="tw-flex tw-flex-auto tw-w-4"
-                :loading="subjectsIsLoading"
-                :disabled="subjectsIsLoading"
-                :class="[
-                  (SubjectMeta.dirty || SubjectMeta.touched) &&
-                  !SubjectMeta.valid &&
-                  SubjectMeta.validated
-                    ? 'invalid'
-                    : '',
-                ]"
-                :filter="subjectsOptions.length > 20"
-                :options="subjectsOptions"
-                :virtual-scroller-options="
-                  subjectsOptions.length > 50 ? { itemSize: 35 } : undefined
-                "
-                option-value="objectId"
-                option-label="fullName"
-                :placeholder="
-                  subjectsIsLoading ? 'Идёт загрузка...' : 'Выберите субъект РФ'
-                "
-                @change="setFieldTouched('subject', true)"
-              >
-              </Dropdown>
-            </div>
-            <div
-              v-if="
-                (SubjectMeta.dirty || SubjectMeta.touched) &&
-                !SubjectMeta.valid &&
-                SubjectMeta.validated
-              "
-              class="tw-mt-2"
-            >
-              <span
-                class="tw-justify-end tw-font-medium tw-text-danger tw-text-xs tw-flex tw-flex-row tw-items-center tw-mb-2 last:tw-mb-0"
-              >
-                <ExclamationTriangle class="tw-mr-2" />
-                {{ errors.subject }}
-              </span>
-            </div>
-          </div> -->
-
-          {{ NumberMeta }} <br /><br />
+          <!-- {{ NumberMeta }} <br /><br />
           {{ ActionDateMeta }} <br /><br />
           {{ ControlMeta }} <br /><br />
           {{ FactMeta }} <br /><br />
           {{ InfoMeta }} <br /><br />
           {{ meta }} <br /><br />
-          {{ errors }}
+          {{ errors }} -->
         </div>
       </form>
     </ScrollPanel>
@@ -398,8 +584,8 @@
           class="success"
           type="submit"
           form="formUser"
+          :disabled="!(meta.dirty && meta.valid)"
         >
-          <!-- :disabled="!(meta.dirty && meta.valid)" -->
           <FloppyDisk class="p-button-icon p-button-icon-left" />
           <div class="p-button-label">
             {{ mode === "create" ? "Создать" : "Сохранить" }}
@@ -416,7 +602,7 @@ import { ref, watch, type Ref, type PropType, computed } from "vue";
 import Button from "primevue/button";
 import Dialog from "primevue/dialog";
 import Calendar from "primevue/calendar";
-// import Dropdown from "primevue/dropdown";
+import Dropdown from "primevue/dropdown";
 import Textarea from "primevue/textarea";
 import InputText from "primevue/inputtext";
 import ScrollPanel from "primevue/scrollpanel";
@@ -431,8 +617,8 @@ import useEmitter from "@/utils/emitter";
 
 import { useAuthStore } from "@/stores/auth.store";
 import { useUsersStore } from "@/stores/users.store";
+import { useOptionsStore } from "@/stores/options.store";
 import { useMaterialsStore } from "@/stores/materials.store";
-// import { useOptionsStore } from "@/stores/options.store";
 
 import type { TMaterial } from "@/typings/material.types";
 import { ZMaterial } from "@/typings/material.types";
@@ -484,7 +670,7 @@ const mode: Ref<string> = ref(
 
 const authStore = useAuthStore();
 const usersStore = useUsersStore();
-// const optionsStore = useOptionsStore();
+const optionsStore = useOptionsStore();
 const materialsStore = useMaterialsStore();
 
 const firstFormField = ref();
@@ -492,7 +678,7 @@ const firstFormField = ref();
 const { bus } = useEmitter();
 
 // ? Если нужно будет запросить справочники
-// const options: Ref<{ [key: string]: unknown[] }> = ref({})
+const options: Ref<{ [key: string]: unknown[] }> = ref({});
 
 // @ts-expect-error почему-то сломан zod
 const validationSchema = computed(() => toTypedSchema(ZMaterial));
@@ -517,12 +703,13 @@ const { value: ActionDate, meta: ActionDateMeta } =
 const { value: Fact, meta: FactMeta } = useField<string>("fact");
 const { value: Control, meta: ControlMeta } = useField<string>("control");
 const { value: Info, meta: InfoMeta } = useField<string>("additionalInfo");
-// const { value: Subject, meta: SubjectMeta } = useField<number>("subject");
-// const { value: SubjectString } = useField<number>("subjectString");
-// const { value: District, meta: DistrictMeta } = useField<number>("district");
-// const { value: DistrictString } = useField<number>("districtString");
-// const { value: Locality, meta: LocalityMeta } = useField<number>("locality");
-// const { value: LocalityString } = useField<number>("localityString");
+const { value: Departure, meta: DepartureMeta } =
+  useField<number>("departureTypeId");
+const { value: DocumentType, meta: DocumentTypeMeta } =
+  useField<number>("documentTypeId");
+const { value: Project, meta: ProjectMeta } = useField<number>("projectId");
+const { value: Institution, meta: InstitutionMeta } =
+  useField<number>("institutionId");
 
 const emitEvent = defineEmits<{
   created: [response: { createdId: number; form: TMaterial }];
@@ -532,42 +719,42 @@ const emitEvent = defineEmits<{
 async function onSuccess(institution: TMaterial) {
   const parsed = ZMaterial.safeParse(institution);
   if (parsed.success) {
-    //   let query:
-    //     | Promise<
-    //         | { createdId: number; form: TMaterial }
-    //         | { updatedId: number; form: TMaterial }
-    //       >
-    //     | undefined;
-    //   if (mode.value === "create") {
-    //     query = materialsStore.create(parsed.data);
-    //   } else if (mode.value === "update") {
-    //     query = materialsStore.update(parsed.data);
-    //   }
+    let query:
+      | Promise<
+          | { createdId: number; form: TMaterial }
+          | { updatedId: number; form: TMaterial }
+        >
+      | undefined;
+    if (mode.value === "create") {
+      query = materialsStore.create(parsed.data);
+    } else if (mode.value === "update") {
+      query = materialsStore.update(parsed.data);
+    }
 
-    //   await query?.then(async (response) => {
-    //     let message = `${props.materialType === "incoming" ? "Входящий" : "Исходящий"} создан`;
+    await query?.then(async (response) => {
+      let message = `${props.materialType === "incoming" ? "Входящий" : "Исходящий"} создан`;
 
-    //     if ("updatedId" in response) {
-    //       message = "Пользователь обновлён";
-    //       emitEvent("updated", response);
-    //       usersStore.activity(
-    //         "write",
-    //         `Изменение материала ${response.updatedId}`,
-    //       );
-    //     } else if ("createdId" in response) {
-    //       emitEvent("created", response);
-    //       usersStore.activity(
-    //         "write",
-    //         `Добавление материала ${response.createdId}`,
-    //       );
-    //     }
+      if ("updatedId" in response) {
+        message = "Материал обновлён";
+        emitEvent("updated", response);
+        usersStore.activity(
+          "write",
+          `Изменение ${props.materialType === "incoming" ? "входящего" : "исходящего"} материала ${response.updatedId}`,
+        );
+      } else if ("createdId" in response) {
+        emitEvent("created", response);
+        usersStore.activity(
+          "write",
+          `Добавление ${props.materialType === "incoming" ? "входящего" : "исходящего"} материала ${response.createdId}`,
+        );
+      }
 
-    //     toast("Успех", message, "success");
-    //     closeModal();
-    //   });
-    console.log(parsed.data);
-    toast("Успех", `Материал «${parsed.data.number}» создано`, "success");
-    closeModal();
+      toast("Успех", message, "success");
+      closeModal();
+    });
+    // console.log(parsed.data);
+    // toast("Успех", `Материал «${parsed.data.number}» создано`, "success");
+    // closeModal();
   } else {
     toast("Ошибка!", "Ошибка приведения к типу 'Material'", "error");
   }
@@ -594,26 +781,25 @@ watch(
     mode.value = props.disabled ? "read" : isNotEmpty ? "update" : "create";
 
     formHeader.value = props.disabled
-      ? `Просмотр материала «${props.material?.number}»`
+      ? `Просмотр ${props.materialType === "incoming" ? "входящего" : "исходящего"} материала «${props.material?.number}»`
       : isNotEmpty
-        ? `Редактирование материала «${props.material.number}»`
-        : "Новый материал";
+        ? `Редактирование ${props.materialType === "incoming" ? "входящего" : "исходящего"} материала «${props.material.number}»`
+        : `Новый ${props.materialType === "incoming" ? "входящий" : "исходящий"} материал`;
 
     // ? Если нужно будет запросить справочники
-    // const optionsToAsk = [
-    //   'users',
-    //   'templatecategory',
-    //   'orggroup',
-    //   'templateinitiator',
-    //   'templatestatus',
-    // ]
+    const optionsToAsk = [
+      "projects",
+      "document-types",
+      "departure-types",
+      "institutions",
+    ];
 
     // ? Если нужно будет запросить справочники
-    // await Promise.all(
-    //   optionsToAsk.map(async (option) => {
-    //     options.value[option] = (await useDropdownsOptionsStore().read(option)) || []
-    //   }),
-    // )
+    await Promise.all(
+      optionsToAsk.map(async (option) => {
+        options.value[option] = (await optionsStore.handbook(option)) || [];
+      }),
+    );
 
     if (props.material) {
       resetData(props.material);

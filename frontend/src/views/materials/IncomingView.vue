@@ -270,7 +270,7 @@ const dataGridColumnsMaterials = [
   {
     dataField: "actionDate",
     position: 1,
-    type: "datetime",
+    type: "date",
     caption: "Дата",
     visible: true,
     allowGrouping: false,
@@ -280,7 +280,7 @@ const dataGridColumnsMaterials = [
   {
     dataField: "control",
     position: 2,
-    type: "datetime",
+    type: "date",
     caption: "На контроле",
     visible: true,
     allowGrouping: false,
@@ -290,7 +290,7 @@ const dataGridColumnsMaterials = [
   {
     dataField: "fact",
     position: 3,
-    type: "datetime",
+    type: "date",
     caption: "Исполнен",
     visible: true,
     allowGrouping: false,

@@ -694,7 +694,7 @@ const localitiesIsLoading: Ref<boolean> = ref(false);
 async function showDialog() {
   if (!props.subjects && !optionsStore.subjects) {
     subjectsIsLoading.value = true;
-    subjectsOptions.value = (await optionsStore.read("subjects")) || [];
+    subjectsOptions.value = (await optionsStore.fias("subjects")) || [];
     subjectsIsLoading.value = false;
     optionsStore.subjects = subjectsOptions.value;
   } else if (
@@ -709,7 +709,7 @@ async function showDialog() {
   if (props.institution?.subject) {
     districtsIsLoading.value = true;
     districtsOptions.value =
-      (await optionsStore.read("districts", props.institution.subject)) || [];
+      (await optionsStore.fias("districts", props.institution.subject)) || [];
     districtsIsLoading.value = false;
   }
   if (props.institution?.district) {
@@ -752,7 +752,7 @@ async function getFIASObjects(
   if (type === "districts" && subjectId) {
     districtsIsLoading.value = true;
     districtsOptions.value =
-      (await optionsStore.read("districts", subjectId)) || [];
+      (await optionsStore.fias("districts", subjectId)) || [];
     districtsIsLoading.value = false;
     setFieldValue("district", null, false);
     setFieldValue("districtString", null, false);
@@ -761,7 +761,7 @@ async function getFIASObjects(
   if (type === "localities" && subjectId && districtId) {
     localitiesIsLoading.value = true;
     localitiesOptions.value =
-      (await optionsStore.read("localities", subjectId, districtId)) || [];
+      (await optionsStore.fias("localities", subjectId, districtId)) || [];
     localitiesIsLoading.value = false;
   }
 }

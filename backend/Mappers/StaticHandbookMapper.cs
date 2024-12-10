@@ -16,6 +16,7 @@ namespace backend.Mappers
             .ReverseMap();
             CreateMap<DocumentType, StaticHandbookDTO>().ReverseMap();
             CreateMap<Project, StaticHandbookDTO>().ReverseMap();
+            CreateMap<Institution, StaticHandbookDTO>().ReverseMap();
         }
     }
 }

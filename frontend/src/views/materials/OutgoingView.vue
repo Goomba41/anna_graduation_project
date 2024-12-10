@@ -274,7 +274,7 @@ const dataGridColumnsMaterials = [
   {
     dataField: "actionDate",
     position: 1,
-    type: "datetime",
+    type: "date",
     caption: "Дата",
     visible: true,
     allowGrouping: false,

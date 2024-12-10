@@ -509,7 +509,7 @@ let subjects: TFIASObjects | undefined;
 onMounted(async () => {
   institutions.value = (await institutionsStore.read()) || [];
 
-  subjects = await optionsStore.read("subjects");
+  subjects = await optionsStore.fias("subjects");
   optionsStore.subjects = subjects;
 
   usersStore.activity("write", "Просмотр списка учреждений");

@@ -59,11 +59,11 @@ export const ZMaterial = z.object({
     .max(1000, "Максимум 1000 символов")
     .nullable()
     .default(null),
-  departureTypeId: z.number().nullable(),
-  documentTypeId: z.number().nullable(),
-  projectId: z.number().nullable(),
-  institutionId: z.number().nullable(),
-  creatorId: z.number().nullable(),
+  departureTypeId: z.number().nullish(),
+  documentTypeId: z.number(),
+  projectId: z.number(),
+  institutionId: z.number(),
+  creatorId: z.number(),
 });
 
 export const ZMaterials = z.array(ZMaterial);
