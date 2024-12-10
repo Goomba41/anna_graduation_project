@@ -1,9 +1,18 @@
 import { z } from "zod";
+import { ZUser } from "./user.types";
+import { ZInstitution } from "./institution.types";
 
 export enum MaterialType {
   Incoming = 0,
   Outgoing = 1,
 }
+
+const ZStaticHandbook = z
+  .object({
+    id: z.number(),
+    name: z.string(),
+  })
+  .nullish();
 
 export const ZMaterial = z.object({
   id: z.number().nullish(),
@@ -21,10 +30,15 @@ export const ZMaterial = z.object({
     .nullable()
     .default(null),
   departureTypeId: z.number().nullable(),
+  departureType: ZStaticHandbook,
   documentTypeId: z.number().nullable(),
+  documentType: ZStaticHandbook,
   projectId: z.number().nullable(),
+  project: ZStaticHandbook,
   institutionId: z.number().nullable(),
+  institution: ZInstitution,
   creatorId: z.number().nullable(),
+  creator: ZUser,
 });
 
 export const ZMaterials = z.array(ZMaterial);

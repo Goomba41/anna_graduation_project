@@ -54,11 +54,7 @@
               :disabled="loadingStore.loadingState"
               @click="makeActionOnItem()"
             >
-              <PlusUserTwotone
-                height="1.25rem"
-                width="1.25rem"
-                stroke-width="2"
-              />
+              <FolderPlus height="1.25rem" width="1.25rem" stroke-width="2" />
             </Button>
 
             <div
@@ -232,13 +228,13 @@ import type { TMaterials, TMaterial } from "@/typings/material.types";
 
 import FilterReset from "@/components/icons/FilterReset.vue";
 import FilterTwotone from "@/components/icons/FilterTwotone.vue";
-import PlusUserTwotone from "@/components/icons/PlusUserTwotone.vue";
+import FolderPlus from "@/components/icons/FolderPlus.vue";
 import MagnifyingGlass from "@/components/icons/MagnifyingGlass.vue";
 
 import toast from "@/utils/toast";
 import useEmitter from "@/utils/emitter";
 
-import UserPopup from "@/components/forms/admin/UserForm.vue";
+// import UserPopup from "@/components/forms/admin/UserForm.vue";
 import FilterPopup from "@/components/FilterPopup.vue";
 
 const usersStore = useUsersStore();
@@ -263,48 +259,92 @@ const dataGridColumnsMaterials = [
     cellTemplate: "",
   },
   {
-    dataField: "fullName",
+    dataField: "number",
     position: 0,
     type: "string",
-    caption: "ФИО",
+    caption: "Номер",
     visible: true,
     allowGrouping: false,
     groupIndex: 0,
-    minWidth: 200,
+    minWidth: 100,
     sortOrder: "asc",
-    cellTemplate: "fio",
+    // cellTemplate: "fio",
   },
   {
-    dataField: "login",
+    dataField: "actionDate",
     position: 1,
-    type: "string",
-    caption: "Логин",
+    type: "datetime",
+    caption: "Дата",
     visible: true,
     allowGrouping: false,
     groupIndex: 0,
-    minWidth: 200,
+    minWidth: 100,
   },
   {
-    dataField: "phone",
+    dataField: "departureType.name",
     position: 4,
     type: "string",
-    caption: "Телефон",
+    caption: "Отправлен",
     visible: true,
     allowGrouping: false,
     groupIndex: 0,
-    minWidth: 200,
-    cellTemplate: "phone",
+    minWidth: 100,
+    // cellTemplate: "phone",
   },
   {
-    dataField: "email",
+    dataField: "documentType.name",
     position: 5,
     type: "string",
-    caption: "Email",
+    caption: "Тип",
     visible: true,
     allowGrouping: false,
     groupIndex: 0,
-    minWidth: 200,
-    cellTemplate: "email",
+    minWidth: 100,
+    // cellTemplate: "email",
+  },
+  {
+    dataField: "project.name",
+    position: 6,
+    type: "string",
+    caption: "Проект",
+    visible: true,
+    allowGrouping: false,
+    groupIndex: 0,
+    minWidth: 100,
+    // cellTemplate: "email",
+  },
+  {
+    dataField: "institution.name",
+    position: 7,
+    type: "string",
+    caption: "Учреждение",
+    visible: true,
+    allowGrouping: false,
+    groupIndex: 0,
+    minWidth: 100,
+    // cellTemplate: "email",
+  },
+  {
+    dataField: "creator.fullName",
+    position: 8,
+    type: "string",
+    caption: "Создал",
+    visible: true,
+    allowGrouping: false,
+    groupIndex: 0,
+    minWidth: 100,
+    // cellTemplate: "email",
+  },
+  {
+    dataField: "additionalInfo",
+    position: 9,
+    type: "string",
+    caption: "Информация",
+    visible: true,
+    allowGrouping: false,
+    groupIndex: 0,
+    minWidth: 100,
+    // cellTemplate: "email",
   },
 ];
 
@@ -413,7 +453,7 @@ function addMenuItems(e: DxDataGridTypes.ContextMenuPreparingEvent) {
         onItemClick: () => {
           emit("openDeletionConfirmation", [
             true,
-            `Вы действительно хотите удалить запись «${rowForAction?.login}»?`,
+            `Вы действительно хотите удалить запись «${rowForAction?.number}»?`,
           ]);
         },
         // TODO: отключен если админ и выбрал сам себя или последнего админа или не админ выбрал сам себя
@@ -450,7 +490,7 @@ function makeActionOnItem(id?: number | null) {
 
   promise
     .then(() => {
-      emit("openAdminUserForm");
+      emit("openMaterialForm");
     })
     .catch(() => {
       toast("Ошибка!", "Не удалось найти объект с данными в списке", "error");
@@ -508,7 +548,8 @@ function resetFilters() {
 }
 
 onMounted(async () => {
-  materials.value = (await materialsStore.read()) || [];
+  materials.value =
+    (await materialsStore.read(undefined, { materialType: 1 })) || [];
 
   usersStore.activity("write", "Просмотр списка исходящих");
 
