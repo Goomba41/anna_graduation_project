@@ -79,7 +79,7 @@ export const useMaterialsStore = defineStore({
 
           const result = successResult.extend({
             createdId: z.number(),
-            data: ZMaterial,
+            data: ZMaterialExtended,
           });
 
           const error = errorResult.safeParse(data);
@@ -122,7 +122,7 @@ export const useMaterialsStore = defineStore({
 
           const result = successResult.extend({
             updatedId: z.number(),
-            data: ZMaterial,
+            data: ZMaterialExtended,
           });
 
           const error = errorResult.safeParse(data);

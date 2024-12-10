@@ -97,6 +97,12 @@ namespace backend.Controllers
 
                 _context.Entry(material).State = EntityState.Modified;
 
+                _context.Entry(material).Reference(m => m.DepartureType).Load();
+                _context.Entry(material).Reference(m => m.DocumentType).Load();
+                _context.Entry(material).Reference(m => m.Project).Load();
+                _context.Entry(material).Reference(m => m.Creator).Load();
+                _context.Entry(material).Reference(m => m.Institution).Load();
+
                 try
                 {
                     await _context.SaveChangesAsync();
@@ -145,6 +151,12 @@ namespace backend.Controllers
 
             _context.Materials.Add(material);
             await _context.SaveChangesAsync();
+
+            _context.Entry(material).Reference(m => m.DepartureType).Load();
+            _context.Entry(material).Reference(m => m.DocumentType).Load();
+            _context.Entry(material).Reference(m => m.Project).Load();
+            _context.Entry(material).Reference(m => m.Creator).Load();
+            _context.Entry(material).Reference(m => m.Institution).Load();
 
             return new JsonResult(new
             {

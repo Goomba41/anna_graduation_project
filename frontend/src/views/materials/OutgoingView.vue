@@ -225,7 +225,11 @@ import { useUsersStore } from "@/stores/users.store";
 import { useLoadingStore } from "@/stores/loading.store";
 import { useMaterialsStore } from "@/stores/materials.store";
 
-import type { TMaterials, TMaterial } from "@/typings/material.types";
+import type {
+  TMaterials,
+  TMaterial,
+  TMaterialExtended,
+} from "@/typings/material.types";
 
 import FilterReset from "@/components/icons/FilterReset.vue";
 import FilterTwotone from "@/components/icons/FilterTwotone.vue";
@@ -498,13 +502,16 @@ function makeActionOnItem(id?: number | null) {
     });
 }
 
-function addMaterialToList(response: { createdId: number; form: TMaterial }) {
+function addMaterialToList(response: {
+  createdId: number;
+  form: TMaterialExtended;
+}) {
   materials.value.push(response.form);
 }
 
 function udpateMaterialInList(response: {
   updatedId: number;
-  form: TMaterial;
+  form: TMaterialExtended;
 }) {
   materials.value = materials.value.filter((m) => response.updatedId !== m.id);
   materials.value.push(response.form);

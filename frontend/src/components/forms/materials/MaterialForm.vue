@@ -620,7 +620,7 @@ import { useUsersStore } from "@/stores/users.store";
 import { useOptionsStore } from "@/stores/options.store";
 import { useMaterialsStore } from "@/stores/materials.store";
 
-import type { TMaterial } from "@/typings/material.types";
+import type { TMaterial, TMaterialExtended } from "@/typings/material.types";
 import { ZMaterial } from "@/typings/material.types";
 
 import FloppyDisk from "@/components/icons/FloppyDisk.vue";
@@ -712,8 +712,8 @@ const { value: Institution, meta: InstitutionMeta } =
   useField<number>("institutionId");
 
 const emitEvent = defineEmits<{
-  created: [response: { createdId: number; form: TMaterial }];
-  updated: [response: { updatedId: number; form: TMaterial }];
+  created: [response: { createdId: number; form: TMaterialExtended }];
+  updated: [response: { updatedId: number; form: TMaterialExtended }];
 }>();
 
 async function onSuccess(institution: TMaterial) {
@@ -721,8 +721,8 @@ async function onSuccess(institution: TMaterial) {
   if (parsed.success) {
     let query:
       | Promise<
-          | { createdId: number; form: TMaterial }
-          | { updatedId: number; form: TMaterial }
+          | { createdId: number; form: TMaterialExtended }
+          | { updatedId: number; form: TMaterialExtended }
         >
       | undefined;
     if (mode.value === "create") {
