@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import { DateTime as luxon } from "luxon";
+
+import Chart from "primevue/chart";
 
 import { useLoadingStore } from "@/stores/loading.store";
 import { useAuthStore } from "@/stores/auth.store";
@@ -51,10 +54,31 @@ const app_name: string | string[] =
   import.meta.env.MODE === "development"
     ? nameSystem()
     : "АИС «Документооборот»";
+
+const chartsData = ref([
+  {
+    labels: ["A", "B", "C", "D", "E", "F", "G"],
+    datasets: [
+      {
+        data: [540, 325, 702],
+      },
+    ],
+  },
+]);
+
+const chartOptions = ref({
+  plugins: {
+    legend: {
+      labels: {
+        cutout: "60%",
+      },
+    },
+  },
+});
 </script>
 
 <template>
-  <div class="greatings tw-flex tw-flex-col tw-w-full tw-mb-8 tw-text-center">
+  <div class="greatings tw-flex tw-flex-col tw-w-full tw-text-center tw-flex-1">
     <p
       class="tw-text-3xl tw-font-bold tw-mb-8 tw-text-gray-700 first-letter:tw-capitalize"
     >
@@ -80,8 +104,35 @@ const app_name: string | string[] =
       страницу системы.
     </p>
     <p class="tw-text-xl tw-mb-4 tw-font-semibold tw-text-gray-700">
-      Ознакомтесь с последними изменениями и показателями:
+      Ознакомьтесь с последними изменениями и показателями:
     </p>
+
+    <div class="charts tw-grid tw-grid-cols-6 tw-grid-rows-2">
+      <div class="tw-flex tw-flex-col tw-h-full">
+        <h4>Материалы по типам</h4>
+        <Chart type="doughnut" :data="chartsData[0]" :options="chartOptions" />
+      </div>
+      <div class="tw-flex tw-flex-col tw-h-full">
+        <h4>Материалы по пользователям</h4>
+        <Chart type="doughnut" :data="chartsData[0]" :options="chartOptions" />
+      </div>
+      <div class="tw-flex tw-flex-col tw-h-full">
+        <h4>Входящие по видам</h4>
+        <Chart type="doughnut" :data="chartsData[0]" :options="chartOptions" />
+      </div>
+      <div class="tw-flex tw-flex-col tw-h-full">
+        <h4>Входящие по продуктам</h4>
+        <Chart type="doughnut" :data="chartsData[0]" :options="chartOptions" />
+      </div>
+      <div class="tw-flex tw-flex-col tw-h-full">
+        <h4>Исходящие по видам</h4>
+        <Chart type="doughnut" :data="chartsData[0]" :options="chartOptions" />
+      </div>
+      <div class="tw-flex tw-flex-col tw-h-full">
+        <h4>Исходящие по продуктам</h4>
+        <Chart type="doughnut" :data="chartsData[0]" :options="chartOptions" />
+      </div>
+    </div>
   </div>
 
   <div
@@ -140,5 +191,11 @@ const app_name: string | string[] =
   .subsystem__enter {
     @apply tw-hidden;
   }
+}
+
+.charts :deep(.p-chart) > canvas {
+  width: 100%;
+  height: 100%;
+  flex: 1 1 0px;
 }
 </style>
