@@ -62,18 +62,63 @@ const app_name: string | string[] =
 
 const chartsData: Ref<TAnalytic> = ref({});
 
-const chartOptions = ref({
+const barChartsData = ref({
+  labels: ["January", "February", "March", "April", "May", "June", "July"],
+  datasets: [
+    {
+      type: "bar",
+      label: "Входящие",
+      data: [50, 25, 12, 48, 90, 76, 42],
+    },
+    {
+      type: "bar",
+      label: "Исходящие",
+      data: [21, 84, 24, 75, 37, 65, 34],
+    },
+  ],
+});
+
+const doghnutChartOptions = ref({
   plugins: {
     legend: {
+      display: false,
+      position: "left",
+      maxWidth: 75,
+      align: "start",
       labels: {
         cutout: "60%",
+        font: {
+          family: "Exo2",
+        },
       },
     },
   },
 });
 
+const barChartOptions = ref({
+  maintainAspectRatio: false,
+  aspectRatio: 0.8,
+  plugins: {
+    tooltips: {
+      mode: "index",
+      intersect: false,
+    },
+    legend: {
+      display: false,
+    },
+  },
+  scales: {
+    x: {
+      stacked: true,
+    },
+    y: {
+      stacked: true,
+    },
+  },
+});
+
 onMounted(async () => {
-  chartsData.value = (await analyticsStore.read()) || [];
+  chartsData.value = (await analyticsStore.read()) || {};
 });
 </script>
 
@@ -107,53 +152,71 @@ onMounted(async () => {
       Ознакомьтесь с последними изменениями и показателями:
     </p>
 
-    <div class="charts tw-grid tw-grid-cols-6 tw-grid-rows-2">
+    <div class="charts tw-grid tw-grid-cols-6 tw-grid-rows-2 tw-gap-4">
       <div class="tw-flex tw-flex-col tw-h-full">
-        <h4>Материалы по типам</h4>
+        <h4 class="tw-mb-4">Материалы по типам</h4>
         <Chart
           type="doughnut"
           :data="chartsData['materialsByType']"
-          :options="chartOptions"
+          :options="doghnutChartOptions"
         />
       </div>
       <div class="tw-flex tw-flex-col tw-h-full">
-        <h4>Материалы по пользователям</h4>
+        <h4 class="tw-mb-4">Материалы по пользователям</h4>
         <Chart
           type="doughnut"
           :data="chartsData['materialsByUser']"
-          :options="chartOptions"
+          :options="doghnutChartOptions"
         />
       </div>
       <div class="tw-flex tw-flex-col tw-h-full">
-        <h4>Входящие по видам</h4>
+        <h4 class="tw-mb-4">Входящие по видам</h4>
         <Chart
           type="doughnut"
           :data="chartsData['incomingByTypes']"
-          :options="chartOptions"
+          :options="doghnutChartOptions"
         />
       </div>
       <div class="tw-flex tw-flex-col tw-h-full">
-        <h4>Входящие по продуктам</h4>
+        <h4 class="tw-mb-4">Входящие по продуктам</h4>
         <Chart
           type="doughnut"
           :data="chartsData['incomingByProjects']"
-          :options="chartOptions"
+          :options="doghnutChartOptions"
         />
       </div>
       <div class="tw-flex tw-flex-col tw-h-full">
-        <h4>Исходящие по видам</h4>
+        <h4 class="tw-mb-4">Исходящие по видам</h4>
         <Chart
           type="doughnut"
           :data="chartsData['outgoingByTypes']"
-          :options="chartOptions"
+          :options="doghnutChartOptions"
         />
       </div>
       <div class="tw-flex tw-flex-col tw-h-full">
-        <h4>Исходящие по продуктам</h4>
+        <h4 class="tw-mb-4">Исходящие по продуктам</h4>
         <Chart
           type="doughnut"
           :data="chartsData['outgoingByProjects']"
-          :options="chartOptions"
+          :options="doghnutChartOptions"
+        />
+      </div>
+      <div class="tw-col-span-3 tw-flex tw-flex-col tw-h-full">
+        <h4 class="tw-mb-4">Материалы за месяц</h4>
+        <Chart
+          type="bar"
+          :data="chartsData['materialsByMonths']"
+          :options="barChartOptions"
+          class="tw-h-64"
+        />
+      </div>
+      <div class="tw-col-span-3 tw-flex tw-flex-col tw-h-full">
+        <h4 class="tw-mb-4">Еще один рандомный график</h4>
+        <Chart
+          type="bar"
+          :data="barChartsData"
+          :options="barChartOptions"
+          class="tw-h-64"
         />
       </div>
     </div>

@@ -1,10 +1,11 @@
 using System.Dynamic;
+using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 
 using AutoMapper;
 
 using backend.Models;
-using backend.DTOs;
+// using backend.DTOs;
 
 namespace backend.Controllers
 {
@@ -39,7 +40,7 @@ namespace backend.Controllers
 
                 dynamic analyticData = new ExpandoObject();
 
-                DoughnutData materialsByType = new();
+                ChartData materialsByType = new();
 
                 materialsByType.Labels = new List<string> { "Входящие", "Исходящие" };
                 materialsByType.Datasets.Add(new Dataset()
@@ -50,7 +51,7 @@ namespace backend.Controllers
                     }
                 });
 
-                DoughnutData materialsByUser = new();
+                ChartData materialsByUser = new();
 
                 materialsByUser.Labels = _context.Users
                   .OrderBy(u => u.LastName)
@@ -63,7 +64,7 @@ namespace backend.Controllers
                 List<string> DocumentTypes = _context.DocumentTypes.OrderBy(dt => dt.Name).Select(dt => dt.Name).ToList();
                 List<string> Projects = _context.Projects.OrderBy(dt => dt.Name).Select(dt => dt.Name).ToList();
 
-                DoughnutData incomingByTypes = new();
+                ChartData incomingByTypes = new();
 
                 incomingByTypes.Labels = DocumentTypes;
                 incomingByTypes.Datasets.Add(new Dataset()
@@ -74,7 +75,7 @@ namespace backend.Controllers
                       .ToList()
                 });
 
-                DoughnutData incomingByProjects = new();
+                ChartData incomingByProjects = new();
 
                 incomingByProjects.Labels = Projects;
                 incomingByProjects.Datasets.Add(new Dataset()
@@ -85,7 +86,7 @@ namespace backend.Controllers
                       .ToList()
                 });
 
-                DoughnutData outgoingByTypes = new();
+                ChartData outgoingByTypes = new();
 
                 outgoingByTypes.Labels = DocumentTypes;
                 outgoingByTypes.Datasets.Add(new Dataset()
@@ -96,7 +97,7 @@ namespace backend.Controllers
                       .ToList()
                 });
 
-                DoughnutData outgoingByProjects = new();
+                ChartData outgoingByProjects = new();
 
                 outgoingByProjects.Labels = Projects;
                 outgoingByProjects.Datasets.Add(new Dataset()
@@ -107,6 +108,53 @@ namespace backend.Controllers
                       .ToList()
                 });
 
+                ChartData materialsByMonths = new();
+
+                materialsByMonths.Datasets.Add(new Dataset()
+                {
+                    Type = "bar",
+                    Label = "Входящие",
+                    Data = new()
+                });
+
+                materialsByMonths.Datasets.Add(new Dataset()
+                {
+                    Type = "bar",
+                    Label = "Исходящие",
+                    Data = new()
+                });
+
+                DateTime nowMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+                int numberOfMonths = 7;
+
+                List<string> monthsLabels = new();
+
+                for (int i = numberOfMonths - 1; i >= 0; i--)
+                {
+                    int currentMonth = nowMonth.Month - i;
+                    int currentYear = nowMonth.Year;
+                    if (currentMonth <= 0)
+                    {
+                        currentYear -= 1;
+                        currentMonth = 12 + currentMonth;
+                    }
+
+                    DateTime startOfMonth = new DateTime(currentYear, currentMonth, 1);
+                    DateTime endOfMonth = new DateTime(currentYear, currentMonth, DateTime.DaysInMonth(currentYear, currentMonth));
+
+                    string fullMonthName = startOfMonth.ToString("MMMM", CultureInfo.CreateSpecificCulture("ru"));
+
+                    monthsLabels.Add($"{char.ToUpper(fullMonthName[0]) + fullMonthName.Substring(1)} • {currentYear.ToString()}");
+
+                    materialsByMonths.Datasets[0].Data.Add(
+                      _context.Materials.Count(m => m.ActionDate.ToLocalTime() <= endOfMonth.ToLocalTime() && m.ActionDate.ToLocalTime() >= startOfMonth.ToLocalTime() && m.MaterialType == 0)
+                    );
+                    materialsByMonths.Datasets[1].Data.Add(
+                    _context.Materials.Count(m => m.ActionDate.ToLocalTime() <= endOfMonth.ToLocalTime() && m.ActionDate.ToLocalTime() >= startOfMonth.ToLocalTime() && m.MaterialType == 1)
+                    );
+                }
+
+                materialsByMonths.Labels = monthsLabels;
 
                 responseObject.result = 0;
                 responseObject.data = new
@@ -116,7 +164,8 @@ namespace backend.Controllers
                     incomingByTypes,
                     incomingByProjects,
                     outgoingByTypes,
-                    outgoingByProjects
+                    outgoingByProjects,
+                    materialsByMonths
                 };
 
                 return Ok(responseObject);

@@ -27,8 +27,6 @@ export const useAnalyticsStore = defineStore({
           const error = errorResult.safeParse(responseData);
           const response = result.safeParse(responseData);
 
-          console.log(responseData, response, error);
-
           if (response.success === true) {
             const { data } = response.data;
 
