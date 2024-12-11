@@ -1,11 +1,15 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import type { Ref } from "vue";
 import { DateTime as luxon } from "luxon";
 
 import Chart from "primevue/chart";
 
 import { useLoadingStore } from "@/stores/loading.store";
 import { useAuthStore } from "@/stores/auth.store";
+import { useAnalyticsStore } from "@/stores/analytics.store";
+
+import type { TAnalytic } from "@/typings/analytics.types.ts";
 
 import fioParse from "@/utils/fio-formatter";
 import nameSystem from "@/utils/meme-naming";
@@ -14,6 +18,7 @@ import nameSystem from "@/utils/meme-naming";
 
 const loadingStore = useLoadingStore();
 const authStore = useAuthStore();
+const analyticsStore = useAnalyticsStore();
 
 function dayTimeString() {
   const currentHour: number = luxon.now().hour;
@@ -55,16 +60,7 @@ const app_name: string | string[] =
     ? nameSystem()
     : "АИС «Документооборот»";
 
-const chartsData = ref([
-  {
-    labels: ["A", "B", "C", "D", "E", "F", "G"],
-    datasets: [
-      {
-        data: [540, 325, 702],
-      },
-    ],
-  },
-]);
+const chartsData: Ref<TAnalytic> = ref({});
 
 const chartOptions = ref({
   plugins: {
@@ -74,6 +70,10 @@ const chartOptions = ref({
       },
     },
   },
+});
+
+onMounted(async () => {
+  chartsData.value = (await analyticsStore.read()) || [];
 });
 </script>
 
@@ -110,27 +110,51 @@ const chartOptions = ref({
     <div class="charts tw-grid tw-grid-cols-6 tw-grid-rows-2">
       <div class="tw-flex tw-flex-col tw-h-full">
         <h4>Материалы по типам</h4>
-        <Chart type="doughnut" :data="chartsData[0]" :options="chartOptions" />
+        <Chart
+          type="doughnut"
+          :data="chartsData['materialsByType']"
+          :options="chartOptions"
+        />
       </div>
       <div class="tw-flex tw-flex-col tw-h-full">
         <h4>Материалы по пользователям</h4>
-        <Chart type="doughnut" :data="chartsData[0]" :options="chartOptions" />
+        <Chart
+          type="doughnut"
+          :data="chartsData['materialsByUser']"
+          :options="chartOptions"
+        />
       </div>
       <div class="tw-flex tw-flex-col tw-h-full">
         <h4>Входящие по видам</h4>
-        <Chart type="doughnut" :data="chartsData[0]" :options="chartOptions" />
+        <Chart
+          type="doughnut"
+          :data="chartsData['incomingByTypes']"
+          :options="chartOptions"
+        />
       </div>
       <div class="tw-flex tw-flex-col tw-h-full">
         <h4>Входящие по продуктам</h4>
-        <Chart type="doughnut" :data="chartsData[0]" :options="chartOptions" />
+        <Chart
+          type="doughnut"
+          :data="chartsData['incomingByProjects']"
+          :options="chartOptions"
+        />
       </div>
       <div class="tw-flex tw-flex-col tw-h-full">
         <h4>Исходящие по видам</h4>
-        <Chart type="doughnut" :data="chartsData[0]" :options="chartOptions" />
+        <Chart
+          type="doughnut"
+          :data="chartsData['outgoingByTypes']"
+          :options="chartOptions"
+        />
       </div>
       <div class="tw-flex tw-flex-col tw-h-full">
         <h4>Исходящие по продуктам</h4>
-        <Chart type="doughnut" :data="chartsData[0]" :options="chartOptions" />
+        <Chart
+          type="doughnut"
+          :data="chartsData['outgoingByProjects']"
+          :options="chartOptions"
+        />
       </div>
     </div>
   </div>
