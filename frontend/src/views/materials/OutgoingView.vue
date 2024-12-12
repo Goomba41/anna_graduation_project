@@ -202,6 +202,7 @@
 
 <script lang="ts" setup>
 import { onMounted, ref, watch, type Ref } from "vue";
+import { useRoute } from "vue-router";
 
 import verb from "plural-ru";
 import { useDebounceFn, useFocus } from "@vueuse/core";
@@ -555,6 +556,8 @@ function resetFilters() {
   dataGridMaterials.value.instance.option("filterValue", []);
 }
 
+const route = useRoute();
+
 onMounted(async () => {
   materials.value =
     (await materialsStore.read(undefined, { materialType: 1 })) || [];
@@ -562,6 +565,15 @@ onMounted(async () => {
   usersStore.activity("write", "Просмотр списка исходящих");
 
   useFocus(searchInput, { initialValue: true });
+
+  if (route.query.id) {
+    const materialId = Number.parseInt(route.query.id.toString(), 10);
+
+    setTimeout(() => {
+      dataGridMaterials.value.instance.option("focusedRowKey", materialId);
+      dataGridMaterials.value.instance.navigateToRow(materialId);
+    }, 100);
+  }
 });
 </script>
 

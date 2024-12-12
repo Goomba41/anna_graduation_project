@@ -656,7 +656,6 @@ onMounted(async () => {
 const router = useRouter();
 
 function redirectToMaterial(material: TMaterial) {
-  console.log(material.id, material.materialType);
   if (material.materialType === 0) {
     router.push({ name: "incoming", query: { id: material.id } });
   } else {
