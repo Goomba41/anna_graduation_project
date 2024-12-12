@@ -172,11 +172,13 @@
     :header="`Материалы по учреждению «${rowForAction?.name}»`"
     :data-source="institutionMaterials"
     :table-columns="materialsGridColumns"
+    @row-double-clicked="redirectToMaterial($event as TMaterial)"
   />
 </template>
 
 <script lang="ts" setup>
 import { onMounted, ref, watch, type Ref } from "vue";
+import { useRouter } from "vue-router";
 
 import verb from "plural-ru";
 import { useDebounceFn, useFocus } from "@vueuse/core";
@@ -202,7 +204,7 @@ import { useUsersStore } from "@/stores/users.store";
 import { useOptionsStore } from "@/stores/options.store";
 
 import type { TInstitutions, TInstitution } from "@/typings/institution.types";
-import type { TMaterials, TMaterialsExtended } from "@/typings/material.types";
+import type { TMaterial, TMaterialsExtended } from "@/typings/material.types";
 import type { TFIASObjects } from "@/typings/fias-object.types";
 
 import FilterReset from "@/components/icons/FilterReset.vue";
@@ -308,11 +310,10 @@ const dataGridColumnsInstitutions = [
   },
 ];
 
-const materialsGridColumns = [
+const materialsGridColumns: DxDataGridTypes.Column[] = [
   {
     dataField: "id",
-    position: -1,
-    type: "number",
+    dataType: "number",
     caption: "Идентификатор",
     visible: true,
     allowGrouping: false,
@@ -321,8 +322,7 @@ const materialsGridColumns = [
   },
   {
     dataField: "number",
-    position: 0,
-    type: "string",
+    dataType: "string",
     caption: "Номер",
     visible: true,
     allowGrouping: false,
@@ -333,8 +333,7 @@ const materialsGridColumns = [
   },
   {
     dataField: "actionDate",
-    position: 1,
-    type: "date",
+    dataType: "date",
     caption: "Дата",
     visible: true,
     allowGrouping: false,
@@ -343,8 +342,7 @@ const materialsGridColumns = [
   },
   {
     dataField: "control",
-    position: 2,
-    type: "date",
+    dataType: "date",
     caption: "На контроле",
     visible: true,
     allowGrouping: false,
@@ -353,8 +351,7 @@ const materialsGridColumns = [
   },
   {
     dataField: "fact",
-    position: 3,
-    type: "date",
+    dataType: "date",
     caption: "Исполнен",
     visible: true,
     allowGrouping: false,
@@ -363,8 +360,7 @@ const materialsGridColumns = [
   },
   {
     dataField: "departureType.name",
-    position: 4,
-    type: "string",
+    dataType: "string",
     caption: "Отправлен",
     visible: true,
     allowGrouping: false,
@@ -374,8 +370,7 @@ const materialsGridColumns = [
   },
   {
     dataField: "documentType.name",
-    position: 5,
-    type: "string",
+    dataType: "string",
     caption: "Тип",
     visible: true,
     allowGrouping: false,
@@ -385,8 +380,7 @@ const materialsGridColumns = [
   },
   {
     dataField: "project.name",
-    position: 6,
-    type: "string",
+    dataType: "string",
     caption: "Проект",
     visible: true,
     allowGrouping: false,
@@ -396,8 +390,7 @@ const materialsGridColumns = [
   },
   {
     dataField: "creator.fullName",
-    position: 7,
-    type: "string",
+    dataType: "string",
     caption: "Создал",
     visible: true,
     allowGrouping: false,
@@ -407,8 +400,7 @@ const materialsGridColumns = [
   },
   {
     dataField: "additionalInfo",
-    position: 8,
-    type: "string",
+    dataType: "string",
     caption: "Информация",
     visible: true,
     allowGrouping: false,
@@ -418,8 +410,7 @@ const materialsGridColumns = [
   },
   {
     dataField: "materialTypeName",
-    position: 9,
-    type: "string",
+    dataType: "string",
     caption: "Тип материала",
     visible: true,
     allowGrouping: true,
@@ -661,6 +652,19 @@ onMounted(async () => {
 
   useFocus(searchInput, { initialValue: true });
 });
+
+const router = useRouter();
+
+function redirectToMaterial(material: TMaterial) {
+  console.log(material.id, material.materialType);
+  if (material.materialType === 0) {
+    router.push({ name: "incoming", query: { id: material.id } });
+  } else {
+    router.push({ name: "outgoing", query: { id: material.id } });
+  }
+}
 </script>
+
+<style lang="css" scoped></style>
 
 <style lang="css" scoped></style>

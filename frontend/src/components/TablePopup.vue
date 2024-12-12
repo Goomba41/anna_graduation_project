@@ -16,24 +16,24 @@
       :filter-sync-enabled="true"
       @content-ready="totalRowsCount()"
       @option-changed="filterEvent($event)"
+      @row-dbl-click="dblClickedRow($event)"
     >
       <DxColumn
         v-for="(column, index) in props.tableColumns"
         :key="index"
         fixed-position="left"
-        :fixed="column.position <= 0"
         :data-field="column.dataField"
         :caption="column.caption"
         :title="column.caption"
         :visible="column.visible"
         :allow-grouping="column.allowGrouping"
         :group-index="column.groupIndex || undefined"
-        :data-type="column.type"
+        :data-type="column.dataType"
         :min-width="column.minWidth"
         :width="column.width"
         :format="column.format"
-        :sort-order="column?.sortOrder"
-        :sort-index="column?.sortIndex"
+        :sort-order="column.sortOrder"
+        :sort-index="column.sortIndex"
       />
 
       <DxFilterRow :visible="true" />
@@ -69,7 +69,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, type Ref } from "vue";
+import { ref, watch } from "vue";
+import type { PropType, Ref } from "vue";
 
 import useEmitter from "@/utils/emitter";
 
@@ -100,18 +101,15 @@ const props = defineProps({
     required: true,
   },
   tableColumns: {
-    type: Array,
+    type: Array as PropType<DxDataGridTypes.Column[]>,
     required: true,
   },
 });
 
-// const emit =
-//   defineEmits<
-//     (
-//       e: "applyFilters",
-//       value: (string | Array<string>)[],
-//     ) => (string | Array<string>)[]
-//   >();
+const emit = defineEmits<{
+  rowDoubleClicked: [row: unknown];
+  // update: [value: string];
+}>();
 
 const { bus } = useEmitter();
 
@@ -141,6 +139,10 @@ function filterEvent(event: DxDataGridTypes.OptionChangedEvent) {
   if (event.name === "filterValue") {
     initialFilters.value = event.value;
   }
+}
+
+function dblClickedRow(event: DxDataGridTypes.RowDblClickEvent) {
+  emit("rowDoubleClicked", event.data);
 }
 </script>
 
