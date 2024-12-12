@@ -98,6 +98,9 @@ public partial class AnnaGraduationProjectContext : DbContext
             entity.Property(e => e.LocalityString)
                 .HasColumnType("character varying")
                 .HasColumnName("locality_string");
+            entity.Property(e => e.CreationDateTime)
+              .HasColumnType("timestamp with time zone")
+              .HasColumnName("creation_datetime");
         });
 
         modelBuilder.Entity<User>(entity =>

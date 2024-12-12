@@ -62,22 +62,6 @@ const app_name: string | string[] =
 
 const chartsData: Ref<TAnalytic> = ref({});
 
-const barChartsData = ref({
-  labels: ["January", "February", "March", "April", "May", "June", "July"],
-  datasets: [
-    {
-      type: "bar",
-      label: "Входящие",
-      data: [50, 25, 12, 48, 90, 76, 42],
-    },
-    {
-      type: "bar",
-      label: "Исходящие",
-      data: [21, 84, 24, 75, 37, 65, 34],
-    },
-  ],
-});
-
 const doghnutChartOptions = ref({
   plugins: {
     legend: {
@@ -211,10 +195,10 @@ onMounted(async () => {
         />
       </div>
       <div class="tw-col-span-3 tw-flex tw-flex-col tw-h-full">
-        <h4 class="tw-mb-4">Еще один рандомный график</h4>
+        <h4 class="tw-mb-4">Учреждения за месяц</h4>
         <Chart
           type="bar"
-          :data="barChartsData"
+          :data="chartsData['institutionsByMonths']"
           :options="barChartOptions"
           class="tw-h-64"
         />

@@ -124,6 +124,15 @@ namespace backend.Controllers
                     Data = new()
                 });
 
+                ChartData institutionsByMonths = new();
+
+                institutionsByMonths.Datasets.Add(new Dataset()
+                {
+                    Type = "bar",
+                    Label = "Учреждений",
+                    Data = new()
+                });
+
                 DateTime nowMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
                 int numberOfMonths = 7;
 
@@ -147,14 +156,19 @@ namespace backend.Controllers
                     monthsLabels.Add($"{char.ToUpper(fullMonthName[0]) + fullMonthName.Substring(1)} • {currentYear.ToString()}");
 
                     materialsByMonths.Datasets[0].Data.Add(
-                      _context.Materials.Count(m => m.ActionDate.ToLocalTime() <= endOfMonth.ToLocalTime() && m.ActionDate.ToLocalTime() >= startOfMonth.ToLocalTime() && m.MaterialType == 0)
+                      _context.Materials.Count(m => m.ActionDate.ToLocalTime() <= endOfMonth.ToLocalTime() && m.ActionDate.ToLocalTime() >= startOfMonth.ToLocalTime() && m.MaterialType == 0 && !m.Deleted)
                     );
                     materialsByMonths.Datasets[1].Data.Add(
-                    _context.Materials.Count(m => m.ActionDate.ToLocalTime() <= endOfMonth.ToLocalTime() && m.ActionDate.ToLocalTime() >= startOfMonth.ToLocalTime() && m.MaterialType == 1)
+                    _context.Materials.Count(m => m.ActionDate.ToLocalTime() <= endOfMonth.ToLocalTime() && m.ActionDate.ToLocalTime() >= startOfMonth.ToLocalTime() && m.MaterialType == 1 && !m.Deleted)
+                    );
+
+                    institutionsByMonths.Datasets[0].Data.Add(
+                      _context.Institutions.Count(m => m.CreationDateTime.ToLocalTime() <= endOfMonth.ToLocalTime() && m.CreationDateTime.ToLocalTime() >= startOfMonth.ToLocalTime() && !m.Deleted)
                     );
                 }
 
                 materialsByMonths.Labels = monthsLabels;
+                institutionsByMonths.Labels = monthsLabels;
 
                 responseObject.result = 0;
                 responseObject.data = new
@@ -165,7 +179,8 @@ namespace backend.Controllers
                     incomingByProjects,
                     outgoingByTypes,
                     outgoingByProjects,
-                    materialsByMonths
+                    materialsByMonths,
+                    institutionsByMonths
                 };
 
                 return Ok(responseObject);

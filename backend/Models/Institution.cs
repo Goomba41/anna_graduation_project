@@ -27,5 +27,7 @@ public partial class Institution
     /// </summary>
     public bool Deleted { get; set; }
 
+    public DateTime CreationDateTime { get; set; } = DateTime.Now;
+
     public virtual ICollection<Material> Materials { get; set; } = new List<Material>();
 }
