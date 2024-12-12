@@ -13,7 +13,7 @@ namespace backend.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
+    // [Authorize]
     public class InstitutionsController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -62,6 +62,53 @@ namespace backend.Controllers
                 responseObject.result = 0;
                 responseObject.rowsQueried = queryModel.Count();
                 responseObject.rowsTotal = _context.Institutions.Count();
+                responseObject.data = queryResult;
+
+                return Ok(responseObject);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(Utils.GetErrorMessageByException(ex));
+                return new JsonResult(new { result = -1, Error = Utils.GetErrorMessageByException(ex) });
+            }
+        }
+
+        [HttpGet]
+        [Route("{id}/Materials")]
+        public ActionResult GetInstitutionMaterials(int id)
+        {
+            try
+            {
+                if (!InstitutionExists(id))
+                {
+                    return NotFound();
+                }
+
+                dynamic responseObject = new ExpandoObject();
+
+                // queryModel = queryModel
+                //     .Where(t => !t.Deleted);
+
+                // Параметры из FromQuery
+                // if (node != null)
+                // {
+                //     queryModel = queryModel.Where(t => t.Node == node);
+                // }
+
+                // queryModel = queryModel
+                //     .OrderBy(t => t.Name);
+                // .ThenBy(t => t.FirstName)
+                // .ThenBy(t => t.Patronymic);
+
+                var queryResult = _context.Institutions
+                  .Include(i => i.Materials).First(i => i.Id == id)!.Materials
+                  .Where(m => !m.Deleted)
+                  .Select(material => _mapper.Map<MaterialResponseDTO>(material))
+                  .ToList();
+
+                responseObject.result = 0;
+                responseObject.rowsQueried = queryResult.Count();
+                responseObject.rowsTotal = queryResult.Count();
                 responseObject.data = queryResult;
 
                 return Ok(responseObject);

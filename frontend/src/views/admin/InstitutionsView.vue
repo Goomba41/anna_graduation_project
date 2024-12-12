@@ -196,6 +196,7 @@ import { useUsersStore } from "@/stores/users.store";
 import { useOptionsStore } from "@/stores/options.store";
 
 import type { TInstitutions, TInstitution } from "@/typings/institution.types";
+import type { TMaterials } from "@/typings/material.types";
 import type { TFIASObjects } from "@/typings/fias-object.types";
 
 import FilterReset from "@/components/icons/FilterReset.vue";
@@ -390,6 +391,13 @@ function addMenuItems(e: DxDataGridTypes.ContextMenuPreparingEvent) {
       onItemClick: () => void;
     })[] = [
       {
+        text: "Материалы",
+        // text: rowForAction.IsPublic ? "Просмотр" : "Редактировать",
+        onItemClick: () => {
+          openMaterialsList(rowForAction?.id!);
+        },
+      },
+      {
         text: "Редактировать",
         // text: rowForAction.IsPublic ? "Просмотр" : "Редактировать",
         onItemClick: () => {
@@ -447,6 +455,22 @@ function makeActionOnItem(id?: number | null) {
     .catch(() => {
       toast("Ошибка!", "Не удалось найти объект с данными в списке", "error");
     });
+}
+
+const institutionMaterials: Ref<TMaterials> = ref([]);
+
+async function openMaterialsList(id: number) {
+  institutionMaterials.value =
+    (await institutionsStore.readMaterials(id)) || [];
+
+  console.log(institutionMaterials.value);
+  // promise
+  //   .then(() => {
+  //     emit("openAdminInstitutionMaterials");
+  //   })
+  //   .catch(() => {
+  //     toast("Ошибка!", "Не удалось найти объект с данными в списке", "error");
+  //   });
 }
 
 function addInstitutionToList(response: {

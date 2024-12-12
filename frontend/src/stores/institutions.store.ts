@@ -8,6 +8,7 @@ import queryString from "@/utils/query-string-transformer";
 
 import type { TInstitution, TInstitutions } from "@/typings/institution.types";
 import { ZInstitution, ZInstitutions } from "@/typings/institution.types";
+import { ZMaterials } from "@/typings/material.types";
 import { errorResult, successResult } from "@/typings/http.types";
 
 import callParseErrorToast from "@/utils/type-parse-error";
@@ -102,7 +103,39 @@ export const useInstitutionsStore = defineStore({
      * @param {string} [id] - ID строки для получения данных по ней
      */
     read,
+    async readMaterials(id: number, query?: { [key: string]: unknown }) {
+      return await axios
+        .get(
+          `/api/institutions/${id}/materials${query ? queryString(query) : ""}`,
+        )
+        .then((responseAXIOS) => {
+          const { data: responseData } = responseAXIOS;
 
+          const result = successResult.extend({
+            data: ZMaterials,
+          });
+
+          const error = errorResult.safeParse(responseData);
+          const response = result.safeParse(responseData);
+
+          if (response.success === true) {
+            const { data } = response.data;
+
+            return Promise.resolve(data);
+          }
+          if (error.success === true) {
+            const { data } = error;
+            toast("Ошибка", data.errorMsg || data.error, "error");
+          }
+
+          callParseErrorToast(response.error);
+          callParseErrorToast(error.error);
+        })
+        .catch((error) => {
+          callParseErrorToast(error);
+          return Promise.reject(error);
+        });
+    },
     /**
      * Обновление объекта
      **/
