@@ -100,9 +100,13 @@ namespace backend.Controllers
                 // .ThenBy(t => t.FirstName)
                 // .ThenBy(t => t.Patronymic);
 
-                var queryResult = _context.Institutions
-                  .Include(i => i.Materials).First(i => i.Id == id)!.Materials
-                  .Where(m => !m.Deleted)
+                var queryResult = _context.Materials
+                  .Include(m => m.DepartureType)
+                  .Include(m => m.DocumentType)
+                  .Include(m => m.Project)
+                  .Include(m => m.Creator)
+                  .Include(m => m.Institution)
+                  .Where(i => i.InstitutionId == id && i.Institution != null && i.Institution.Id == id && !i.Deleted)
                   .Select(material => _mapper.Map<MaterialResponseDTO>(material))
                   .ToList();
 

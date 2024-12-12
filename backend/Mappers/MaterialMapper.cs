@@ -10,6 +10,10 @@ namespace backend.Mappers
         public MaterialMapper()
         {
             CreateMap<Material, MaterialResponseDTO>()
+            .ForMember(
+                dest => dest.MaterialTypeName,
+                opt => opt.MapFrom(src => src.MaterialType == 0 ? "Входящие" : "Исходящие")
+            )
             // .ForMember(
             //     dest => dest.ActionDate,
             //     opt => opt.MapFrom(src => string.Concat(src.ActionDate.ToString("o", CultureInfo.InvariantCulture), "Z"))

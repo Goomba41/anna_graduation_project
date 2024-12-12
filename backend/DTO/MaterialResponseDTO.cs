@@ -8,6 +8,7 @@ namespace backend.DTOs
         public DateTime ActionDate { get; set; } = DateTime.Now;
         public string Number { get; set; } = "";
         public MaterialType MaterialType { get; set; } = MaterialType.Incoming;
+        public string MaterialTypeName { get; set; } = "";
         public string? AdditionalInfo { get; set; } = null!;
         public DateTime? Control { get; set; } = null!;
         public DateTime? Fact { get; set; } = null!;

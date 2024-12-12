@@ -167,6 +167,12 @@
     @created="addInstitutionToList"
     @updated="updateInstitutionInList"
   />
+
+  <TablePopup
+    :header="`Материалы по учреждению «${rowForAction?.name}»`"
+    :data-source="institutionMaterials"
+    :table-columns="materialsGridColumns"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -196,7 +202,7 @@ import { useUsersStore } from "@/stores/users.store";
 import { useOptionsStore } from "@/stores/options.store";
 
 import type { TInstitutions, TInstitution } from "@/typings/institution.types";
-import type { TMaterials } from "@/typings/material.types";
+import type { TMaterials, TMaterialsExtended } from "@/typings/material.types";
 import type { TFIASObjects } from "@/typings/fias-object.types";
 
 import FilterReset from "@/components/icons/FilterReset.vue";
@@ -207,6 +213,7 @@ import MagnifyingGlass from "@/components/icons/MagnifyingGlass.vue";
 import toast from "@/utils/toast";
 import useEmitter from "@/utils/emitter";
 
+import TablePopup from "@/components/TablePopup.vue";
 import FilterPopup from "@/components/FilterPopup.vue";
 import InstitutionPopup from "@/components/forms/admin/InstitutionForm.vue";
 
@@ -298,6 +305,127 @@ const dataGridColumnsInstitutions = [
     minWidth: 200,
     sortIndex: 4,
     sortOrder: "asc",
+  },
+];
+
+const materialsGridColumns = [
+  {
+    dataField: "id",
+    position: -1,
+    type: "number",
+    caption: "Идентификатор",
+    visible: true,
+    allowGrouping: false,
+    groupIndex: 0,
+    width: 50,
+  },
+  {
+    dataField: "number",
+    position: 0,
+    type: "string",
+    caption: "Номер",
+    visible: true,
+    allowGrouping: false,
+    groupIndex: 0,
+    minWidth: 100,
+    sortOrder: "asc",
+    // cellTemplate: "fio",
+  },
+  {
+    dataField: "actionDate",
+    position: 1,
+    type: "date",
+    caption: "Дата",
+    visible: true,
+    allowGrouping: false,
+    groupIndex: 0,
+    minWidth: 100,
+  },
+  {
+    dataField: "control",
+    position: 2,
+    type: "date",
+    caption: "На контроле",
+    visible: true,
+    allowGrouping: false,
+    groupIndex: 0,
+    minWidth: 100,
+  },
+  {
+    dataField: "fact",
+    position: 3,
+    type: "date",
+    caption: "Исполнен",
+    visible: true,
+    allowGrouping: false,
+    groupIndex: 0,
+    minWidth: 100,
+  },
+  {
+    dataField: "departureType.name",
+    position: 4,
+    type: "string",
+    caption: "Отправлен",
+    visible: true,
+    allowGrouping: false,
+    groupIndex: 0,
+    minWidth: 100,
+    // cellTemplate: "phone",
+  },
+  {
+    dataField: "documentType.name",
+    position: 5,
+    type: "string",
+    caption: "Тип",
+    visible: true,
+    allowGrouping: false,
+    groupIndex: 0,
+    minWidth: 100,
+    // cellTemplate: "email",
+  },
+  {
+    dataField: "project.name",
+    position: 6,
+    type: "string",
+    caption: "Проект",
+    visible: true,
+    allowGrouping: false,
+    groupIndex: 0,
+    minWidth: 100,
+    // cellTemplate: "email",
+  },
+  {
+    dataField: "creator.fullName",
+    position: 7,
+    type: "string",
+    caption: "Создал",
+    visible: true,
+    allowGrouping: false,
+    groupIndex: 0,
+    minWidth: 100,
+    // cellTemplate: "email",
+  },
+  {
+    dataField: "additionalInfo",
+    position: 8,
+    type: "string",
+    caption: "Информация",
+    visible: true,
+    allowGrouping: false,
+    groupIndex: 0,
+    minWidth: 100,
+    // cellTemplate: "email",
+  },
+  {
+    dataField: "materialTypeName",
+    position: 9,
+    type: "string",
+    caption: "Тип материала",
+    visible: true,
+    allowGrouping: true,
+    groupIndex: 1,
+    minWidth: 100,
+    // cellTemplate: "email",
   },
 ];
 
@@ -394,7 +522,7 @@ function addMenuItems(e: DxDataGridTypes.ContextMenuPreparingEvent) {
         text: "Материалы",
         // text: rowForAction.IsPublic ? "Просмотр" : "Редактировать",
         onItemClick: () => {
-          openMaterialsList(rowForAction?.id!);
+          if (rowForAction?.id) openMaterialsList(rowForAction?.id);
         },
       },
       {
@@ -457,20 +585,13 @@ function makeActionOnItem(id?: number | null) {
     });
 }
 
-const institutionMaterials: Ref<TMaterials> = ref([]);
+const institutionMaterials: Ref<TMaterialsExtended> = ref([]);
 
 async function openMaterialsList(id: number) {
   institutionMaterials.value =
     (await institutionsStore.readMaterials(id)) || [];
 
-  console.log(institutionMaterials.value);
-  // promise
-  //   .then(() => {
-  //     emit("openAdminInstitutionMaterials");
-  //   })
-  //   .catch(() => {
-  //     toast("Ошибка!", "Не удалось найти объект с данными в списке", "error");
-  //   });
+  emit("openTablePopup");
 }
 
 function addInstitutionToList(response: {

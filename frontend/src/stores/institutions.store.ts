@@ -8,7 +8,7 @@ import queryString from "@/utils/query-string-transformer";
 
 import type { TInstitution, TInstitutions } from "@/typings/institution.types";
 import { ZInstitution, ZInstitutions } from "@/typings/institution.types";
-import { ZMaterials } from "@/typings/material.types";
+import { ZMaterialsExtended } from "@/typings/material.types";
 import { errorResult, successResult } from "@/typings/http.types";
 
 import callParseErrorToast from "@/utils/type-parse-error";
@@ -112,7 +112,7 @@ export const useInstitutionsStore = defineStore({
           const { data: responseData } = responseAXIOS;
 
           const result = successResult.extend({
-            data: ZMaterials,
+            data: ZMaterialsExtended,
           });
 
           const error = errorResult.safeParse(responseData);
