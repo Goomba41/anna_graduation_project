@@ -19,7 +19,7 @@ const ZStaticHandbook = z
 export const ZMaterial = z.object({
   id: z.number().nullish(),
   materialType: z.nativeEnum(MaterialType),
-  materialTypeName: z.string(),
+  materialTypeName: z.string().optional(),
   actionDate: z.union([
     z
       .string({ message: "Обязательное поле" })
