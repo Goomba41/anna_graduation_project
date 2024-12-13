@@ -13,7 +13,7 @@ namespace backend.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
+    // [Authorize]
     public class MaterialsController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -192,7 +192,33 @@ namespace backend.Controllers
 
         private bool MaterialExists(int id)
         {
-            return _context.Materials.Any(e => e.Id == id);
+            return _context.Materials.Any(e => e.Id == id && !e.Deleted);
+        }
+
+        [HttpGet("{id}/Files")]
+        public ActionResult GetMaterialsFiles(int id)
+        {
+            try
+            {
+                if (!MaterialExists(id))
+                {
+                    return NotFound();
+                }
+
+                var queryResult = _context.Materials
+                  .Include(m => m.Files)
+                  .FirstOrDefault(m => m.Id == id)?.Files
+                  .Select(file => _mapper.Map<FileNonBinaryResponseDTO>(file))
+                  .ToList();
+
+                return Ok(queryResult);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(Utils.GetErrorMessageByException(ex));
+                return new JsonResult(new { result = -1, Error = Utils.GetErrorMessageByException(ex) });
+            }
+
         }
     }
 }

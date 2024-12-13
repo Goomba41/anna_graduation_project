@@ -33,6 +33,8 @@ public partial class AnnaGraduationProjectContext : DbContext
 
     public virtual DbSet<Project> Projects { get; set; }
 
+    public virtual DbSet<File> Files { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseNpgsql(_configuration.GetSection("DatabaseConnectionString").Value);
 
@@ -252,6 +254,14 @@ public partial class AnnaGraduationProjectContext : DbContext
             entity.HasOne(d => d.Creator).WithMany(p => p.Materials)
                 .HasForeignKey(d => d.CreatorId)
                 .HasConstraintName("users_fk");
+        });
+
+        modelBuilder.Entity<File>(entity =>
+        {
+            entity.Property(e => e.Atime)
+                .HasColumnType("timestamp with time zone");
+            entity.Property(e => e.Mtime)
+                .HasColumnType("timestamp with time zone");
         });
 
         OnModelCreatingPartial(modelBuilder);

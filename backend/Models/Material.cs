@@ -46,4 +46,6 @@ public partial class Material
     /// Удален (не выводить)
     /// </summary>
     public bool Deleted { get; set; }
+
+    public virtual ICollection<File> Files { get; set; } = new List<File>();
 }
