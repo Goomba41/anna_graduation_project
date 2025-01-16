@@ -8,9 +8,11 @@ public class File
 
     public string? Mime { get; set; }
 
-    public DateTime Atime { get; set; } = DateTime.Now;
+    public DateTime? Atime { get; set; }
 
-    public DateTime Mtime { get; set; } = DateTime.Now;
+    public DateTime? Mtime { get; set; }
+
+    public DateTime Ctime { get; set; } = DateTime.Now;
 
     public required byte[] Binary { get; set; }
 

@@ -198,6 +198,12 @@
     @created="addMaterialToList"
     @updated="udpateMaterialInList"
   />
+
+  <TablePopup
+    :header="`Вложения для материала «${rowForAction?.number}»`"
+    :data-source="materialsFiles"
+    :table-columns="[]"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -222,10 +228,12 @@ import type { DxFilterBuilderTypes } from "devextreme-vue/filter-builder";
 import type { DxDataGridTypes } from "devextreme-vue/data-grid";
 import type { DxContextMenuTypes } from "devextreme-vue/context-menu";
 
+import { useFilesStore } from "@/stores/files.store";
 import { useUsersStore } from "@/stores/users.store";
 import { useLoadingStore } from "@/stores/loading.store";
 import { useMaterialsStore } from "@/stores/materials.store";
 
+import type { TFiles } from "@/typings/files.types";
 import type {
   TMaterials,
   TMaterial,
@@ -243,6 +251,7 @@ import useEmitter from "@/utils/emitter";
 import MaterialForm from "@/components/forms/materials/MaterialForm.vue";
 import FilterPopup from "@/components/FilterPopup.vue";
 
+const filesStore = useFilesStore();
 const usersStore = useUsersStore();
 const loadingStore = useLoadingStore();
 const materialsStore = useMaterialsStore();
@@ -444,6 +453,13 @@ function addMenuItems(e: DxDataGridTypes.ContextMenuPreparingEvent) {
       onItemClick: () => void;
     })[] = [
       {
+        text: "Вложения",
+        // text: rowForAction.IsPublic ? "Просмотр" : "Редактировать",
+        onItemClick: () => {
+          if (rowForAction?.id) openFilesList(rowForAction?.id);
+        },
+      },
+      {
         text: "Редактировать",
         // text: rowForAction.IsPublic ? "Просмотр" : "Редактировать",
         onItemClick: () => {
@@ -469,6 +485,13 @@ function addMenuItems(e: DxDataGridTypes.ContextMenuPreparingEvent) {
     // Добавим пункты в меню
     e.items.push(...contextItems);
   }
+}
+
+const materialsFiles: Ref<TFiles> = ref([]);
+
+async function openFilesList(id: number) {
+  materialsFiles.value = (await filesStore.readList(id)) || [];
+  emit("openTablePopup");
 }
 
 function makeActionOnItem(id?: number | null) {

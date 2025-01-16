@@ -15052,7 +15052,7 @@
 }
 .dx-datagrid-nodata {
   position: absolute;
-  top: 50%;
+  top: calc(50% - 1rem);
   left: 50%;
   width: 100%;
   text-align: center;

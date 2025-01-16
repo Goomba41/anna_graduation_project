@@ -194,6 +194,44 @@
     @created="addMaterialToList"
     @updated="udpateMaterialInList"
   />
+
+  <TablePopup
+    :header="`Вложения для материала «${rowForAction?.number}»`"
+    :data-source="materialsFiles"
+    :table-columns="[
+      {
+        dataField: 'id',
+        dataType: 'number',
+        caption: 'Идентификатор',
+        visible: true,
+        allowGrouping: false,
+        sortOrder: 'asc',
+        sortIndex: 1,
+        width: 100,
+      },
+      {
+        dataField: 'name',
+        dataType: 'string',
+        caption: 'Имя',
+        visible: true,
+        allowGrouping: false,
+        sortOrder: 'asc',
+        sortIndex: 2,
+        minWidth: 200,
+        width: 1000,
+      },
+      {
+        dataField: 'mime',
+        dataType: 'string',
+        caption: 'Тип файла',
+        visible: true,
+        allowGrouping: true,
+        sortOrder: 'asc',
+        sortIndex: 3,
+        minWidth: 150,
+      },
+    ]"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -218,6 +256,7 @@ import type { DxFilterBuilderTypes } from "devextreme-vue/filter-builder";
 import type { DxDataGridTypes } from "devextreme-vue/data-grid";
 import type { DxContextMenuTypes } from "devextreme-vue/context-menu";
 
+import { useFilesStore } from "@/stores/files.store";
 import { useUsersStore } from "@/stores/users.store";
 import { useLoadingStore } from "@/stores/loading.store";
 import { useMaterialsStore } from "@/stores/materials.store";
@@ -228,6 +267,8 @@ import type {
   TMaterialExtended,
 } from "@/typings/material.types";
 
+import type { TFiles } from "@/typings/files.types";
+
 import FilterReset from "@/components/icons/FilterReset.vue";
 import FilterTwotone from "@/components/icons/FilterTwotone.vue";
 import FolderPlus from "@/components/icons/FolderPlus.vue";
@@ -236,9 +277,11 @@ import MagnifyingGlass from "@/components/icons/MagnifyingGlass.vue";
 import toast from "@/utils/toast";
 import useEmitter from "@/utils/emitter";
 
-import MaterialForm from "@/components/forms/materials/MaterialForm.vue";
+import TablePopup from "@/components/TablePopup.vue";
 import FilterPopup from "@/components/FilterPopup.vue";
+import MaterialForm from "@/components/forms/materials/MaterialForm.vue";
 
+const filesStore = useFilesStore();
 const usersStore = useUsersStore();
 const loadingStore = useLoadingStore();
 const materialsStore = useMaterialsStore();
@@ -460,6 +503,13 @@ function addMenuItems(e: DxDataGridTypes.ContextMenuPreparingEvent) {
       onItemClick: () => void;
     })[] = [
       {
+        text: "Вложения",
+        // text: rowForAction.IsPublic ? "Просмотр" : "Редактировать",
+        onItemClick: () => {
+          if (rowForAction?.id) openFilesList(rowForAction?.id);
+        },
+      },
+      {
         text: "Редактировать",
         // text: rowForAction.IsPublic ? "Просмотр" : "Редактировать",
         onItemClick: () => {
@@ -517,6 +567,13 @@ function makeActionOnItem(id?: number | null) {
     .catch(() => {
       toast("Ошибка!", "Не удалось найти объект с данными в списке", "error");
     });
+}
+
+const materialsFiles: Ref<TFiles> = ref([]);
+
+async function openFilesList(id: number) {
+  materialsFiles.value = (await filesStore.readList(id)) || [];
+  emit("openTablePopup");
 }
 
 function addMaterialToList(response: {

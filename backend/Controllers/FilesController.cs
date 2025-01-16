@@ -32,17 +32,25 @@ namespace backend.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{id}")]
-        public ActionResult GetFile(int id)
+        [HttpGet("Materials/{material}")]
+        public ActionResult GetFilesListByMaterial(int material)
         {
             try
             {
-                var queryResult = _context.Files
-                  .Where(file => file.Id == id)
-                  .Select(file => _mapper.Map<FileBinaryResponseDTO>(file))
-                  .FirstOrDefault();
+                dynamic responseObject = new ExpandoObject();
 
-                return Ok(queryResult);
+                List<FileNonBinaryResponseDTO> queryResult = _context.Files
+                  .Where(file => file.MaterialId == material && !file.Deleted)
+                  // .Include(file => file.Material)
+                  .Select(file => _mapper.Map<FileNonBinaryResponseDTO>(file))
+                  .ToList();
+
+                responseObject.result = 0;
+                responseObject.rowsQueried = queryResult.Count();
+                responseObject.rowsTotal = _context.Files.Count();
+                responseObject.data = queryResult;
+
+                return Ok(responseObject);
             }
             catch (Exception ex)
             {
@@ -52,62 +60,62 @@ namespace backend.Controllers
 
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Material>> PostMaterial(Material material)
-        {
-            var existedLogin = _context.Materials
-                .FirstOrDefault(u => u.Id.Equals(material.Id) && !u.Deleted);
+        // [HttpPost]
+        // public async Task<ActionResult<Material>> PostMaterial(Material material)
+        // {
+        //     var existedLogin = _context.Materials
+        //         .FirstOrDefault(u => u.Id.Equals(material.Id) && !u.Deleted);
 
-            if (existedLogin != null)
-            {
-                _logger.LogError($"Попытка создать материал с существующим идентификатором («{material.Id}»)");
-                return new JsonResult(new { result = -1, Error = $"Материал с идентификатором «{material.Id}» существует" });
-            }
+        //     if (existedLogin != null)
+        //     {
+        //         _logger.LogError($"Попытка создать материал с существующим идентификатором («{material.Id}»)");
+        //         return new JsonResult(new { result = -1, Error = $"Материал с идентификатором «{material.Id}» существует" });
+        //     }
 
-            _context.Materials.Add(material);
-            await _context.SaveChangesAsync();
+        //     _context.Materials.Add(material);
+        //     await _context.SaveChangesAsync();
 
-            _context.Entry(material).Reference(m => m.DepartureType).Load();
-            _context.Entry(material).Reference(m => m.DocumentType).Load();
-            _context.Entry(material).Reference(m => m.Project).Load();
-            _context.Entry(material).Reference(m => m.Creator).Load();
-            _context.Entry(material).Reference(m => m.Institution).Load();
+        //     _context.Entry(material).Reference(m => m.DepartureType).Load();
+        //     _context.Entry(material).Reference(m => m.DocumentType).Load();
+        //     _context.Entry(material).Reference(m => m.Project).Load();
+        //     _context.Entry(material).Reference(m => m.Creator).Load();
+        //     _context.Entry(material).Reference(m => m.Institution).Load();
 
-            return new JsonResult(new
-            {
-                result = 0,
-                createdId = material.Id,
-                data = _mapper.Map<MaterialResponseDTO>(material)
-            });
-        }
+        //     return new JsonResult(new
+        //     {
+        //         result = 0,
+        //         createdId = material.Id,
+        //         data = _mapper.Map<MaterialResponseDTO>(material)
+        //     });
+        // }
 
-        [HttpDelete("{id}")]
-        public IActionResult DeleteMaterial(int id)
-        {
-            try
-            {
-                var material = _context.Materials.Find(id);
-                if (material == null)
-                {
-                    return NotFound();
-                }
+        // [HttpDelete("{id}")]
+        // public IActionResult DeleteMaterial(int id)
+        // {
+        //     try
+        //     {
+        //         var material = _context.Materials.Find(id);
+        //         if (material == null)
+        //         {
+        //             return NotFound();
+        //         }
 
-                material.Deleted = true;
-                // _context.Materials.Remove(user);
-                _context.SaveChanges();
+        //         material.Deleted = true;
+        //         // _context.Materials.Remove(user);
+        //         _context.SaveChanges();
 
-                return new JsonResult(new { result = 0, deletedId = material.Id });
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(Utils.GetErrorMessageByException(ex));
-                return new JsonResult(new { result = -1, Error = Utils.GetErrorMessageByException(ex) });
-            }
-        }
+        //         return new JsonResult(new { result = 0, deletedId = material.Id });
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         _logger.LogError(Utils.GetErrorMessageByException(ex));
+        //         return new JsonResult(new { result = -1, Error = Utils.GetErrorMessageByException(ex) });
+        //     }
+        // }
 
-        private bool MaterialExists(int id)
-        {
-            return _context.Materials.Any(e => e.Id == id);
-        }
+        // private bool MaterialExists(int id)
+        // {
+        //     return _context.Materials.Any(e => e.Id == id);
+        // }
     }
 }

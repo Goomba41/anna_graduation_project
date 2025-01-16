@@ -12,7 +12,6 @@ import type {
   TMaterialsExtended,
 } from "@/typings/material.types";
 import {
-  ZMaterial,
   ZMaterialExtended,
   ZMaterialsExtended,
 } from "@/typings/material.types";

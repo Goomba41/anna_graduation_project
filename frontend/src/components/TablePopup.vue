@@ -2,63 +2,121 @@
   <Dialog
     v-model:visible="visible"
     :header="props.header"
-    :style="{ width: '80vw', height: '80vh' }"
+    :style="
+      props.dataSource?.length
+        ? { width: '80vw', height: '80vh' }
+        : { width: '32vw', height: '34vh' }
+    "
     :modal="true"
   >
-    <DxDataGrid
-      ref="dataGrid"
-      column-resizing-mode="widget"
-      key-expr="id"
-      width="100%"
-      :data-source="props.dataSource"
-      :allow-column-resizing="true"
-      :focused-row-enabled="true"
-      :filter-sync-enabled="true"
-      @content-ready="totalRowsCount()"
-      @option-changed="filterEvent($event)"
-      @row-dbl-click="dblClickedRow($event)"
-    >
-      <DxColumn
-        v-for="(column, index) in props.tableColumns"
-        :key="index"
-        fixed-position="left"
-        :data-field="column.dataField"
-        :caption="column.caption"
-        :title="column.caption"
-        :visible="column.visible"
-        :allow-grouping="column.allowGrouping"
-        :group-index="column.groupIndex || undefined"
-        :data-type="column.dataType"
-        :min-width="column.minWidth"
-        :width="column.width"
-        :format="column.format"
-        :sort-order="column.sortOrder"
-        :sort-index="column.sortIndex"
-      />
+    <div ref="dropZoneRef" class="drop-zone">
+      <div v-if="isOverDropZone" class="drop-zone_hint">
+        Бросьте файлы в эту зону для загрузки
+      </div>
+      <DxDataGrid
+        v-else
+        ref="dataGrid"
+        column-resizing-mode="widget"
+        key-expr="id"
+        width="100%"
+        :data-source="props.dataSource"
+        :allow-column-resizing="true"
+        :focused-row-enabled="true"
+        :filter-sync-enabled="true"
+        @content-ready="totalRowsCount()"
+        @option-changed="filterEvent($event)"
+        @row-dbl-click="dblClickedRow($event)"
+      >
+        <DxColumn
+          v-for="(column, index) in props.tableColumns"
+          :key="index"
+          fixed-position="left"
+          :data-field="column.dataField"
+          :caption="column.caption"
+          :title="column.caption"
+          :visible="column.visible"
+          :allow-grouping="column.allowGrouping"
+          :group-index="column.groupIndex || undefined"
+          :data-type="column.dataType"
+          :min-width="column.minWidth"
+          :width="column.width"
+          :format="column.format"
+          :sort-order="column.sortOrder"
+          :sort-index="column.sortIndex"
+        />
 
-      <DxFilterRow :visible="true" />
-      <DxEditing :confirm-delete="false" />
-      <DxScrolling
-        mode="virtual"
-        show-scrollbar="onHover"
-        :scroll-by-thumb="true"
-        :scroll-by-content="false"
-        :use-native="false"
-      />
+        <DxFilterRow :visible="true" />
+        <DxEditing :confirm-delete="false" />
+        <DxScrolling
+          mode="virtual"
+          show-scrollbar="onHover"
+          :scroll-by-thumb="true"
+          :scroll-by-content="false"
+          :use-native="false"
+        />
 
-      <!-- * Включить, если нужна пагинация. Сейчас работает бесконечный скролл + нужна стилизация -->
-      <DxPaging :enabled="false" :page-size="2" />
-      <DxPager
-        :allowed-page-sizes="[2, 100, 200, 500]"
-        display-mode="compact"
-        :show-navigation-buttons="true"
-        :show-info="true"
-        :show-page-size-selector="true"
-      />
-    </DxDataGrid>
-
+        <!-- * Включить, если нужна пагинация. Сейчас работает бесконечный скролл + нужна стилизация -->
+        <DxPaging :enabled="false" :page-size="2" />
+        <DxPager
+          :allowed-page-sizes="[2, 100, 200, 500]"
+          display-mode="compact"
+          :show-navigation-buttons="true"
+          :show-info="true"
+          :show-page-size-selector="true"
+        />
+      </DxDataGrid>
+    </div>
     <template #footer>
-      <div class="tw-flex tw-flex-row tw-justify-end">
+      <div class="tw-flex tw-flex-row tw-justify-between tw-items-center">
+        <div
+          class="hint tw-w-64 tw-text-left tw-font-semibold tw-text-gray-400 tw-flex tw-flex-row"
+        >
+          <Lightbulb width="3em" height="1.25em" class="tw-text-amber-400" />
+          <div>
+            Для загрузки используйте drag'n'drop или кнопку выбора файлов
+          </div>
+        </div>
+
+        <div class="middle-part">
+          <Button
+            icon-pos="left"
+            :class="[!filesToUpload?.length ? 'primary' : 'success', 'tw-mr-4']"
+            @click="filesToUpload?.length ? filesUpload() : open()"
+          >
+            <FolderOpen
+              v-if="!filesToUpload?.length"
+              class="p-button-icon p-button-icon-left"
+            />
+            <Upload v-else class="p-button-icon p-button-icon-left" />
+            <div class="p-button-label">
+              {{
+                filesToUpload?.length
+                  ? `Загрузить ${plural(
+                      filesToUpload.length,
+                      "%d файл",
+                      "%d файла",
+                      "%d файлов",
+                    )} (${filesize(
+                      filesToUpload
+                        .map((file) => file.size)
+                        .reduce((prev, next) => prev + next),
+                    ).human("jedec")})`
+                  : "Выбрать файлы"
+              }}
+            </div>
+          </Button>
+          <Button
+            v-if="filesToUpload?.length"
+            icon-pos="left"
+            class="danger tw-mr-4"
+            @click="cancelFilesSelection()"
+          >
+            <!-- p-button-icon-only -->
+            <Fire class="p-button-icon p-button-icon-left" />
+            <div class="p-button-label">Отменить выбор</div>
+          </Button>
+        </div>
+
         <Button icon-pos="left" class="neutral tw-mr-4" @click="closeModal">
           <TimesCircle class="p-button-icon p-button-icon-left" />
           <div class="p-button-label">Закрыть</div>
@@ -71,6 +129,11 @@
 <script lang="ts" setup>
 import { ref, watch } from "vue";
 import type { PropType, Ref } from "vue";
+
+import plural from "plural-ru";
+import filesize from "file-size";
+
+import { useDropZone, useFileDialog } from "@vueuse/core";
 
 import useEmitter from "@/utils/emitter";
 
@@ -88,6 +151,10 @@ import DxDataGrid, {
 import type { DxDataGridTypes } from "devextreme-vue/data-grid";
 
 import TimesCircle from "./icons/TimesCircle.vue";
+import Lightbulb from "./icons/LightbulbTwotone.vue";
+import FolderOpen from "./icons/FolderOpenTwotone.vue";
+import Upload from "./icons/UploadTwotone.vue";
+import Fire from "./icons/FireTwotone.vue";
 
 const visible: Ref<boolean> = ref(false);
 
@@ -123,6 +190,7 @@ watch(
 
 const closeModal = () => {
   visible.value = false;
+  cancelFilesSelection();
 };
 
 const dataGrid = ref(DxDataGrid);
@@ -144,10 +212,81 @@ function filterEvent(event: DxDataGridTypes.OptionChangedEvent) {
 function dblClickedRow(event: DxDataGridTypes.RowDblClickEvent) {
   emit("rowDoubleClicked", event.data);
 }
+
+const dropZoneRef = ref<HTMLDivElement>();
+
+const filesData = ref<
+  { name: string; size: number; type: string; lastModified: number }[]
+>([]);
+
+const filesToUpload: Ref<File[] | null> = ref(null);
+
+function onDrop(files: File[] | null) {
+  filesData.value = [];
+  filesToUpload.value = null;
+  if (files) {
+    filesToUpload.value = files;
+    filesData.value = files.map((file) => ({
+      name: file.name,
+      size: file.size,
+      type: file.type,
+      lastModified: file.lastModified,
+    }));
+  }
+}
+
+const { isOverDropZone } = useDropZone(dropZoneRef, {
+  onDrop,
+  dataTypes: ["application/pdf"],
+  multiple: true,
+  // whether to prevent default behavior for unhandled events
+  preventDefaultForUnhandled: false,
+});
+
+function cancelFilesSelection() {
+  console.log("calcellation");
+  filesData.value = [];
+  filesToUpload.value = null;
+  reset();
+}
+
+const { open, reset, onChange } = useFileDialog({
+  accept: "application/pdf", // Set to accept only image files
+  directory: false, // Select directories instead of files if set true
+});
+
+onChange((files) => {
+  filesData.value = [];
+  filesToUpload.value = null;
+  if (files) {
+    filesToUpload.value = Array.from(files);
+    filesData.value = Array.from(files).map((file) => ({
+      name: file.name,
+      size: file.size,
+      type: file.type,
+      lastModified: file.lastModified,
+    }));
+  }
+});
+
+function filesUpload() {
+  console.log("upload");
+}
 </script>
 
 <style lang="css" scoped>
 :deep(.dx-datagrid.dx-gridbase-container) {
   @apply tw-bg-gray-200 tw-rounded-lg;
+}
+
+.drop-zone {
+  width: 100%;
+  height: 100%;
+
+  .drop-zone_hint {
+    width: inherit;
+    height: inherit;
+    @apply tw-bg-gray-100 tw-rounded-lg;
+  }
 }
 </style>
