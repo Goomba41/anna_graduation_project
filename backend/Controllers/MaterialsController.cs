@@ -171,10 +171,19 @@ namespace backend.Controllers
         {
             try
             {
-                var material = _context.Materials.Find(id);
+                var material = _context.Materials
+                  .Include(material => material.Files.Where(file => !file.Deleted))
+                  .Where(material => material.Id == id)
+                  .FirstOrDefault();
+
                 if (material == null)
                 {
                     return NotFound();
+                }
+
+                if (material.Files.Count() > 0)
+                {
+                    material.Files.ToList().ForEach(file => file.Deleted = true);
                 }
 
                 material.Deleted = true;

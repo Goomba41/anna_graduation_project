@@ -257,6 +257,7 @@ watch(
     displayConfirmation.value = params[0];
     confirmationMessage.value = params[1];
     customConfirmationParams = params[2] || {};
+    customConfirmationId = params[3];
 
     customConfirmationTextual.value = customConfirmationParams.textual ?? false;
 
@@ -339,7 +340,7 @@ function onConfirm() {
   time.value = 0;
   customConfirmationCT.value = null;
 
-  emit("deletionConfirmation", true);
+  emit(`deletionConfirmation${customConfirmationId || ""}`, true);
   displayConfirmation.value = false;
 }
 
@@ -347,7 +348,7 @@ function onReject() {
   time.value = 0;
   customConfirmationCT.value = null;
 
-  emit("deletionConfirmation", false);
+  emit(`deletionConfirmation${customConfirmationId || ""}`, false);
   displayConfirmation.value = false;
 
   clearInterval(timer);

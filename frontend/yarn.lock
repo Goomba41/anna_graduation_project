@@ -1281,6 +1281,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/mime-types@npm:^2.1.4":
+  version: 2.1.4
+  resolution: "@types/mime-types@npm:2.1.4"
+  checksum: 10/f8c521c54ee0c0b9f90a65356a80b1413ed27ccdc94f5c7ebb3de5d63cedb559cd2610ea55b4100805c7349606a920d96e54f2d16b2f0afa6b7cd5253967ccc9
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:*":
   version: 20.7.0
   resolution: "@types/node@npm:20.7.0"
@@ -7644,6 +7651,7 @@ __metadata:
     "@types/file-size": "npm:^1.0.3"
     "@types/jsdom": "npm:^21.1.7"
     "@types/luxon": "npm:^3.4.2"
+    "@types/mime-types": "npm:^2.1.4"
     "@types/node": "npm:^22.10.7"
     "@types/sockjs-client": "npm:^1"
     "@types/uuid": "npm:^10.0.0"

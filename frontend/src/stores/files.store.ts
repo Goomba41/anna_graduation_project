@@ -1,12 +1,11 @@
 import { defineStore } from "pinia";
 
-// import { z } from "zod";
+import { z } from "zod";
 import axios from "axios";
 
 import toast from "@/utils/toast";
 import queryString from "@/utils/query-string-transformer";
 
-// import type { TFiles } from "@/typings/files.types";
 import { ZFiles } from "@/typings/files.types";
 import { errorResult, successResult } from "@/typings/http.types";
 
@@ -133,36 +132,36 @@ export const useFilesStore = defineStore({
     //     });
     // },
 
-    // async delete(id: number) {
-    //   return await axios
-    //     .delete(`/api/materials/${id}`)
-    //     .then((responseAXIOS) => {
-    //       const { data } = responseAXIOS;
+    async delete(id: number) {
+      return await axios
+        .delete(`/api/files/${id}`)
+        .then((responseAXIOS) => {
+          const { data } = responseAXIOS;
 
-    //       const result = successResult.extend({ deletedId: z.number() });
+          const result = successResult.extend({ deletedId: z.number() });
 
-    //       const error = errorResult.safeParse(data);
-    //       const response = result.safeParse(data);
+          const error = errorResult.safeParse(data);
+          const response = result.safeParse(data);
 
-    //       if (response.success === true) {
-    //         const { deletedId } = response.data;
+          if (response.success === true) {
+            const { deletedId } = response.data;
 
-    //         return Promise.resolve(deletedId);
-    //       }
-    //       if (error.success === true) {
-    //         const { data } = error;
-    //         toast("Ошибка", data.errorMsg || data.error, "error");
-    //         return Promise.reject(data.errorMsg || data.error);
-    //       }
+            return Promise.resolve(deletedId);
+          }
+          if (error.success === true) {
+            const { data } = error;
+            toast("Ошибка", data.errorMsg || data.error, "error");
+            return Promise.reject(data.errorMsg || data.error);
+          }
 
-    //       callParseErrorToast(response.error);
-    //       callParseErrorToast(error.error);
-    //       return Promise.reject(`${error.error}; ${response.error}`);
-    //     })
-    //     .catch((error) => {
-    //       callParseErrorToast(error);
-    //       return Promise.reject(error);
-    //     });
-    // },
+          callParseErrorToast(response.error);
+          callParseErrorToast(error.error);
+          return Promise.reject(`${error.error}; ${response.error}`);
+        })
+        .catch((error) => {
+          callParseErrorToast(error);
+          return Promise.reject(error);
+        });
+    },
   },
 });

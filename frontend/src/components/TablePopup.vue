@@ -2,16 +2,13 @@
   <Dialog
     v-model:visible="visible"
     :header="props.header"
-    :style="
-      props.dataSource?.length
-        ? { width: '80vw', height: '80vh' }
-        : { width: '32vw', height: '34vh' }
-    "
+    :style="{ width: '80vw', height: '80vh' }"
     :modal="true"
   >
     <div ref="dropZoneRef" class="drop-zone">
       <div v-if="isOverDropZone" class="drop-zone_hint">
-        Бросьте файлы в эту зону для загрузки
+        Бросьте файлы здесь для загрузки <br />
+        <Upload height="4rem" width="4rem" class="tw-mt-6" />
       </div>
       <DxDataGrid
         v-else
@@ -19,13 +16,13 @@
         column-resizing-mode="widget"
         key-expr="id"
         width="100%"
-        :data-source="props.dataSource"
+        :data-source="filesDataSource"
         :allow-column-resizing="true"
         :focused-row-enabled="true"
         :filter-sync-enabled="true"
         @content-ready="totalRowsCount()"
         @option-changed="filterEvent($event)"
-        @row-dbl-click="dblClickedRow($event)"
+        @context-menu-preparing="addMenuItems($event)"
       >
         <DxColumn
           v-for="(column, index) in props.tableColumns"
@@ -127,7 +124,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from "vue";
+import { ref, watch, toRaw } from "vue";
 import type { PropType, Ref } from "vue";
 
 import plural from "plural-ru";
@@ -135,6 +132,7 @@ import filesize from "file-size";
 
 import { useDropZone, useFileDialog } from "@vueuse/core";
 
+import toast from "@/utils/toast";
 import useEmitter from "@/utils/emitter";
 
 import Button from "primevue/button";
@@ -149,6 +147,11 @@ import DxDataGrid, {
   DxColumn,
 } from "devextreme-vue/data-grid";
 import type { DxDataGridTypes } from "devextreme-vue/data-grid";
+import type { DxContextMenuTypes } from "devextreme-vue/context-menu";
+
+import type { TFile, TFiles } from "@/typings/files.types";
+
+import { useFilesStore } from "@/stores/files.store";
 
 import TimesCircle from "./icons/TimesCircle.vue";
 import Lightbulb from "./icons/LightbulbTwotone.vue";
@@ -158,13 +161,15 @@ import Fire from "./icons/FireTwotone.vue";
 
 const visible: Ref<boolean> = ref(false);
 
+const filesStore = useFilesStore();
+
 const props = defineProps({
   header: {
     type: String,
     required: true,
   },
   dataSource: {
-    type: Array,
+    type: Array as PropType<TFiles>,
     required: true,
   },
   tableColumns: {
@@ -173,18 +178,21 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits<{
-  rowDoubleClicked: [row: unknown];
-  // update: [value: string];
-}>();
+// const emit = defineEmits<{
+//   rowDoubleClicked: [row: unknown];
+//   // update: [value: string];
+// }>();
 
-const { bus } = useEmitter();
+const { bus, emit: notificationEmitter } = useEmitter();
+
+const filesDataSource: Ref<TFiles> = ref([]);
 
 watch(
   () => bus.value.get("openTablePopup"),
   () => {
     // Деструктурим параметры (потому что параметры пишутся в массив)
     visible.value = true;
+    filesDataSource.value = structuredClone(toRaw(props.dataSource));
   },
 );
 
@@ -209,9 +217,9 @@ function filterEvent(event: DxDataGridTypes.OptionChangedEvent) {
   }
 }
 
-function dblClickedRow(event: DxDataGridTypes.RowDblClickEvent) {
-  emit("rowDoubleClicked", event.data);
-}
+// function dblClickedRow(event: DxDataGridTypes.RowDblClickEvent) {
+//   emit("rowDoubleClicked", event.data);
+// }
 
 const dropZoneRef = ref<HTMLDivElement>();
 
@@ -244,7 +252,6 @@ const { isOverDropZone } = useDropZone(dropZoneRef, {
 });
 
 function cancelFilesSelection() {
-  console.log("calcellation");
   filesData.value = [];
   filesToUpload.value = null;
   reset();
@@ -272,6 +279,77 @@ onChange((files) => {
 function filesUpload() {
   console.log("upload");
 }
+
+let rowForAction: TFile | undefined = undefined;
+
+/**
+ * Функция-обработчик для создания пунктов контекстного меню
+ * по клику ПКМ на строке
+ * @param {event} [e] - глобальное событие клика по строке
+ **/
+function addMenuItems(e: DxDataGridTypes.ContextMenuPreparingEvent) {
+  // Если это строка контента и тип данных
+  if (e.target === "content" && e.rowIndex >= 0 && e.row?.rowType === "data") {
+    e.items = e.items || []; // e.items изначально скорее всего undefined
+
+    rowForAction = e.row.data;
+
+    // Сформируем корневые пункты контекстного меню
+    const contextItems: (DxContextMenuTypes.Item & {
+      onItemClick: () => void;
+    })[] = [
+      {
+        text: "Пустая строка",
+        visible: false,
+        onItemClick: () => {},
+      },
+      {
+        // Классы пунктов никак нельзя редактировать, потому что они вставляются
+        // devextreme'ом, поэтому в css сделано выделение последнего элемента красным
+        // и удаление должно быть ВСЕГДА последним. Единственная проблема: если строка
+        // не предусматривает действие удаления.
+        text: "Удалить",
+        onItemClick: () => {
+          notificationEmitter("openDeletionConfirmation", [
+            true,
+            `Вы действительно хотите удалить запись «${rowForAction?.name}»?`,
+            undefined,
+            "File",
+          ]);
+        },
+      },
+    ];
+
+    // Добавим пункты в меню
+    e.items.push(...contextItems);
+  }
+}
+
+watch(
+  () => bus.value.get("deletionConfirmationFile"),
+  (value) => {
+    // Деструктурим параметры (потому что value это Proxy)
+    const [confirm] = (value as unknown[]) ?? [];
+
+    // Если подтверждено, вызовем удаление на сервере
+    if (confirm) {
+      deleteItem();
+    }
+  },
+);
+
+async function deleteItem() {
+  if (rowForAction?.id) {
+    await filesStore.delete(rowForAction.id).then((deletedId) => {
+      toast("Успех!", `Файл «${rowForAction?.name}» удалён`, "success");
+      filesDataSource.value = props.dataSource.filter(
+        (file) => file.id !== (rowForAction?.id || deletedId),
+      );
+    });
+  } else {
+    toast("Ошибка!", "Не удалось найти объект с данными в списке", "error");
+  }
+}
 </script>
 
 <style lang="css" scoped>
@@ -286,7 +364,7 @@ function filesUpload() {
   .drop-zone_hint {
     width: inherit;
     height: inherit;
-    @apply tw-bg-gray-100 tw-rounded-lg;
+    @apply tw-bg-gray-100 tw-rounded-lg tw-flex tw-justify-center tw-items-center tw-border-2 tw-border-dashed tw-border-gray-500 tw-text-gray-400 tw-font-semibold tw-text-xl tw-flex-col;
   }
 }
 </style>

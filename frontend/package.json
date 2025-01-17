@@ -20,6 +20,7 @@
   "dependencies": {
     "@microsoft/signalr": "^8.0.7",
     "@types/file-size": "^1.0.3",
+    "@types/mime-types": "^2.1.4",
     "@vee-validate/zod": "^4.15.0",
     "@vueuse/components": "^12.4.0",
     "@vueuse/core": "^12.4.0",

@@ -89,29 +89,29 @@ namespace backend.Controllers
         //     });
         // }
 
-        // [HttpDelete("{id}")]
-        // public IActionResult DeleteMaterial(int id)
-        // {
-        //     try
-        //     {
-        //         var material = _context.Materials.Find(id);
-        //         if (material == null)
-        //         {
-        //             return NotFound();
-        //         }
+        [HttpDelete("{id}")]
+        public IActionResult DeleteFile(int id)
+        {
+            try
+            {
+                var file = _context.Files.Find(id);
+                if (file == null)
+                {
+                    return NotFound();
+                }
 
-        //         material.Deleted = true;
-        //         // _context.Materials.Remove(user);
-        //         _context.SaveChanges();
+                file.Deleted = true;
+                // _context.Files.Remove(file);
+                _context.SaveChanges();
 
-        //         return new JsonResult(new { result = 0, deletedId = material.Id });
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         _logger.LogError(Utils.GetErrorMessageByException(ex));
-        //         return new JsonResult(new { result = -1, Error = Utils.GetErrorMessageByException(ex) });
-        //     }
-        // }
+                return new JsonResult(new { result = 0, deletedId = file.Id });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(Utils.GetErrorMessageByException(ex));
+                return new JsonResult(new { result = -1, Error = Utils.GetErrorMessageByException(ex) });
+            }
+        }
 
         // private bool MaterialExists(int id)
         // {

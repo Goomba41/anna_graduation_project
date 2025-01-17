@@ -20738,6 +20738,14 @@ input.dx-hidden {
   @apply tw-rounded-bl-xl tw-rounded-br-xl;
 }
 
+.dx-context-menu:not(.dx-filter-menu)
+  .dx-menu-items-container
+  > li:has(> div.dx-state-invisible)
+  + li
+  .dx-item.dx-menu-item {
+  @apply tw-rounded-tr-xl tw-rounded-tl-xl;
+}
+
 .dx-context-menu .dx-submenu {
   background-color: #fff;
   /* border: 1px solid #ddd; */
