@@ -235,6 +235,7 @@
     ]"
     @row-double-clicked="openFile($event as TFile)"
     @row-delete-clicked="deleteFile($event as TFile)"
+    @files-upload="uploadFiles($event)"
   />
 </template>
 
@@ -245,6 +246,7 @@ import { useRoute } from "vue-router";
 import verb from "plural-ru";
 import { useDebounceFn, useFocus } from "@vueuse/core";
 import { base64StringToBlob } from "blob-util";
+import { DateTime as luxon } from "luxon";
 
 import Button from "primevue/button";
 import InputText from "primevue/inputtext";
@@ -667,7 +669,25 @@ async function deleteFile(file: TFile) {
   if (file.id)
     await filesStore.delete(file.id).then(() => {
       toast("Успех!", `Файл «${file?.name}» удалён`, "success");
+      materialsFiles.value = materialsFiles.value.filter(
+        (item) => item.id !== file?.id,
+      );
     });
+}
+
+async function uploadFiles(files: File[]) {
+  let latestId = materialsFiles.value.length;
+  for (const file of files) {
+    latestId += 1;
+    materialsFiles.value.push({
+      id: latestId,
+      name: file.name,
+      mime: file.type,
+      ctime: luxon.now().toJSDate(),
+      atime: null,
+      mtime: null,
+    });
+  }
 }
 </script>
 

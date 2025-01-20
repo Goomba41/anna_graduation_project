@@ -187,6 +187,7 @@ const props = defineProps({
 const emit = defineEmits<{
   rowDoubleClicked: [row: unknown];
   rowDeleteClicked: [row: unknown];
+  filesUpload: [row: File[]];
   // update: [value: string];
 }>();
 
@@ -286,19 +287,12 @@ onChange((files) => {
 watch(
   () => filesToUpload.value?.length,
   (value) => {
-    console.log(value);
-    filesUpload();
+    if (value) emit("filesUpload", filesToUpload.value ?? []);
+
+    dataGrid.value.instance.refresh();
+    filesToUpload.value = [];
   },
 );
-
-function filesUpload() {
-  if (filesToUpload.value?.length)
-    for (const file of filesToUpload.value) {
-      console.log(`upload ${file.name}`);
-    }
-
-  filesToUpload.value = [];
-}
 
 let rowForAction: Partial<{ id: string | number }> | undefined = undefined;
 
@@ -363,9 +357,7 @@ watch(
 async function deleteItem() {
   if (rowForAction?.id) {
     emit("rowDeleteClicked", rowForAction);
-    dataSource.value = dataSource.value.filter(
-      (item) => (item as any).id !== rowForAction?.id,
-    );
+    dataGrid.value.instance.refresh();
   } else {
     toast("Ошибка!", "Не удалось найти объект с данными в списке", "error");
   }
