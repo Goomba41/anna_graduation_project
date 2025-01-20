@@ -5,77 +5,86 @@
     :style="{ width: '80vw', height: '80vh' }"
     :modal="true"
   >
-    <div ref="dropZoneRef" class="drop-zone">
-      <div v-if="isOverDropZone" class="drop-zone_hint">
-        Бросьте файлы здесь для загрузки <br />
-        <Upload height="4rem" width="4rem" class="tw-mt-6" />
-      </div>
-      <DxDataGrid
-        v-else
-        ref="dataGrid"
-        column-resizing-mode="widget"
-        key-expr="id"
-        width="100%"
-        :data-source="filesDataSource"
-        :allow-column-resizing="true"
-        :focused-row-enabled="true"
-        :filter-sync-enabled="true"
-        @content-ready="totalRowsCount()"
-        @option-changed="filterEvent($event)"
-        @context-menu-preparing="addMenuItems($event)"
-      >
-        <DxColumn
-          v-for="(column, index) in props.tableColumns"
-          :key="index"
-          fixed-position="left"
-          :data-field="column.dataField"
-          :caption="column.caption"
-          :title="column.caption"
-          :visible="column.visible"
-          :allow-grouping="column.allowGrouping"
-          :group-index="column.groupIndex || undefined"
-          :data-type="column.dataType"
-          :min-width="column.minWidth"
-          :width="column.width"
-          :format="column.format"
-          :sort-order="column.sortOrder"
-          :sort-index="column.sortIndex"
-        />
+    <DxDataGrid
+      ref="dataGrid"
+      column-resizing-mode="widget"
+      key-expr="id"
+      width="100%"
+      :data-source="dataSource"
+      :allow-column-resizing="true"
+      :focused-row-enabled="true"
+      :filter-sync-enabled="true"
+      @content-ready="totalRowsCount()"
+      @option-changed="filterEvent($event)"
+      @context-menu-preparing="addMenuItems($event)"
+      @row-dbl-click="dblClickedRow($event)"
+    >
+      <DxColumn
+        v-for="(column, index) in props.tableColumns"
+        :key="index"
+        fixed-position="left"
+        :data-field="column.dataField"
+        :caption="column.caption"
+        :title="column.caption"
+        :visible="column.visible"
+        :allow-grouping="column.allowGrouping"
+        :group-index="column.groupIndex || undefined"
+        :data-type="column.dataType"
+        :min-width="column.minWidth"
+        :width="column.width"
+        :format="column.format"
+        :sort-order="column.sortOrder"
+        :sort-index="column.sortIndex"
+      />
 
-        <DxFilterRow :visible="true" />
-        <DxEditing :confirm-delete="false" />
-        <DxScrolling
-          mode="virtual"
-          show-scrollbar="onHover"
-          :scroll-by-thumb="true"
-          :scroll-by-content="false"
-          :use-native="false"
-        />
+      <DxFilterRow :visible="true" />
+      <DxEditing :confirm-delete="false" />
+      <DxScrolling
+        mode="virtual"
+        show-scrollbar="onHover"
+        :scroll-by-thumb="true"
+        :scroll-by-content="false"
+        :use-native="false"
+      />
 
-        <!-- * Включить, если нужна пагинация. Сейчас работает бесконечный скролл + нужна стилизация -->
-        <DxPaging :enabled="false" :page-size="2" />
-        <DxPager
-          :allowed-page-sizes="[2, 100, 200, 500]"
-          display-mode="compact"
-          :show-navigation-buttons="true"
-          :show-info="true"
-          :show-page-size-selector="true"
-        />
-      </DxDataGrid>
-    </div>
+      <!-- * Включить, если нужна пагинация. Сейчас работает бесконечный скролл + нужна стилизация -->
+      <DxPaging :enabled="false" :page-size="2" />
+      <DxPager
+        :allowed-page-sizes="[2, 100, 200, 500]"
+        display-mode="compact"
+        :show-navigation-buttons="true"
+        :show-info="true"
+        :show-page-size-selector="true"
+      />
+    </DxDataGrid>
+
     <template #footer>
       <div class="tw-flex tw-flex-row tw-justify-between tw-items-center">
         <div
           class="hint tw-w-64 tw-text-left tw-font-semibold tw-text-gray-400 tw-flex tw-flex-row"
         >
-          <Lightbulb width="3em" height="1.25em" class="tw-text-amber-400" />
+          <!-- <Lightbulb width="3em" height="1.25em" class="tw-text-amber-400" />
           <div>
             Для загрузки используйте drag'n'drop или кнопку выбора файлов
-          </div>
+          </div> -->
         </div>
 
-        <div class="middle-part">
-          <Button
+        <div
+          v-if="props.uploadFiles"
+          ref="dropZoneRef"
+          class="middle-part drop-zone"
+          @click="open()"
+        >
+          <div v-if="!isOverDropZone" class="drop-zone_hint">
+            <Upload height="1.5rem" width="1.5rem" /> Перетащите файлы в эту
+            область или <span>нажмите для загрузки</span>
+          </div>
+          <div v-else class="">
+            <span class="tw-mr-2 tw-text-primary">Почти готово!</span>Бросьте
+            файлы сюда, чтобы начать загрузку
+          </div>
+
+          <!-- <Button
             icon-pos="left"
             :class="[!filesToUpload?.length ? 'primary' : 'success', 'tw-mr-4']"
             @click="filesToUpload?.length ? filesUpload() : open()"
@@ -108,10 +117,10 @@
             class="danger tw-mr-4"
             @click="cancelFilesSelection()"
           >
-            <!-- p-button-icon-only -->
+            p-button-icon-only
             <Fire class="p-button-icon p-button-icon-left" />
             <div class="p-button-label">Отменить выбор</div>
-          </Button>
+          </Button> -->
         </div>
 
         <Button icon-pos="left" class="neutral tw-mr-4" @click="closeModal">
@@ -124,11 +133,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, toRaw } from "vue";
+import { ref, watch } from "vue";
 import type { PropType, Ref } from "vue";
-
-import plural from "plural-ru";
-import filesize from "file-size";
 
 import { useDropZone, useFileDialog } from "@vueuse/core";
 
@@ -149,50 +155,51 @@ import DxDataGrid, {
 import type { DxDataGridTypes } from "devextreme-vue/data-grid";
 import type { DxContextMenuTypes } from "devextreme-vue/context-menu";
 
-import type { TFile, TFiles } from "@/typings/files.types";
-
-import { useFilesStore } from "@/stores/files.store";
-
 import TimesCircle from "./icons/TimesCircle.vue";
-import Lightbulb from "./icons/LightbulbTwotone.vue";
-import FolderOpen from "./icons/FolderOpenTwotone.vue";
 import Upload from "./icons/UploadTwotone.vue";
-import Fire from "./icons/FireTwotone.vue";
 
 const visible: Ref<boolean> = ref(false);
 
-const filesStore = useFilesStore();
+const dataSource = defineModel("dataSource", {
+  type: Array,
+  required: true,
+});
 
 const props = defineProps({
   header: {
     type: String,
     required: true,
   },
-  dataSource: {
-    type: Array as PropType<TFiles>,
-    required: true,
-  },
   tableColumns: {
     type: Array as PropType<DxDataGridTypes.Column[]>,
     required: true,
   },
+  deletableRows: {
+    type: Boolean,
+    default: false,
+  },
+  uploadFiles: {
+    type: Boolean,
+    default: false,
+  },
 });
 
-// const emit = defineEmits<{
-//   rowDoubleClicked: [row: unknown];
-//   // update: [value: string];
-// }>();
+const emit = defineEmits<{
+  rowDoubleClicked: [row: unknown];
+  rowDeleteClicked: [row: unknown];
+  // update: [value: string];
+}>();
 
 const { bus, emit: notificationEmitter } = useEmitter();
 
-const filesDataSource: Ref<TFiles> = ref([]);
+// const filesDataSource: Ref<unknown[]> = ref([]);
 
 watch(
   () => bus.value.get("openTablePopup"),
   () => {
     // Деструктурим параметры (потому что параметры пишутся в массив)
     visible.value = true;
-    filesDataSource.value = structuredClone(toRaw(props.dataSource));
+    // filesDataSource.value = structuredClone(toRaw(dataSource));
   },
 );
 
@@ -217,9 +224,9 @@ function filterEvent(event: DxDataGridTypes.OptionChangedEvent) {
   }
 }
 
-// function dblClickedRow(event: DxDataGridTypes.RowDblClickEvent) {
-//   emit("rowDoubleClicked", event.data);
-// }
+function dblClickedRow(event: DxDataGridTypes.RowDblClickEvent) {
+  emit("rowDoubleClicked", event.data);
+}
 
 const dropZoneRef = ref<HTMLDivElement>();
 
@@ -276,11 +283,24 @@ onChange((files) => {
   }
 });
 
+watch(
+  () => filesToUpload.value?.length,
+  (value) => {
+    console.log(value);
+    filesUpload();
+  },
+);
+
 function filesUpload() {
-  console.log("upload");
+  if (filesToUpload.value?.length)
+    for (const file of filesToUpload.value) {
+      console.log(`upload ${file.name}`);
+    }
+
+  filesToUpload.value = [];
 }
 
-let rowForAction: TFile | undefined = undefined;
+let rowForAction: Partial<{ id: string | number }> | undefined = undefined;
 
 /**
  * Функция-обработчик для создания пунктов контекстного меню
@@ -297,13 +317,15 @@ function addMenuItems(e: DxDataGridTypes.ContextMenuPreparingEvent) {
     // Сформируем корневые пункты контекстного меню
     const contextItems: (DxContextMenuTypes.Item & {
       onItemClick: () => void;
-    })[] = [
-      {
+    })[] = [];
+
+    if (props.deletableRows) {
+      contextItems.push({
         text: "Пустая строка",
         visible: false,
         onItemClick: () => {},
-      },
-      {
+      });
+      contextItems.push({
         // Классы пунктов никак нельзя редактировать, потому что они вставляются
         // devextreme'ом, поэтому в css сделано выделение последнего элемента красным
         // и удаление должно быть ВСЕГДА последним. Единственная проблема: если строка
@@ -317,8 +339,8 @@ function addMenuItems(e: DxDataGridTypes.ContextMenuPreparingEvent) {
             "File",
           ]);
         },
-      },
-    ];
+      });
+    }
 
     // Добавим пункты в меню
     e.items.push(...contextItems);
@@ -340,12 +362,10 @@ watch(
 
 async function deleteItem() {
   if (rowForAction?.id) {
-    await filesStore.delete(rowForAction.id).then((deletedId) => {
-      toast("Успех!", `Файл «${rowForAction?.name}» удалён`, "success");
-      filesDataSource.value = props.dataSource.filter(
-        (file) => file.id !== (rowForAction?.id || deletedId),
-      );
-    });
+    emit("rowDeleteClicked", rowForAction);
+    dataSource.value = dataSource.value.filter(
+      (item) => (item as any).id !== rowForAction?.id,
+    );
   } else {
     toast("Ошибка!", "Не удалось найти объект с данными в списке", "error");
   }
@@ -358,13 +378,22 @@ async function deleteItem() {
 }
 
 .drop-zone {
-  width: 100%;
-  height: 100%;
+  @apply tw-cursor-pointer tw-bg-gray-200 tw-flex tw-w-1/2 tw-p-4 tw-mr-4 tw-border-gray-500 tw-rounded-lg tw-justify-center tw-items-center tw-border-2 tw-border-dashed tw-text-gray-400 tw-font-semibold tw-text-base;
+
+  &:hover {
+    @apply tw-border-primary;
+  }
 
   .drop-zone_hint {
-    width: inherit;
-    height: inherit;
-    @apply tw-bg-gray-100 tw-rounded-lg tw-flex tw-justify-center tw-items-center tw-border-2 tw-border-dashed tw-border-gray-500 tw-text-gray-400 tw-font-semibold tw-text-xl tw-flex-col;
+    @apply tw-flex tw-justify-center tw-items-center;
+
+    span {
+      @apply tw-text-primary tw-ml-1;
+    }
+
+    svg {
+      @apply tw-mr-2;
+    }
   }
 }
 </style>

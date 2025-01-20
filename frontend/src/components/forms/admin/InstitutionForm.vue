@@ -715,7 +715,7 @@ async function showDialog() {
   if (props.institution?.district) {
     localitiesIsLoading.value = true;
     localitiesOptions.value =
-      (await optionsStore.read(
+      (await optionsStore.fias(
         "localities",
         props.institution.subject,
         props.institution.district,

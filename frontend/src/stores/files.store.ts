@@ -95,42 +95,45 @@ export const useFilesStore = defineStore({
     readList,
 
     /**
-     * Обновление объекта
+     * Открытие файла на просмотр
      **/
-    // async update(form: TMaterial) {
-    //   return await axios
-    //     .put(`/api/materials/${form.id}`, form)
-    //     .then((responseAXIOS) => {
-    //       const { data } = responseAXIOS;
+    async blob(id: number) {
+      return await axios
+        .get(`/api/files/${id}/blob`)
+        .then((responseAXIOS) => {
+          const { data } = responseAXIOS;
 
-    //       const result = successResult.extend({
-    //         updatedId: z.number(),
-    //         data: ZMaterialExtended,
-    //       });
+          // const result = successResult.extend({
+          //   updatedId: z.number(),
+          //   data: ZMaterialExtended,
+          // });
 
-    //       const error = errorResult.safeParse(data);
-    //       const response = result.safeParse(data);
+          const error = errorResult.safeParse(data);
+          // const response = result.safeParse(data);
 
-    //       if (response.success === true) {
-    //         const { updatedId, data: form } = response.data;
+          // if (response.success === true) {
+          //   const { updatedId, data: form } = response.data;
 
-    //         return Promise.resolve({ updatedId, form });
-    //       }
-    //       if (error.success === true) {
-    //         const { data } = error;
-    //         toast("Ошибка", data.errorMsg || data.error, "error");
-    //         return Promise.reject(data.errorMsg || data.error);
-    //       }
+          //   return Promise.resolve({ updatedId, form });
+          // }
+          if (error.success === true) {
+            const { data } = error;
+            toast("Ошибка", data.errorMsg || data.error, "error");
+            return Promise.reject(data.errorMsg || data.error);
+          }
 
-    //       callParseErrorToast(response.error);
-    //       callParseErrorToast(error.error);
-    //       return Promise.reject(`${error.error}; ${response.error}`);
-    //     })
-    //     .catch((error) => {
-    //       callParseErrorToast(error);
-    //       return Promise.reject(error);
-    //     });
-    // },
+          return Promise.resolve(data.binary);
+
+          // callParseErrorToast(response.error);
+          // callParseErrorToast(error.error);
+          // return Promise.reject(`${error.error}; ${response.error}`);
+          // return Promise.reject(`${error.error}`);
+        })
+        .catch((error) => {
+          callParseErrorToast(error);
+          return Promise.reject(error);
+        });
+    },
 
     async delete(id: number) {
       return await axios

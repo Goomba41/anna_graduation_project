@@ -196,8 +196,10 @@
   />
 
   <TablePopup
+    v-model:data-source="materialsFiles"
     :header="`Вложения для материала «${rowForAction?.number}»`"
-    :data-source="materialsFiles"
+    :deletable-rows="true"
+    :upload-files="true"
     :table-columns="[
       {
         dataField: 'id',
@@ -231,6 +233,8 @@
         minWidth: 150,
       },
     ]"
+    @row-double-clicked="openFile($event as TFile)"
+    @row-delete-clicked="deleteFile($event as TFile)"
   />
 </template>
 
@@ -240,6 +244,7 @@ import { useRoute } from "vue-router";
 
 import verb from "plural-ru";
 import { useDebounceFn, useFocus } from "@vueuse/core";
+import { base64StringToBlob } from "blob-util";
 
 import Button from "primevue/button";
 import InputText from "primevue/inputtext";
@@ -267,7 +272,7 @@ import type {
   TMaterialExtended,
 } from "@/typings/material.types";
 
-import type { TFiles } from "@/typings/files.types";
+import type { TFile, TFiles } from "@/typings/files.types";
 
 import FilterReset from "@/components/icons/FilterReset.vue";
 import FilterTwotone from "@/components/icons/FilterTwotone.vue";
@@ -648,6 +653,22 @@ onMounted(async () => {
     }, 100);
   }
 });
+
+async function openFile(file: TFile) {
+  if (file.id)
+    await filesStore.blob(file.id).then((response) => {
+      const binaryString = base64StringToBlob(response, "application/pdf");
+      const url = window.URL.createObjectURL(binaryString);
+      window.open(url, "_blank");
+    });
+}
+
+async function deleteFile(file: TFile) {
+  if (file.id)
+    await filesStore.delete(file.id).then(() => {
+      toast("Успех!", `Файл «${file?.name}» удалён`, "success");
+    });
+}
 </script>
 
 <style lang="css" scoped></style>

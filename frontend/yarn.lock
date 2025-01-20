@@ -7666,6 +7666,7 @@ __metadata:
     "@vueuse/core": "npm:^12.4.0"
     autoprefixer: "npm:^10.4.20"
     axios: "npm:^1.7.9"
+    blob-util: "npm:^2.0.2"
     buffer: "npm:^6.0.3"
     chart.js: "npm:^4.4.7"
     chroma-js: "npm:^3.1.2"

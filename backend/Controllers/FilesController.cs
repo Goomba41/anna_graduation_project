@@ -60,6 +60,30 @@ namespace backend.Controllers
 
         }
 
+        [HttpGet("{id}/blob")]
+        public ActionResult GetFileBlob(int id)
+        {
+            try
+            {
+                FileBinaryResponseDTO? queryResult = _context.Files
+                  .Where(file => file.Id == id && !file.Deleted)
+                  // .Include(file => file.Material)
+                  .Select(file => _mapper.Map<FileBinaryResponseDTO>(file))
+                  .FirstOrDefault();
+
+                if (queryResult != null)
+                    return Ok(queryResult);
+
+                return NotFound();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(Utils.GetErrorMessageByException(ex));
+                return new JsonResult(new { result = -1, Error = Utils.GetErrorMessageByException(ex) });
+            }
+
+        }
+
         // [HttpPost]
         // public async Task<ActionResult<Material>> PostMaterial(Material material)
         // {

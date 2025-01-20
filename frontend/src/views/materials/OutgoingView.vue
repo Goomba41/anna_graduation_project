@@ -200,9 +200,45 @@
   />
 
   <TablePopup
+    v-model:data-source="materialsFiles"
     :header="`Вложения для материала «${rowForAction?.number}»`"
-    :data-source="materialsFiles"
-    :table-columns="[]"
+    :deletable-rows="true"
+    :upload-files="true"
+    :table-columns="[
+      {
+        dataField: 'id',
+        dataType: 'number',
+        caption: 'Идентификатор',
+        visible: true,
+        allowGrouping: false,
+        sortOrder: 'asc',
+        sortIndex: 1,
+        width: 100,
+      },
+      {
+        dataField: 'name',
+        dataType: 'string',
+        caption: 'Имя',
+        visible: true,
+        allowGrouping: false,
+        sortOrder: 'asc',
+        sortIndex: 2,
+        minWidth: 200,
+        width: 1000,
+      },
+      {
+        dataField: 'mime',
+        dataType: 'string',
+        caption: 'Тип файла',
+        visible: true,
+        allowGrouping: true,
+        sortOrder: 'asc',
+        sortIndex: 3,
+        minWidth: 150,
+      },
+    ]"
+    @row-double-clicked="openFile($event as TFile)"
+    @row-delete-clicked="deleteFile($event as TFile)"
   />
 </template>
 
@@ -211,6 +247,7 @@ import { onMounted, ref, watch, type Ref } from "vue";
 import { useRoute } from "vue-router";
 
 import verb from "plural-ru";
+import { base64StringToBlob } from "blob-util";
 import { useDebounceFn, useFocus } from "@vueuse/core";
 
 import Button from "primevue/button";
@@ -233,7 +270,7 @@ import { useUsersStore } from "@/stores/users.store";
 import { useLoadingStore } from "@/stores/loading.store";
 import { useMaterialsStore } from "@/stores/materials.store";
 
-import type { TFiles } from "@/typings/files.types";
+import type { TFile, TFiles } from "@/typings/files.types";
 import type {
   TMaterials,
   TMaterial,
@@ -598,6 +635,22 @@ onMounted(async () => {
     }, 100);
   }
 });
+
+async function openFile(file: TFile) {
+  if (file.id)
+    await filesStore.blob(file.id).then((response) => {
+      const binaryString = base64StringToBlob(response, "application/pdf");
+      const url = window.URL.createObjectURL(binaryString);
+      window.open(url, "_blank");
+    });
+}
+
+async function deleteFile(file: TFile) {
+  if (file.id)
+    await filesStore.delete(file.id).then(() => {
+      toast("Успех!", `Файл «${file?.name}» удалён`, "success");
+    });
+}
 </script>
 
 <style lang="css" scoped></style>
