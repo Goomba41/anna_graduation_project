@@ -151,7 +151,7 @@ namespace backend.Migrations
 
                     b.HasIndex("MaterialId");
 
-                    b.ToTable("Files");
+                    b.ToTable("Files", (string)null);
                 });
 
             modelBuilder.Entity("backend.Models.Institution", b =>

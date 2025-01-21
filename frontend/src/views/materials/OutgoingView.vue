@@ -287,8 +287,9 @@ import MagnifyingGlass from "@/components/icons/MagnifyingGlass.vue";
 import toast from "@/utils/toast";
 import useEmitter from "@/utils/emitter";
 
-import MaterialForm from "@/components/forms/materials/MaterialForm.vue";
+import TablePopup from "@/components/TablePopup.vue";
 import FilterPopup from "@/components/FilterPopup.vue";
+import MaterialForm from "@/components/forms/materials/MaterialForm.vue";
 
 const filesStore = useFilesStore();
 const usersStore = useUsersStore();

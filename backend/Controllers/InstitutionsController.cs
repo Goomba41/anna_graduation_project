@@ -186,6 +186,7 @@ namespace backend.Controllers
                 return new JsonResult(new { result = -1, Error = $"Учреждение с идентификатором «{institution.Id}» существует" });
             }
 
+            // institution.CreationDateTime = DateTime.SpecifyKind(institution.CreationDateTime, DateTimeKind.Utc);
             _context.Institutions.Add(institution);
             await _context.SaveChangesAsync();
 

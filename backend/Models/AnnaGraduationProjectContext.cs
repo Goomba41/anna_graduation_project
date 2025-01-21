@@ -101,6 +101,11 @@ public partial class AnnaGraduationProjectContext : DbContext
                 .HasColumnType("character varying")
                 .HasColumnName("locality_string");
             entity.Property(e => e.CreationDateTime)
+              .HasConversion
+              (
+                  src => src.Kind == DateTimeKind.Utc ? src : DateTime.SpecifyKind(src, DateTimeKind.Utc),
+                  dst => dst.Kind == DateTimeKind.Utc ? dst : DateTime.SpecifyKind(dst, DateTimeKind.Utc)
+              )
               .HasColumnType("timestamp with time zone")
               .HasColumnName("creation_datetime");
         });
