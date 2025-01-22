@@ -204,6 +204,13 @@ watch(
   },
 );
 
+watch(
+  () => bus.value.get("refreshDataGrid"),
+  () => {
+    dataGrid.value.instance.refresh();
+  },
+);
+
 const closeModal = () => {
   visible.value = false;
   cancelFilesSelection();
@@ -289,7 +296,6 @@ watch(
   (value) => {
     if (value) emit("filesUpload", filesToUpload.value ?? []);
 
-    dataGrid.value.instance.refresh();
     filesToUpload.value = [];
   },
 );

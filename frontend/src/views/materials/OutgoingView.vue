@@ -656,17 +656,26 @@ async function deleteFile(file: TFile) {
 }
 
 async function uploadFiles(files: File[]) {
-  let latestId = materialsFiles.value.length;
   for (const file of files) {
-    latestId += 1;
-    materialsFiles.value.push({
-      id: latestId,
+    const fileForm: TFile = {
       name: file.name,
       mime: file.type,
       ctime: luxon.now().toJSDate(),
       atime: null,
       mtime: null,
-    });
+    };
+
+    if (rowForAction?.id)
+      await filesStore
+        .upload(rowForAction?.id, fileForm, file)
+        .then((createdId) => {
+          toast("Успех!", `Файл «${file?.name}» загружен`, "success");
+          fileForm.id = createdId;
+          materialsFiles.value.push(fileForm);
+          setTimeout(() => {
+            emit("refreshDataGrid");
+          }, 100);
+        });
   }
 }
 </script>

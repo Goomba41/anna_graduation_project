@@ -7,6 +7,7 @@ import toast from "@/utils/toast";
 import queryString from "@/utils/query-string-transformer";
 
 import { ZFiles } from "@/typings/files.types";
+import type { TFile } from "@/typings/files.types";
 import { errorResult, successResult } from "@/typings/http.types";
 
 import callParseErrorToast from "@/utils/type-parse-error";
@@ -150,6 +151,46 @@ export const useFilesStore = defineStore({
             const { deletedId } = response.data;
 
             return Promise.resolve(deletedId);
+          }
+          if (error.success === true) {
+            const { data } = error;
+            toast("Ошибка", data.errorMsg || data.error, "error");
+            return Promise.reject(data.errorMsg || data.error);
+          }
+
+          callParseErrorToast(response.error);
+          callParseErrorToast(error.error);
+          return Promise.reject(`${error.error}; ${response.error}`);
+        })
+        .catch((error) => {
+          callParseErrorToast(error);
+          return Promise.reject(error);
+        });
+    },
+
+    async upload(id: number, form: TFile, file: File) {
+      return await axios
+        .post(
+          `/api/files/materials/${id}`,
+          { form, binary: file },
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          },
+        )
+        .then((responseAXIOS) => {
+          const { data: responseData } = responseAXIOS;
+
+          const result = successResult.extend({ createdId: z.number() });
+
+          const error = errorResult.safeParse(responseData);
+          const response = result.safeParse(responseData);
+
+          if (response.success === true) {
+            const { createdId } = response.data;
+
+            return Promise.resolve(createdId);
           }
           if (error.success === true) {
             const { data } = error;

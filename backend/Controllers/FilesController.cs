@@ -1,8 +1,6 @@
 using System.Dynamic;
 
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
 
 using AutoMapper;
 
@@ -65,14 +63,21 @@ namespace backend.Controllers
         {
             try
             {
-                FileBinaryResponseDTO? queryResult = _context.Files
-                  .Where(file => file.Id == id && !file.Deleted)
+                IQueryable<Models.File> query = _context.Files
+                  .Where(file => file.Id == id && !file.Deleted);
+
+                FileBinaryResponseDTO? queryResult = query
                   // .Include(file => file.Material)
                   .Select(file => _mapper.Map<FileBinaryResponseDTO>(file))
                   .FirstOrDefault();
 
                 if (queryResult != null)
+                {
+                    query.FirstOrDefault()!.Atime = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc);
+                    _context.SaveChanges();
+
                     return Ok(queryResult);
+                }
 
                 return NotFound();
             }
@@ -84,34 +89,48 @@ namespace backend.Controllers
 
         }
 
-        // [HttpPost]
-        // public async Task<ActionResult<Material>> PostMaterial(Material material)
-        // {
-        //     var existedLogin = _context.Materials
-        //         .FirstOrDefault(u => u.Id.Equals(material.Id) && !u.Deleted);
+        [HttpPost("materials/{materialId}")]
+        public async Task<ActionResult<FileNonBinaryResponseDTO>> PostFileToMaterial(int materialId, [FromForm] FileNonBinaryResponseDTO form)
+        {
+            if (!Request.HasFormContentType)
+            {
+                return BadRequest("Unsupported media type");
+            }
 
-        //     if (existedLogin != null)
-        //     {
-        //         _logger.LogError($"Попытка создать материал с существующим идентификатором («{material.Id}»)");
-        //         return new JsonResult(new { result = -1, Error = $"Материал с идентификатором «{material.Id}» существует" });
-        //     }
+            var material = _context.Materials
+              .Where(material => material.Id == materialId)
+              .FirstOrDefault();
 
-        //     _context.Materials.Add(material);
-        //     await _context.SaveChangesAsync();
+            if (material == null)
+            {
+                _logger.LogError($"Попытка создать файл к несуществующему материалу с идентификатором («{materialId}»)");
+                return new JsonResult(new { result = -1, Error = $"Материал с идентификатором «{materialId}» не существует" });
+            }
 
-        //     _context.Entry(material).Reference(m => m.DepartureType).Load();
-        //     _context.Entry(material).Reference(m => m.DocumentType).Load();
-        //     _context.Entry(material).Reference(m => m.Project).Load();
-        //     _context.Entry(material).Reference(m => m.Creator).Load();
-        //     _context.Entry(material).Reference(m => m.Institution).Load();
 
-        //     return new JsonResult(new
-        //     {
-        //         result = 0,
-        //         createdId = material.Id,
-        //         data = _mapper.Map<MaterialResponseDTO>(material)
-        //     });
-        // }
+            Models.File mappedForm = _mapper.Map<Models.File>(form);
+
+            IFormCollection? rawForm = await Request.ReadFormAsync();
+
+            foreach (IFormFile file in rawForm.Files)
+            {
+                byte[] bytes = new byte[file.Length];
+                await file.OpenReadStream().ReadAsync(bytes, 0, (int)file.Length);
+                mappedForm.Binary = bytes;
+            }
+
+            mappedForm.Material = material;
+            _context.Files.Add(mappedForm);
+
+            await _context.SaveChangesAsync();
+
+            return new JsonResult(new
+            {
+                result = 0,
+                createdId = mappedForm.Id,
+                data = _mapper.Map<FileNonBinaryResponseDTO>(mappedForm)
+            });
+        }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteFile(int id)
