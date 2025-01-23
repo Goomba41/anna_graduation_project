@@ -1,17 +1,14 @@
 import { defineStore } from "pinia";
 
-import {
-  HttpTransportType,
-  HubConnection,
-  HubConnectionBuilder,
-} from "@microsoft/signalr";
-import toast, { remove } from "@/utils/toast";
+import * as signalr from "@microsoft/signalr";
+// import toast, { remove } from "@/utils/toast";
 
 export const useSignalRStore = defineStore({
   id: "signalR",
   state: () => ({
-    connection: null as HubConnection | null,
-    incoming: null as any | null,
+    connection: null as signalr.HubConnection | null,
+    // incoming: null as any | null,
+    received: null as { percent: number; title: string } | null,
   }),
   actions: {
     /**
@@ -19,11 +16,11 @@ export const useSignalRStore = defineStore({
      */
     async connect() {
       // Создаем соединение с параметрами
-      this.connection = new HubConnectionBuilder()
+      this.connection = new signalr.HubConnectionBuilder()
         .withUrl("/notification", {
           accessTokenFactory: () => localStorage.getItem("token") || "",
           skipNegotiation: true,
-          transport: HttpTransportType.WebSockets,
+          transport: signalr.HttpTransportType.WebSockets,
         })
         .withAutomaticReconnect()
         .build();
@@ -92,9 +89,9 @@ export const useSignalRStore = defineStore({
       if (listeners && typeof listeners === "string") {
         this.connection?.off(listeners);
       } else if (listeners && Array.isArray(listeners) && listeners.length) {
-        listeners.forEach((listener: string) => {
+        for (const listener of listeners) {
           this.connection?.off(listener);
-        });
+        }
       }
       this.connection?.stop();
     },

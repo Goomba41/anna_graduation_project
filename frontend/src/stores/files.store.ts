@@ -11,201 +11,170 @@ import type { TFile } from "@/typings/files.types";
 import { errorResult, successResult } from "@/typings/http.types";
 
 import callParseErrorToast from "@/utils/type-parse-error";
-// import { DataSource } from './data-sources.store'
 
-async function readList(id: number, query?: { [key: string]: unknown }) {
-  return await axios
-    .get(
-      `/api/files/materials${id ? `/${id}` : ""}${query ? queryString(query) : ""}`,
-    )
-    .then((responseAXIOS) => {
-      const { data: responseData } = responseAXIOS;
+import { useSignalRStore } from "./signalr.store";
 
-      const result = successResult.extend({
-        data: ZFiles,
+export const useFilesStore = defineStore("files", () => {
+  const signalRStore = useSignalRStore();
+
+  /**
+   * Получение данных (строка или список строк)
+   * @param {string} [id] - ID строки для получения данных по ней
+   */
+  async function readList(id: number, query?: { [key: string]: unknown }) {
+    return await axios
+      .get(
+        `/api/files/materials${id ? `/${id}` : ""}${query ? queryString(query) : ""}`,
+      )
+      .then((responseAXIOS) => {
+        const { data: responseData } = responseAXIOS;
+
+        const result = successResult.extend({
+          data: ZFiles,
+        });
+
+        const error = errorResult.safeParse(responseData);
+        const response = result.safeParse(responseData);
+
+        if (response.success === true) {
+          const { data } = response.data;
+
+          return Promise.resolve(data);
+        }
+        if (error.success === true) {
+          const { data } = error;
+          toast("Ошибка", data.errorMsg || data.error, "error");
+        }
+
+        callParseErrorToast(response.error);
+        callParseErrorToast(error.error);
+      })
+      .catch((error) => {
+        callParseErrorToast(error);
+        return Promise.reject(error);
       });
+  }
 
-      const error = errorResult.safeParse(responseData);
-      const response = result.safeParse(responseData);
+  /**
+   * Открытие файла на просмотр
+   **/
+  async function blob(id: number) {
+    return await axios
+      .get(`/api/files/${id}/blob`)
+      .then((responseAXIOS) => {
+        const { data } = responseAXIOS;
 
-      if (response.success === true) {
-        const { data } = response.data;
+        // const result = successResult.extend({
+        //   updatedId: z.number(),
+        //   data: ZMaterialExtended,
+        // });
 
-        return Promise.resolve(data);
-      }
-      if (error.success === true) {
-        const { data } = error;
-        toast("Ошибка", data.errorMsg || data.error, "error");
-      }
+        const error = errorResult.safeParse(data);
+        // const response = result.safeParse(data);
 
-      callParseErrorToast(response.error);
-      callParseErrorToast(error.error);
-    })
-    .catch((error) => {
-      callParseErrorToast(error);
-      return Promise.reject(error);
-    });
-}
+        // if (response.success === true) {
+        //   const { updatedId, data: form } = response.data;
 
-export const useFilesStore = defineStore({
-  id: "files",
-  state: () => ({}),
-  actions: {
-    /**
-     * Создание объекта
-     * @param {[key: string]: any} form - данные формы для отправки на сервер
-     */
-    // async create(form: TMaterial) {
-    //   return await axios
-    //     .post("/api/materials", form)
-    //     .then((responseAXIOS) => {
-    //       const { data } = responseAXIOS;
+        //   return Promise.resolve({ updatedId, form });
+        // }
+        if (error.success === true) {
+          const { data } = error;
+          toast("Ошибка", data.errorMsg || data.error, "error");
+          return Promise.reject(data.errorMsg || data.error);
+        }
 
-    //       const result = successResult.extend({
-    //         createdId: z.number(),
-    //         data: ZMaterialExtended,
-    //       });
+        return Promise.resolve(data.binary);
 
-    //       const error = errorResult.safeParse(data);
-    //       const response = result.safeParse(data);
+        // callParseErrorToast(response.error);
+        // callParseErrorToast(error.error);
+        // return Promise.reject(`${error.error}; ${response.error}`);
+        // return Promise.reject(`${error.error}`);
+      })
+      .catch((error) => {
+        callParseErrorToast(error);
+        return Promise.reject(error);
+      });
+  }
 
-    //       if (response.success === true) {
-    //         const { createdId, data: form } = response.data;
+  async function remove(id: number) {
+    return await axios
+      .delete(`/api/files/${id}`)
+      .then((responseAXIOS) => {
+        const { data } = responseAXIOS;
 
-    //         return Promise.resolve({ createdId, form });
-    //       }
-    //       if (error.success === true) {
-    //         const { data } = error;
-    //         toast("Ошибка", data.errorMsg || data.error, "error");
-    //         return Promise.reject(data.errorMsg || data.error);
-    //       }
+        const result = successResult.extend({ deletedId: z.number() });
 
-    //       callParseErrorToast(response.error);
-    //       callParseErrorToast(error.error);
-    //       return Promise.reject(`${error.error}; ${response.error}`);
-    //     })
-    //     .catch((error) => {
-    //       return Promise.reject(error);
-    //     });
-    // },
+        const error = errorResult.safeParse(data);
+        const response = result.safeParse(data);
 
-    /**
-     * Получение данных (строка или список строк)
-     * @param {string} [id] - ID строки для получения данных по ней
-     */
-    readList,
+        if (response.success === true) {
+          const { deletedId } = response.data;
 
-    /**
-     * Открытие файла на просмотр
-     **/
-    async blob(id: number) {
-      return await axios
-        .get(`/api/files/${id}/blob`)
-        .then((responseAXIOS) => {
-          const { data } = responseAXIOS;
+          return Promise.resolve(deletedId);
+        }
+        if (error.success === true) {
+          const { data } = error;
+          toast("Ошибка", data.errorMsg || data.error, "error");
+          return Promise.reject(data.errorMsg || data.error);
+        }
 
-          // const result = successResult.extend({
-          //   updatedId: z.number(),
-          //   data: ZMaterialExtended,
-          // });
+        callParseErrorToast(response.error);
+        callParseErrorToast(error.error);
+        return Promise.reject(`${error.error}; ${response.error}`);
+      })
+      .catch((error) => {
+        callParseErrorToast(error);
+        return Promise.reject(error);
+      });
+  }
 
-          const error = errorResult.safeParse(data);
-          // const response = result.safeParse(data);
-
-          // if (response.success === true) {
-          //   const { updatedId, data: form } = response.data;
-
-          //   return Promise.resolve({ updatedId, form });
-          // }
-          if (error.success === true) {
-            const { data } = error;
-            toast("Ошибка", data.errorMsg || data.error, "error");
-            return Promise.reject(data.errorMsg || data.error);
-          }
-
-          return Promise.resolve(data.binary);
-
-          // callParseErrorToast(response.error);
-          // callParseErrorToast(error.error);
-          // return Promise.reject(`${error.error}; ${response.error}`);
-          // return Promise.reject(`${error.error}`);
-        })
-        .catch((error) => {
-          callParseErrorToast(error);
-          return Promise.reject(error);
-        });
-    },
-
-    async delete(id: number) {
-      return await axios
-        .delete(`/api/files/${id}`)
-        .then((responseAXIOS) => {
-          const { data } = responseAXIOS;
-
-          const result = successResult.extend({ deletedId: z.number() });
-
-          const error = errorResult.safeParse(data);
-          const response = result.safeParse(data);
-
-          if (response.success === true) {
-            const { deletedId } = response.data;
-
-            return Promise.resolve(deletedId);
-          }
-          if (error.success === true) {
-            const { data } = error;
-            toast("Ошибка", data.errorMsg || data.error, "error");
-            return Promise.reject(data.errorMsg || data.error);
-          }
-
-          callParseErrorToast(response.error);
-          callParseErrorToast(error.error);
-          return Promise.reject(`${error.error}; ${response.error}`);
-        })
-        .catch((error) => {
-          callParseErrorToast(error);
-          return Promise.reject(error);
-        });
-    },
-
-    async upload(id: number, form: TFile, file: File) {
-      return await axios
-        .post(
-          `/api/files/materials/${id}`,
-          { form, binary: file },
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
+  async function upload(id: number, form: TFile, file: File) {
+    return await axios
+      .post(
+        `/api/files/materials/${id}`,
+        { form, binary: file },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
           },
-        )
-        .then((responseAXIOS) => {
-          const { data: responseData } = responseAXIOS;
+          onUploadProgress: (progressEvent) => {
+            signalRStore.$patch({
+              received: {
+                percent: Math.floor((progressEvent.progress ?? 0) * 100),
+                title: `Загрузка файла «${form?.name}»`,
+              },
+            });
+          },
+        },
+      )
+      .then((responseAXIOS) => {
+        const { data: responseData } = responseAXIOS;
 
-          const result = successResult.extend({ createdId: z.number() });
+        const result = successResult.extend({ createdId: z.number() });
 
-          const error = errorResult.safeParse(responseData);
-          const response = result.safeParse(responseData);
+        const error = errorResult.safeParse(responseData);
+        const response = result.safeParse(responseData);
 
-          if (response.success === true) {
-            const { createdId } = response.data;
+        if (response.success === true) {
+          const { createdId } = response.data;
 
-            return Promise.resolve(createdId);
-          }
-          if (error.success === true) {
-            const { data } = error;
-            toast("Ошибка", data.errorMsg || data.error, "error");
-            return Promise.reject(data.errorMsg || data.error);
-          }
+          return Promise.resolve(createdId);
+        }
+        if (error.success === true) {
+          const { data } = error;
+          toast("Ошибка", data.errorMsg || data.error, "error");
+          return Promise.reject(data.errorMsg || data.error);
+        }
 
-          callParseErrorToast(response.error);
-          callParseErrorToast(error.error);
-          return Promise.reject(`${error.error}; ${response.error}`);
-        })
-        .catch((error) => {
-          callParseErrorToast(error);
-          return Promise.reject(error);
-        });
-    },
-  },
+        callParseErrorToast(response.error);
+        callParseErrorToast(error.error);
+        return Promise.reject(`${error.error}; ${response.error}`);
+      })
+      .catch((error) => {
+        callParseErrorToast(error);
+        return Promise.reject(error);
+      });
+  }
+
+  return { readList, blob, remove, upload };
 });

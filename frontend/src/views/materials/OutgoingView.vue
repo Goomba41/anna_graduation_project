@@ -270,6 +270,7 @@ import type { DxContextMenuTypes } from "devextreme-vue/context-menu";
 import { useFilesStore } from "@/stores/files.store";
 import { useUsersStore } from "@/stores/users.store";
 import { useLoadingStore } from "@/stores/loading.store";
+import { useSignalRStore } from "@/stores/signalr.store";
 import { useMaterialsStore } from "@/stores/materials.store";
 
 import type { TFile, TFiles } from "@/typings/files.types";
@@ -284,7 +285,7 @@ import FilterTwotone from "@/components/icons/FilterTwotone.vue";
 import FolderPlus from "@/components/icons/FolderPlus.vue";
 import MagnifyingGlass from "@/components/icons/MagnifyingGlass.vue";
 
-import toast from "@/utils/toast";
+import toast, { remove } from "@/utils/toast";
 import useEmitter from "@/utils/emitter";
 
 import TablePopup from "@/components/TablePopup.vue";
@@ -650,10 +651,12 @@ async function openFile(file: TFile) {
 
 async function deleteFile(file: TFile) {
   if (file.id)
-    await filesStore.delete(file.id).then(() => {
+    await filesStore.remove(file.id).then(() => {
       toast("Успех!", `Файл «${file?.name}» удалён`, "success");
     });
 }
+
+const signalRStore = useSignalRStore();
 
 async function uploadFiles(files: File[]) {
   for (const file of files) {
@@ -665,6 +668,14 @@ async function uploadFiles(files: File[]) {
       mtime: null,
     };
 
+    toast(
+      `Загрузка файла «${file?.name}»`,
+      undefined,
+      "info",
+      null,
+      "progress",
+    );
+
     if (rowForAction?.id)
       await filesStore
         .upload(rowForAction?.id, fileForm, file)
@@ -674,6 +685,8 @@ async function uploadFiles(files: File[]) {
           materialsFiles.value.push(fileForm);
           setTimeout(() => {
             emit("refreshDataGrid");
+            remove("progress");
+            signalRStore.received = null;
           }, 100);
         });
   }
