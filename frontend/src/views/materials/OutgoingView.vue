@@ -209,6 +209,16 @@
         dataField: 'id',
         dataType: 'number',
         caption: 'Идентификатор',
+        visible: false,
+        allowGrouping: false,
+        sortOrder: 'asc',
+        sortIndex: 0,
+        width: 100,
+      },
+      {
+        dataField: 'seqNum',
+        dataType: 'number',
+        caption: '№ п/п',
         visible: true,
         allowGrouping: false,
         sortOrder: 'asc',
@@ -659,8 +669,14 @@ async function deleteFile(file: TFile) {
 const signalRStore = useSignalRStore();
 
 async function uploadFiles(files: File[]) {
-  for (const file of files) {
+  const idArr = materialsFiles.value.length
+    ? materialsFiles.value.map((file) => file.seqNum ?? 0)
+    : [0];
+  const maxId = Math.max(...idArr);
+
+  for (const [index, file] of files.entries()) {
     const fileForm: TFile = {
+      seqNum: maxId + index + 1,
       name: file.name,
       mime: file.type,
       ctime: luxon.now().toJSDate(),

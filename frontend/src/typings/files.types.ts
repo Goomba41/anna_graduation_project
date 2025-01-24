@@ -4,6 +4,7 @@ import { DateTime as luxon } from "luxon";
 
 export const ZFile = z.object({
   id: z.number().nullish(),
+  seqNum: z.number(),
   name: z
     .string({ message: "Обязательное поле" })
     .min(1, "Обязательное поле")

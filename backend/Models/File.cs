@@ -4,6 +4,8 @@ public class File
 {
     public int Id { get; set; }
 
+    public int SeqNum { get; set; }
+
     public string? Name { get; set; }
 
     public string? Mime { get; set; }

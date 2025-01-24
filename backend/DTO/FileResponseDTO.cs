@@ -3,6 +3,7 @@ namespace backend.DTOs
     public class FileResponseDTO
     {
         public int Id { get; set; }
+        public int SeqNum { get; set; }
         public string Name { get; set; } = "";
         public string Mime { get; set; } = "";
         public DateTime? Atime { get; set; }
@@ -16,6 +17,7 @@ namespace backend.DTOs
     public class FileNonBinaryResponseDTO
     {
         public int Id { get; set; }
+        public int SeqNum { get; set; }
         public string Name { get; set; } = "";
         public string Mime { get; set; } = "";
         public DateTime? Atime { get; set; }

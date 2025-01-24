@@ -107,7 +107,6 @@ namespace backend.Controllers
                 return new JsonResult(new { result = -1, Error = $"Материал с идентификатором «{materialId}» не существует" });
             }
 
-
             Models.File mappedForm = _mapper.Map<Models.File>(form);
 
             IFormCollection? rawForm = await Request.ReadFormAsync();
