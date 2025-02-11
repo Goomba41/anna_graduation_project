@@ -43,7 +43,7 @@ export const router = createRouter({
           component: () => import("../views/HomeView.vue"),
           meta: {
             pageTitle:
-              import.meta.env.MODE === "development"
+              import.meta.env.MODE !== "development"
                 ? nameSystem()[2]
                 : "АИС «Документооборот» - документооборот ООО «Находка-АИС»",
             id: "c3e1f260-d618-4b21-9594-c99d5aabf026",

@@ -56,7 +56,7 @@ function dayTimeString() {
 // }
 
 const app_name: string | string[] =
-  import.meta.env.MODE === "development"
+  import.meta.env.MODE !== "development"
     ? nameSystem()
     : "АИС «Документооборот»";
 

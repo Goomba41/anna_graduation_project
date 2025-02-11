@@ -31,12 +31,14 @@ namespace backend.Controllers
 
             if (User == null)
             {
-                return NotFound();
+                // return NotFound();
+                return new JsonResult(new { result = -1, Error = "Пользователь не найден в системе" });
             }
 
             if (User.Password != Utils.GetPasswordHash(form.Password))
             {
-                return BadRequest("Invalid credentials");
+                // return BadRequest("Invalid credentials");
+                return new JsonResult(new { result = -1, Error = "Неправильный пароль" });
             }
 
             Claim[]? claims = new[] {

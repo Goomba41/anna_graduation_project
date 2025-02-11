@@ -10,6 +10,8 @@ import router from "@/router";
 import jwtParse from "@/utils/jwt-parse";
 import toast from "@/utils/toast";
 
+import { errorResult } from "@/typings/http.types";
+
 import { useUsersStore } from "./users.store";
 // import { useSignalRStore } from "./signalr.store";
 
@@ -62,8 +64,10 @@ export const useAuthStore = defineStore({
           Login: username,
           Password: password,
         })
-        .then((response) => {
-          const token: string = response.data.accessToken;
+        .then((responseAXIOS) => {
+          const { data: responseData } = responseAXIOS;
+
+          const token: string = responseData.accessToken;
 
           if (token) {
             this.refreshToken(token);
@@ -75,7 +79,15 @@ export const useAuthStore = defineStore({
             router.push(this.returnUrl || "/");
           }
 
-          if (!token) toast("Ошибка входа", JSON.stringify(response), "error");
+          if (!token) {
+            const error = errorResult.safeParse(responseData);
+            if (error.success === true) {
+              const { data } = error;
+              toast("Ошибка входа", data.errorMsg || data.error, "error");
+            } else {
+              toast("Ошибка входа", "Неизвестная ошибка", "error");
+            }
+          }
         });
     },
     /**

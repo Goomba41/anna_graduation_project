@@ -52,7 +52,7 @@
                       : '',
                   ]"
                   placeholder="*Фамилия (3-100 символов)"
-                  @input="setFieldTouched('Fam', true)"
+                  @input="setFieldTouched('lastName', true)"
                 />
                 <InputText
                   id="Name"
@@ -69,7 +69,7 @@
                       : '',
                   ]"
                   placeholder="*Имя (3-100 символов)"
-                  @input="setFieldTouched('Nam', true)"
+                  @input="setFieldTouched('firstName', true)"
                 />
                 <InputText
                   v-model.trim="Patronymic"
@@ -85,7 +85,7 @@
                       : '',
                   ]"
                   placeholder="Отчество (3-100 символов)"
-                  @input="setFieldTouched('Ot', true)"
+                  @input="setFieldTouched('patronymic', true)"
                 />
               </div>
             </div>
@@ -116,7 +116,7 @@
                 class="tw-font-medium tw-text-danger tw-text-xs tw-flex tw-flex-row tw-items-center tw-mb-2 last:tw-mb-0"
               >
                 <ExclamationTriangle class="tw-mr-2" />
-                {{ errors[error] }}
+                {{ errors.firstName || errors.lastName || errors.patronymic }}
               </span>
             </div>
           </div>
@@ -148,7 +148,7 @@
                     : '',
                 ]"
                 placeholder="3-110 символов"
-                @input="setFieldTouched('Name', true)"
+                @input="setFieldTouched('login', true)"
               />
             </div>
 
@@ -200,7 +200,7 @@
                         : '',
                     ]"
                     placeholder="от 6 символов"
-                    @input="setFieldTouched('Userpassword', true)"
+                    @input="setFieldTouched('password', true)"
                   />
 
                   <Button icon-pos="left" class="tw-mr-2" @click="getPassword">
@@ -273,7 +273,7 @@
                   <Checkbox
                     v-model="Sysadmin"
                     :binary="true"
-                    @change="setFieldTouched('Sysadmin', true)"
+                    @change="setFieldTouched('sysadmin', true)"
                   />
                 </div>
               </div>
@@ -313,7 +313,7 @@
                   mask="+7 (999) 999-99-99? доб. 9999"
                   :unmask="true"
                   :auto-clear="true"
-                  @keydown="setFieldTouched('Telephone', true)"
+                  @keydown="setFieldTouched('phone', true)"
                 />
               </div>
 
@@ -363,7 +363,7 @@
                       : '',
                   ]"
                   placeholder="example@example.ru"
-                  @input="setFieldTouched('Email', true)"
+                  @input="setFieldTouched('email', true)"
                 />
               </div>
 
@@ -521,6 +521,7 @@ const validationSchema = computed(() =>
                 /^[a-zA-Z0-9!@#$%^&*()_+~|}{[\]:;?></=]*$/,
                 "Только символы латиницы, цифры и спец. символы !@#$%^&*()_+~|}{[\\]:;?></=",
               )
+              .nullish()
               .default(null),
           }),
         )
@@ -706,10 +707,10 @@ function resetData(form?: TUser) {
       values: {
         id: undefined,
         fullName: undefined,
-        lastName: null,
-        firstName: null,
+        lastName: undefined,
+        firstName: undefined,
         patronymic: undefined,
-        login: null,
+        login: undefined,
         email: undefined,
         phone: undefined,
         sysadmin: false,

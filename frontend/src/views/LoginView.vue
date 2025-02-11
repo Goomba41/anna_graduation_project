@@ -116,7 +116,7 @@ import SpinnerDotted from "@/components/icons/SpinnerDotted.vue";
 import ExclamationTriangle from "@/components/icons/ExclamationTriangle.vue";
 
 const app_name: string =
-  process.env.NODE_ENV === "development"
+  process.env.NODE_ENV !== "development"
     ? nameSystem()[2]
     : "АИС «Документооборот»";
 

@@ -49,7 +49,7 @@
                     : '',
                 ]"
                 placeholder="1-300 символов"
-                @input="setFieldTouched('Name', true)"
+                @input="setFieldTouched('name', true)"
               />
             </div>
 
@@ -305,7 +305,7 @@
                     : '',
                 ]"
                 placeholder="1-300 символов"
-                @input="setFieldTouched('Address', true)"
+                @input="setFieldTouched('address', true)"
               />
             </div>
 
@@ -357,7 +357,7 @@
                     : '',
                 ]"
                 placeholder="1-500 символов"
-                @input="setFieldTouched('Contact', true)"
+                @input="setFieldTouched('contact', true)"
               />
             </div>
 
@@ -515,7 +515,6 @@ const { bus } = useEmitter();
 // ? Если нужно будет запросить справочники
 // const options: Ref<{ [key: string]: unknown[] }> = ref({})
 
-// @ts-expect-error почему-то сломан zod
 const validationSchema = computed(() => toTypedSchema(ZInstitution));
 
 const {
@@ -563,10 +562,10 @@ async function onSuccess(institution: TInstitution) {
     }
 
     await query?.then(async (response) => {
-      let message = "Пользователь создан";
+      let message = "Учреждение создано";
 
       if ("updatedId" in response) {
-        message = "Пользователь обновлён";
+        message = "Учреждение обновлено";
         emitEvent("updated", response);
         usersStore.activity(
           "write",
@@ -664,15 +663,15 @@ function resetData(form?: TInstitution) {
     resetForm({
       values: {
         id: undefined,
-        name: null,
-        address: null,
+        name: undefined,
+        address: undefined,
         contact: null,
-        subject: null,
-        district: null,
-        locality: null,
-        subjectString: null,
-        districtString: null,
-        localityString: null,
+        subject: undefined,
+        district: undefined,
+        locality: undefined,
+        subjectString: undefined,
+        districtString: undefined,
+        localityString: undefined,
       },
     });
   }
@@ -746,16 +745,16 @@ async function getFIASObjects(
   districtId?: number,
 ) {
   localitiesOptions.value = [];
-  setFieldValue("locality", null, false);
-  setFieldValue("localityString", null, false);
+  setFieldValue("locality", undefined, false);
+  setFieldValue("localityString", undefined, false);
 
   if (type === "districts" && subjectId) {
     districtsIsLoading.value = true;
     districtsOptions.value =
       (await optionsStore.fias("districts", subjectId)) || [];
     districtsIsLoading.value = false;
-    setFieldValue("district", null, false);
-    setFieldValue("districtString", null, false);
+    setFieldValue("district", undefined, false);
+    setFieldValue("districtString", undefined, false);
   }
 
   if (type === "localities" && subjectId && districtId) {
